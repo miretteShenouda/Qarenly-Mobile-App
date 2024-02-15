@@ -28,7 +28,7 @@ class SideMenuScreen extends StatelessWidget {
                     width: double.infinity,
                   ),
                   Padding(
-                      padding: EdgeInsets.only(left: 25.h, right: 33.h),
+                      padding: EdgeInsets.only(left: 5.h, right: 5.h),
                       child: CustomElevatedButton(
                         height: 48.v,
                         width: double.infinity,
@@ -51,26 +51,23 @@ class SideMenuScreen extends StatelessWidget {
                   _buildTwelve(context),
                   SizedBox(height: 21.v),
                   Padding(
-                      padding: EdgeInsets.only(left: 25.h, right: 33.h),
-                      child: CustomTextFormField(
-                          controller: notificationsController,
-                          hintText: "Notifications",
-                          hintStyle: theme.textTheme.headlineSmall!,
-                          textInputAction: TextInputAction.done,
-                          prefix: Container(
-                              margin: EdgeInsets.fromLTRB(6.h, 9.v, 4.h, 7.v),
-                              child: CustomImageView(
-                                  imagePath:
-                                      ImageConstant.imgNotificationiconpng91,
-                                  height: 25.v,
-                                  width: 28.h)),
-                          prefixConstraints: BoxConstraints(maxHeight: 43.v),
-                          contentPadding: EdgeInsets.only(
-                              top: 6.v, right: 30.h, bottom: 6.v),
-                          borderDecoration: TextFormFieldStyleHelper
-                              .fillOnPrimaryContainerTL21,
-                          fillColor: theme.colorScheme.onPrimaryContainer
-                              .withOpacity(0.24))),
+                      padding: EdgeInsets.only(left: 5.h, right: 5.h),
+                      child: CustomElevatedButton(
+                        height: 48.v,
+                        width: double.infinity,
+                        text: "Notifications",
+                        margin: EdgeInsets.only(
+                            left: 25.h, right: 33.h, bottom: 16.v),
+                        leftIcon: CustomImageView(
+                          imagePath: ImageConstant.imgNotificationiconpng91,
+                          height: 31.v,
+                          width: 28.h,
+                        ),
+                        onPressed: () {
+                          // Handle Home button tap
+                        },
+                        alignment: Alignment.centerLeft,
+                      )),
                   Spacer(),
                   Divider(),
                   SizedBox(height: 19.v),
