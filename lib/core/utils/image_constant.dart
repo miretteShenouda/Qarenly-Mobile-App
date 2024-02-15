@@ -5,14 +5,14 @@ class ImageConstant {
   // savedItems images
   static String imgGroup51 = '$imagePath/img_group_51.svg';
 
-  static String imgOcticonTrash16 = '$imagePath/img_octicon_trash_16.svg';
+  static String imgOcticonTrash16 = '$imagePath/trash.png';
 
   static String imgR21 = '$imagePath/img_r_2_1.png';
 
   static String imgSL3001 = '$imagePath/img_s_l300_1.png';
 
   // sign up page images
-  static String imgArrowLeft = '$imagePath/img_arrow_left.svg';
+  static String imgArrowLeft = '$imagePath/back.png';
 
   static String imgEmail = '$imagePath/email_icon.png';
 
@@ -25,7 +25,7 @@ class ImageConstant {
   static String img14 = '$imagePath/img_14.png';
 
   // viewproduct images
-  static String imgIcomoonFreeAmazon = '$imagePath/img_icomoon_free_amazon.svg';
+  static String imgIcomoonFreeAmazon = '$imagePath/amazon.png';
 
   static String imgEllipse5 = '$imagePath/img_ellipse_5.png';
 
@@ -43,7 +43,7 @@ class ImageConstant {
   static String imgNotificationiconpng91 =
       '$imagePath/img_notificationiconpng9_1.png';
 
-  static String imgUilsignoutalt = '$imagePath/img_uilsignoutalt.svg';
+  static String imgUilsignoutalt = '$imagePath/signout.png';
 
   // Common images
   static String imgEiUser = '$imagePath/home_user.png';
