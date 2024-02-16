@@ -28,23 +28,31 @@ class SideMenuScreen extends StatelessWidget {
                     width: double.infinity,
                   ),
                   Padding(
-                      padding: EdgeInsets.only(left: 5.h, right: 5.h),
-                      child: CustomElevatedButton(
-                        height: 48.v,
-                        width: double.infinity,
-                        text: "Home",
-                        margin: EdgeInsets.only(
-                            left: 25.h, right: 33.h, bottom: 16.v),
-                        leftIcon: CustomImageView(
+                    padding: EdgeInsets.only(left: 5.h, right: 5.h),
+                    child: CustomElevatedButton(
+                      height: 48.v,
+                      width: double.infinity,
+                      text: "Home",
+                      margin: EdgeInsets.only(
+                          left: 25.h, right: 33.h, bottom: 16.v),
+                      leftIcon: Padding(
+                        padding: EdgeInsets.only(right: 15.h, left: 0.h),
+                        child: CustomImageView(
                           imagePath: ImageConstant.imgHome,
                           height: 31.v,
                           width: 28.h,
+                          // alignment: Alignment
+                          //     .centerLeft, // Align icon to the leftmost
+                          margin: EdgeInsets.only(top: 4.v, bottom: 5.v),
                         ),
-                        onPressed: () {
-                          // Handle Home button tap
-                        },
-                        alignment: Alignment.centerLeft,
-                      )),
+                      ),
+                      onPressed: () {
+                        // Handle Home button tap
+                      },
+                      alignment: Alignment
+                          .centerLeft, // Align button content to the left
+                    ),
+                  ),
                   SizedBox(height: 16.v),
                   _buildTen(context),
                   SizedBox(height: 21.v),
@@ -75,15 +83,40 @@ class SideMenuScreen extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Padding(
                           padding: EdgeInsets.only(left: 21.h),
-                          child: Text("About us",
-                              style: CustomTextStyles.headlineSmallMedium))),
-                  SizedBox(height: 16.v),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: EdgeInsets.only(left: 21.h),
-                          child: Text("Your account",
-                              style: CustomTextStyles.headlineSmallMedium))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                //  crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      // Handle About Us button tap
+                                    },
+                                    child: Text(
+                                      "About Us",
+                                      style: CustomTextStyles
+                                          .headlineSmallMedium
+                                          .copyWith(color: Colors.black),
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.v),
+                                  TextButton(
+                                    onPressed: () {
+                                      // Handle Your Account button tap
+                                    },
+                                    child: Text(
+                                      "Your Account",
+                                      style: CustomTextStyles
+                                          .headlineSmallMedium
+                                          .copyWith(color: Colors.black),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ))),
                   SizedBox(height: 19.v),
                   CustomElevatedButton(
                       height: 35.v,
@@ -133,80 +166,48 @@ class SideMenuScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildTen(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(left: 25.h, right: 33.h),
-        padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 4.v),
-        decoration: AppDecoration.fillOnPrimaryContainer
-            .copyWith(borderRadius: BorderRadiusStyle.roundedBorder20),
-        child: Row(mainAxisSize: MainAxisSize.max, children: [
-          CustomImageView(
-              imagePath: ImageConstant.imgBookmark,
-              height: 24.v,
-              width: 17.h,
-              margin: EdgeInsets.only(top: 4.v, bottom: 5.v),
-              onTap: () {
-                onTapImgBookmark(context);
-              }),
-          Padding(
-              padding: EdgeInsets.only(left: 14.h, top: 2.v),
-              child: Text("Saved", style: theme.textTheme.headlineSmall))
-        ]));
+    return CustomElevatedButton(
+      height: 48.v,
+      width: double.infinity,
+      text: "Saved",
+      margin: EdgeInsets.only(left: 25.h, right: 33.h, bottom: 16.v),
+      leftIcon: CustomImageView(
+        imagePath: ImageConstant.imgBookmark,
+        height: 24.v,
+        width: 17.h,
+        margin: EdgeInsets.only(right: 14.h),
+        alignment: Alignment.centerLeft, // Align the image to the leftmost
+      ),
+      onPressed: () {
+        onTapImgBookmark(context);
+      },
+      alignment: Alignment.centerLeft, // Align the button content to the left
+    );
   }
 
   /// Section Widget
   Widget _buildTwelve(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(left: 25.h, right: 33.h),
-        padding: EdgeInsets.symmetric(horizontal: 9.h, vertical: 2.v),
-        decoration: AppDecoration.fillOnPrimaryContainer
-            .copyWith(borderRadius: BorderRadiusStyle.roundedBorder20),
-        child: Row(mainAxisSize: MainAxisSize.max, children: [
-          CustomImageView(
-              imagePath: ImageConstant.imgSolarSettingsLinear,
-              height: 25.adaptSize,
-              width: 25.adaptSize,
-              margin: EdgeInsets.symmetric(vertical: 6.v)),
-          Container(
-              height: 31.v,
-              width: 98.h,
-              margin: EdgeInsets.only(left: 5.h, top: 6.v),
-              child: Stack(alignment: Alignment.center, children: [
-                Align(
-                    alignment: Alignment.center,
-                    child:
-                        Text("Settings", style: theme.textTheme.headlineSmall)),
-                Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                        height: 31.v,
-                        width: 98.h,
-                        child: Stack(alignment: Alignment.center, children: [
-                          Align(
-                              alignment: Alignment.center,
-                              child: Text("Settings",
-                                  style: theme.textTheme.headlineSmall)),
-                          Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                  height: 31.v,
-                                  width: 98.h,
-                                  child: Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        Align(
-                                            alignment: Alignment.center,
-                                            child: Text("Settings",
-                                                style: theme
-                                                    .textTheme.headlineSmall)),
-                                        Align(
-                                            alignment: Alignment.center,
-                                            child: Text("Settings",
-                                                style: theme
-                                                    .textTheme.headlineSmall))
-                                      ])))
-                        ])))
-              ]))
-        ]));
+    return Padding(
+      //margin: EdgeInsets.only(left: 25.h, right: 33.h),
+      padding: EdgeInsets.only(left: 25.h, right: 33.h),
+      child: CustomElevatedButton(
+        height: 48.v,
+        width: double.infinity,
+        text: "Settings",
+        margin: EdgeInsets.only(bottom: 16.v),
+        leftIcon: CustomImageView(
+          imagePath: ImageConstant.imgSolarSettingsLinear,
+          height: 25.adaptSize,
+          width: 25.adaptSize,
+          margin: EdgeInsets.only(right: 14.h),
+        ),
+        onPressed: () {
+          // Handle Settings button tap
+          // You can navigate to the settings screen or perform any action here
+        },
+        alignment: Alignment.centerLeft,
+      ),
+    );
   }
 
   /// Navigates to the saveditemsScreen when the action is triggered.
