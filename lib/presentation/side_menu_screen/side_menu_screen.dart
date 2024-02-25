@@ -12,172 +12,293 @@ class SideMenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: appTheme.blueGray300,
-      body: Row(
-        children: [
-          // Side Menu (Drawer)
-          Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: appTheme.blueGray300,
-                  ),
-                  child: _buildSixtyThree(context),
-                ),
-                ListTile(
-                  title: Text(
-                    'Home',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 6, 51, 89),
-                      fontSize: 20,
-                    ),
-                  ),
-                  leading: CustomImageView(
-                    imagePath: ImageConstant.imgHome,
-                    height: 31.v,
-                    width: 28.h,
-                  ),
-                  onTap: () {
-                    onTapImgHome(context);
-                  },
-                ),
-                ListTile(
-                  title: Text(
-                    'Saved',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 6, 51, 89),
-                      fontSize: 20,
-                    ),
-                  ),
-                  leading: CustomImageView(
-                    imagePath: ImageConstant.imgBookmark,
-                    height: 24.v,
-                    width: 17.h,
-                  ),
-                  onTap: () {
-                    // Handle Saved onTap
-                  },
-                ),
-                ListTile(
-                  title: Text(
-                    'Notifications',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 6, 51, 89),
-                      fontSize: 20,
-                    ),
-                  ),
-                  leading: CustomImageView(
-                    imagePath: ImageConstant.imgNotificationiconpng91,
-                    height: 24.v,
-                    width: 17.h,
-                  ),
-                  onTap: () {
-                    // Handle Saved onTap
-                  },
-                ),
-                ListTile(
-                  title: Text(
-                    'Settings',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 6, 51, 89),
-                      fontSize: 20,
-                    ),
-                  ),
-                  leading: CustomImageView(
-                    imagePath: ImageConstant.imgSolarSettingsLinear,
-                    height: 25.adaptSize,
-                    width: 25.adaptSize,
-                  ),
-                  onTap: () {
-                    // Handle Settings onTap
-                  },
-                ),
-                ListTile(
-                  title: Text(
-                    'About Us',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 6, 51, 89),
-                      fontSize: 20,
-                    ),
-                  ),
-                  leading: CustomImageView(
-                    imagePath: ImageConstant.aboutUs,
-                    height: 25.adaptSize,
-                    width: 25.adaptSize,
-                  ),
-                  onTap: () {
-                    // Handle About Us onTap
-                  },
-                ),
-                SizedBox(height: 16.v),
-                Spacer(),
-                Divider(),
-                SizedBox(height: 16.v),
-                ListTile(
-                  title: Text(
-                    'Dark mode',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 6, 51, 89),
-                      fontSize: 20,
-                    ),
-                  ),
-                  leading: CustomImageView(
-                    imagePath: ImageConstant.nightmode,
-                    height: 33.v,
-                    width: 33.h,
-                  ),
-                  onTap: () {
-                    onTapSignOut(context);
-                  },
-                ),
-                ListTile(
-                  title: Text(
-                    'Sign Out',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 6, 51, 89),
-                      fontSize: 20,
-                    ),
-                  ),
-                  leading: CustomImageView(
-                    imagePath: ImageConstant.imgUilsignoutalt,
-                    height: 33.v,
-                    width: 33.h,
-                  ),
-                  onTap: () {
-                    onTapSignOut(context);
-                  },
-                ),
-              ],
-            ),
-          ),
-
-          // Main Content
-          Expanded(
-            child: Container(
-              width: 328.h,
-              padding: EdgeInsets.symmetric(vertical: 19.v, horizontal: 25.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(children: [
+      Scaffold(
+        backgroundColor: appTheme.blueGray300,
+        body: Row(
+          children: [
+            // Expanded(
+            //   child: Container(
+            //     width: 328.h,
+            //     padding: EdgeInsets.symmetric(vertical: 19.v, horizontal: 25.h),
+            //     child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         SizedBox(height: 14.v),
+            //         //  _buildSixtyThree(context),
+            //         SizedBox(height: 48.v),
+            //         _buildTen(context),
+            //         _buildTwelve(context),
+            //         _buildFourteen(context),
+            //         SizedBox(height: 50.v),
+            //         Spacer(),
+            //         Divider(),
+            //         SizedBox(height: 19.v),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // Side Menu (Drawer)
+            Drawer(
+              backgroundColor: appTheme.blueGray300,
+              child: ListView(
+                padding: EdgeInsets.zero,
                 children: [
-                  SizedBox(height: 14.v),
-                  _buildSixtyThree(context),
-                  SizedBox(height: 48.v),
-                  _buildTen(context),
-                  _buildTwelve(context),
-                  _buildFourteen(context),
+                  DrawerHeader(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_back,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context); // Close the drawer
+                          },
+                        ),
+                        SizedBox(
+                            height: 10
+                                .v), // Add some vertical space between the back arrow and the user info
+                        _buildSixtyThree(
+                            context), // Move the user info to a separate method for better organization
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 16.v),
+                  Card(
+                      margin: EdgeInsets.only(
+                          left: 18, right: 22), // Adjust margin as needed
+                      elevation: 5.0,
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            50.0), // Set the border radius
+                      ),
+                      child: SizedBox(
+                        height: 48,
+                        child: ListTile(
+                          title: Text(
+                            'Home',
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 6, 51, 89),
+                              fontSize: 23,
+                            ),
+                          ),
+                          leading: CustomImageView(
+                            imagePath: ImageConstant.imgHome,
+                            height: 34.v,
+                            width: 30.h,
+                          ),
+                          onTap: () {
+                            onTapImgHome(context);
+                          },
+                        ),
+                      )),
+                  SizedBox(height: 16.v),
+                  Card(
+                      margin: EdgeInsets.only(left: 18, right: 22),
+                      elevation: 5.0,
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            50.0), // Set the border radius
+                      ),
+                      child: SizedBox(
+                          height: 48,
+                          child: ListTile(
+                            title: Text(
+                              'Saved',
+                              style: TextStyle(
+                                color: const Color.fromARGB(255, 6, 51, 89),
+                                fontSize: 23,
+                              ),
+                            ),
+                            leading: CustomImageView(
+                              imagePath: ImageConstant.imgBookmark,
+                              height: 27.adaptSize,
+                              width: 19.adaptSize,
+                            ),
+                            onTap: () {
+                              // Handle Saved onTap
+                            },
+                          ))),
+                  SizedBox(height: 16.v),
+                  Card(
+                      margin: EdgeInsets.only(left: 18, right: 22),
+                      elevation: 5.0,
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            50.0), // Set the border radius
+                      ),
+                      child: SizedBox(
+                        height: 48,
+                        child: ListTile(
+                          title: Text(
+                            'Notifications',
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 6, 51, 89),
+                              fontSize: 23,
+                            ),
+                          ),
+                          leading: CustomImageView(
+                            imagePath: ImageConstant.imgNotificationiconpng91,
+                            height: 32.adaptSize,
+                            width: 27.adaptSize,
+                          ),
+                          onTap: () {
+                            // Handle Saved onTap
+                          },
+                        ),
+                      )),
+                  SizedBox(height: 16.v),
+                  Card(
+                      margin: EdgeInsets.only(left: 18, right: 22),
+                      elevation: 5.0,
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            50.0), // Set the border radius
+                      ),
+                      child: SizedBox(
+                        height: 48,
+                        child: ListTile(
+                          title: Text(
+                            'Settings',
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 6, 51, 89),
+                              fontSize: 23,
+                            ),
+                          ),
+                          leading: CustomImageView(
+                            imagePath: ImageConstant.imgSolarSettingsLinear,
+                            height: 28.adaptSize,
+                            width: 28.adaptSize,
+                          ),
+                          onTap: () {
+                            // Handle Settings onTap
+                          },
+                        ),
+                      )),
+                  SizedBox(height: 16.v),
+                  Card(
+                      margin: EdgeInsets.only(left: 18, right: 22),
+                      elevation: 5.0,
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            50.0), // Set the border radius
+                      ),
+                      child: SizedBox(
+                        height: 48,
+                        child: ListTile(
+                          title: Text(
+                            'About Us',
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 6, 51, 89),
+                              fontSize: 23,
+                            ),
+                          ),
+                          leading: CustomImageView(
+                            imagePath: ImageConstant.aboutUs,
+                            height: 27.adaptSize,
+                            width: 27.adaptSize,
+                          ),
+                          onTap: () {
+                            // Handle About Us onTap
+                          },
+                        ),
+                      )),
+                  SizedBox(height: 16.v),
                   Spacer(),
                   Divider(),
-                  SizedBox(height: 19.v),
+                  SizedBox(height: 190.v),
+                  Card(
+                      margin: EdgeInsets.only(left: 18, right: 70),
+                      elevation: 5.0,
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            50.0), // Set the border radius
+                      ),
+                      child: SizedBox(
+                        height: 50,
+                        child: ListTile(
+                          title: Text(
+                            'Dark mode',
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 6, 51, 89),
+                              fontSize: 23,
+                            ),
+                          ),
+                          leading: CustomImageView(
+                            imagePath: ImageConstant.nightmode,
+                            height: 40.adaptSize,
+                            width: 40.adaptSize,
+                          ),
+                          onTap: () {},
+                        ),
+                      )),
+                  SizedBox(height: 16.v),
+                  Card(
+                    margin: EdgeInsets.only(left: 18, right: 70),
+                    elevation: 5.0,
+                    color: Color.fromRGBO(255, 255, 255, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(50.0), // Set the border radius
+                    ),
+                    child: SizedBox(
+                      height: 50,
+                      child: ListTile(
+                        title: Text(
+                          'Sign Out',
+                          style: TextStyle(
+                            color: const Color.fromARGB(255, 6, 51, 89),
+                            fontSize: 23,
+                          ),
+                        ),
+                        leading: CustomImageView(
+                          imagePath: ImageConstant.imgUilsignoutalt,
+                          height: 33.adaptSize,
+                          width: 33.adaptSize,
+                        ),
+                        onTap: () {
+                          onTapSignOut(context);
+                        },
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
+
+            // Main Content
+            // Expanded(
+            //   child: Container(
+            //     width: 328.h,
+            //     padding: EdgeInsets.symmetric(vertical: 19.v, horizontal: 25.h),
+            //     child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         SizedBox(height: 14.v),
+            //         //  _buildSixtyThree(context),
+            //         SizedBox(height: 48.v),
+            //         _buildTen(context),
+            //         _buildTwelve(context),
+            //         _buildFourteen(context),
+            //         SizedBox(height: 50.v),
+            //         Spacer(),
+            //         Divider(),
+            //         SizedBox(height: 19.v),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
+      )
+    ]);
   }
 
   Widget _buildFourteen(BuildContext context) {
@@ -206,28 +327,33 @@ class SideMenuScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildSixtyThree(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(left: 5.h, right: 10.h),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomImageView(
-                  imagePath: ImageConstant.imgEllipse6,
-                  height: 80.adaptSize,
-                  width: 80.adaptSize,
-                  radius: BorderRadius.circular(45.h),
-                  margin: EdgeInsets.only(top: 8.v)),
-              Padding(
-                  padding: EdgeInsets.only(top: 35.v, bottom: 34.v),
-                  child: Text("Username",
-                      style: CustomTextStyles.headlineSmallSemiBold)),
-              CustomImageView(
-                  imagePath: ImageConstant.imgMobile,
-                  height: 37.adaptSize,
-                  width: 37.adaptSize,
-                  margin: EdgeInsets.only(bottom: 62.v))
-            ]));
+    return Row(
+      children: [
+        CustomImageView(
+          imagePath: ImageConstant.imgEllipse6,
+          height: 70.adaptSize,
+          width: 70.adaptSize,
+          radius: BorderRadius.circular(40.h),
+          margin: EdgeInsets.only(
+              right: 20.h), // Increase the right margin for spacing
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Username",
+              style: CustomTextStyles.headlineSmallSemiBold,
+            ),
+            // Add some vertical space between the username and the bottom edge of the header
+            CustomImageView(
+              imagePath: ImageConstant.imgMobile,
+              height: 15.adaptSize,
+              width: 15.adaptSize,
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildTen(BuildContext context) {
