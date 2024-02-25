@@ -63,6 +63,23 @@ class SideMenuScreen extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
+                    'Notifications',
+                    style: TextStyle(
+                      color: const Color.fromARGB(255, 6, 51, 89),
+                      fontSize: 20,
+                    ),
+                  ),
+                  leading: CustomImageView(
+                    imagePath: ImageConstant.imgNotificationiconpng91,
+                    height: 24.v,
+                    width: 17.h,
+                  ),
+                  onTap: () {
+                    // Handle Saved onTap
+                  },
+                ),
+                ListTile(
+                  title: Text(
                     'Settings',
                     style: TextStyle(
                       color: const Color.fromARGB(255, 6, 51, 89),
@@ -203,7 +220,7 @@ class SideMenuScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 8.v)),
               Padding(
                   padding: EdgeInsets.only(top: 35.v, bottom: 34.v),
-                  child: Text("Marie John",
+                  child: Text("Username",
                       style: CustomTextStyles.headlineSmallSemiBold)),
               CustomImageView(
                   imagePath: ImageConstant.imgMobile,
