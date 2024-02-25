@@ -28,7 +28,7 @@ class ImageConstant {
   static String imgIcomoonFreeAmazon = '$imagePath/amazon.png';
 
   static String imgEllipse5 = '$imagePath/img_ellipse_5.png';
-
+  static String nightmode = '$imagePath/nightmode.png';
   // side-menu images
   static String imgEllipse6 = '$imagePath/img_ellipse_6.png';
 
@@ -39,6 +39,7 @@ class ImageConstant {
   static String imgBookmark = '$imagePath/saved_icon.png';
 
   static String imgSolarSettingsLinear = '$imagePath/settings.png';
+  static String aboutUs = '$imagePath/carbon_information.png';
 
   static String imgNotificationiconpng91 =
       '$imagePath/img_notificationiconpng9_1.png';
