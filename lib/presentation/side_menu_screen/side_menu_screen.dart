@@ -107,7 +107,7 @@ class SideMenuScreen extends StatelessWidget {
                           width: 19.adaptSize,
                         ),
                         onTap: () {
-                          // Handle Saved onTap
+                          onTapImgBookmark(context);
                         },
                       ))),
               SizedBox(height: 16.v),
@@ -134,9 +134,7 @@ class SideMenuScreen extends StatelessWidget {
                         height: 32.adaptSize,
                         width: 27.adaptSize,
                       ),
-                      onTap: () {
-                        // Handle Saved onTap
-                      },
+                      onTap: () {},
                     ),
                   )),
               SizedBox(height: 16.v),
@@ -343,25 +341,25 @@ class SideMenuScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTen(BuildContext context) {
-    return CustomElevatedButton(
-      height: 48.v,
-      width: double.infinity,
-      text: "Saved",
-      margin: EdgeInsets.only(left: 25.h, right: 33.h, bottom: 16.v),
-      leftIcon: CustomImageView(
-        imagePath: ImageConstant.imgBookmark,
-        height: 24.v,
-        width: 17.h,
-        margin: EdgeInsets.only(right: 14.h),
-        alignment: Alignment.centerLeft, // Align the image to the leftmost
-      ),
-      onPressed: () {
-        onTapImgBookmark(context);
-      },
-      alignment: Alignment.centerLeft, // Align the button content to the left
-    );
-  }
+  // Widget _buildTen(BuildContext context) {
+  //   return CustomElevatedButton(
+  //     height: 48.v,
+  //     width: double.infinity,
+  //     text: "Saved",
+  //     margin: EdgeInsets.only(left: 25.h, right: 33.h, bottom: 16.v),
+  //     leftIcon: CustomImageView(
+  //       imagePath: ImageConstant.imgBookmark,
+  //       height: 24.v,
+  //       width: 17.h,
+  //       margin: EdgeInsets.only(right: 14.h),
+  //       alignment: Alignment.centerLeft, // Align the image to the leftmost
+  //     ),
+  //     onPressed: () {
+  //       onTapImgBookmark(context);
+  //     },
+  //     alignment: Alignment.centerLeft, // Align the button content to the left
+  //   );
+  // }
 
   /// Section Widget
   Widget _buildTwelve(BuildContext context) {

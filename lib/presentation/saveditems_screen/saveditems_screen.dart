@@ -1,3 +1,4 @@
+import '../../widgets/app_bar/appbar_title_searchview.dart';
 import '../../widgets/custom_text_form_field.dart';
 import '../saveditems_screen/widgets/productcard_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -35,39 +36,6 @@ class SaveditemsScreen extends StatelessWidget {
     ));
   }
 
-  /// Section Widget
-  // PreferredSizeWidget _buildAppBar(BuildContext context) {
-  //   return CustomAppBar(
-  //     leadingWidth: 69.h,
-  //     leading: Row(
-  //       children: [
-  //         AppbarLeadingImage(
-  //           imagePath: ImageConstant.imgEiUser,
-  //           margin: EdgeInsets.only(left: 16.h, top: 1.v, bottom: 1.v),
-  //         ),
-  //         SizedBox(
-  //             width: 10), // Add some space between user icon and search bar
-  //         Expanded(
-  //           child: _buildSearchBar(context),
-  //         ),
-  //       ],
-  //     ),
-  //     centerTitle: true,
-  //     // title: AppbarTitleImage(
-  //     //   imagePath: ImageConstant.imgGroup51,
-  //     //   hintText: 'search',
-  //     // ),
-  //     actions: [
-  //       AppbarTrailingImage(
-  //         imagePath: ImageConstant.imgBasilMenuOutline,
-  //         margin: EdgeInsets.fromLTRB(6.h, 3.v, 20.h, 4.v),
-  //         onTap: () {
-  //           onTapBasilMenuOutline(context);
-  //         },
-  //       ),
-  //     ],
-  //   );
-  // }
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return PreferredSize(
       preferredSize:
@@ -75,35 +43,35 @@ class SaveditemsScreen extends StatelessWidget {
       child: Column(
         children: [
           CustomAppBar(
+            leadingWidth: 69.h,
+            leading: Row(
+              children: [
+                AppbarLeadingImage(
+                  imagePath: ImageConstant.imgEiUser,
+                  margin: EdgeInsets.only(left: 16.h, top: 1.v, bottom: 1.v),
+                ),
+              ],
+            ),
+            centerTitle: true,
+            title: Expanded(
+              child: Container(
+                margin: EdgeInsets.only(left: 15.h, top: 10.v, bottom: 1.v),
+                child: AppbarTitleSearchview(
+                  hintText: "search",
+                  controller: searchController,
+                ),
+              ),
+            ),
             actions: [
               AppbarTrailingImage(
                 imagePath: ImageConstant.imgBasilMenuOutline,
-                margin: EdgeInsets.fromLTRB(6.h, 3.v, 20.h, 4.v),
+                margin: EdgeInsets.fromLTRB(7.h, 8.v, 15.h, 1.v),
                 onTap: () {
                   onTapBasilMenuOutline(context);
                 },
               ),
             ],
-          ),
-          Container(
-            height: 40,
-            width: 280,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(200),
-              color: Colors.white,
-              // Adjust the radius as needed
-            ),
-            child: Center(
-              child: TextField(
-                  decoration: InputDecoration(
-                hintText: 'Search for something',
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Color.fromARGB(255, 44, 68, 153),
-                ),
-              )),
-            ),
-          ),
+          )
         ],
       ),
     );

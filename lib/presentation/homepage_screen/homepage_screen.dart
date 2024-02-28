@@ -44,21 +44,35 @@ class HomepageScreen extends StatelessWidget {
   /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-        leadingWidth: 69.h,
-        leading: AppbarLeadingImage(
+      leadingWidth: 69.h,
+      leading: Row(
+        children: [
+          AppbarLeadingImage(
             imagePath: ImageConstant.imgEiUser,
-            margin: EdgeInsets.only(left: 16.h, top: 1.v, bottom: 1.v)),
-        centerTitle: true,
-        title: AppbarTitleSearchview(
-            hintText: "search", controller: searchController),
-        actions: [
-          AppbarTrailingImage(
-              imagePath: ImageConstant.imgBasilMenuOutline,
-              margin: EdgeInsets.fromLTRB(6.h, 3.v, 15.h, 4.v),
-              onTap: () {
-                onTapBasilMenuOutline(context);
-              })
-        ]);
+            margin: EdgeInsets.only(left: 16.h, top: 1.v, bottom: 1.v),
+          ),
+        ],
+      ),
+      centerTitle: true,
+      title: Expanded(
+        child: Container(
+          margin: EdgeInsets.only(left: 15.h, top: 10.v, bottom: 1.v),
+          child: AppbarTitleSearchview(
+            hintText: "search",
+            controller: searchController,
+          ),
+        ),
+      ),
+      actions: [
+        AppbarTrailingImage(
+          imagePath: ImageConstant.imgBasilMenuOutline,
+          margin: EdgeInsets.fromLTRB(7.h, 8.v, 15.h, 1.v),
+          onTap: () {
+            onTapBasilMenuOutline(context);
+          },
+        ),
+      ],
+    );
   }
 
   /// Section Widget
