@@ -104,7 +104,7 @@ class CustomSearchView extends StatelessWidget {
         hintStyle: hintStyle ?? CustomTextStyles.titleLargeRegular,
         prefixIcon: Padding(
           padding: EdgeInsets.all(
-            15.h,
+            11.h,
           ),
           child: Icon(
             Icons.search,

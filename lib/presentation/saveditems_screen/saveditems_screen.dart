@@ -1,10 +1,8 @@
 import '../../widgets/app_bar/appbar_title_searchview.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../saveditems_screen/widgets/productcard_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/widgets/app_bar/appbar_leading_image.dart';
-import 'package:qarenly/widgets/app_bar/appbar_title_image.dart';
 import 'package:qarenly/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:qarenly/widgets/app_bar/custom_app_bar.dart';
 

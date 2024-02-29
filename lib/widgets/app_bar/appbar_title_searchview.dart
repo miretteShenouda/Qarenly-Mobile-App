@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/widgets/custom_search_view.dart';
 
 // ignore: must_be_immutable
 class AppbarTitleSearchview extends StatelessWidget {
@@ -38,6 +36,7 @@ class AppbarTitleSearchview extends StatelessWidget {
         child: TextField(
             decoration: InputDecoration(
           hintText: 'Search for something',
+          border: InputBorder.none,
           prefixIcon: Icon(
             Icons.search,
             color: Color.fromARGB(255, 0, 48, 73),

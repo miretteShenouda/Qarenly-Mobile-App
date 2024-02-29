@@ -18,7 +18,7 @@ class UserprofileItemWidget extends StatelessWidget {
         children: [
           CustomImageView(
             imagePath: ImageConstant.img164691852916392,
-            height: 123.v,
+            height: 128.v,
             width: 104.h,
             radius: BorderRadius.circular(
               20.h,
