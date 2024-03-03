@@ -5,7 +5,7 @@ class ImageConstant {
   // savedItems images
   static String imgGroup51 = '$imagePath/img_group_51.svg';
 
-  static String imgOcticonTrash16 = '$imagePath/trash.png';
+  static String imgOcticonTrash16 = '$imagePath/octicon_trash.png';
 
   static String imgR21 = '$imagePath/img_r_2_1.png';
 
