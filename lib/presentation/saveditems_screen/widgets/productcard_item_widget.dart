@@ -20,10 +20,10 @@ class ProductcardItemWidget extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 1.v),
+          SizedBox(height: 115.h),
           Padding(
             padding: EdgeInsets.only(left: 81.h),
             child: Row(
@@ -32,7 +32,7 @@ class ProductcardItemWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    width: 203.h,
+                    width: 190.h,
                     margin: EdgeInsets.only(top: 6.v),
                     child: RichText(
                       text: TextSpan(
