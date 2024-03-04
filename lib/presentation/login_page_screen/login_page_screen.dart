@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/widgets/custom_elevated_button.dart';
-import 'package:qarenly/widgets/custom_text_form_field.dart';
+import 'package:qarenly/common/widgets/custom_elevated_button.dart';
+import 'package:qarenly/common/widgets/custom_text_form_field.dart';
 
 // ignore_for_file: must_be_immutable
 class LoginPageScreen extends StatelessWidget {
