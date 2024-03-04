@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/widgets/base_button.dart';
+import 'package:qarenly/common/widgets/base_button.dart';
 
 class CustomElevatedButton extends BaseButton {
   CustomElevatedButton({

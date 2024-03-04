@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/widgets/custom_elevated_button.dart';
-import 'package:qarenly/widgets/custom_text_form_field.dart';
+import 'package:qarenly/common/widgets/custom_elevated_button.dart';
+import 'package:qarenly/common/widgets/custom_text_form_field.dart';
 
 // ignore_for_file: must_be_immutable
 class LoginPageScreen extends StatelessWidget {
@@ -60,19 +60,15 @@ class LoginPageScreen extends StatelessWidget {
                                       child: Text("forgot your password?",
                                           style: CustomTextStyles.bodyMedium14
                                               .copyWith(
-                                                  color: Colors.white,
                                                   decoration: TextDecoration
                                                       .underline)))),
                               SizedBox(height: 23.v),
                               Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                      padding: EdgeInsets.only(left: 110.h),
+                                      padding: EdgeInsets.only(left: 97.h),
                                       child: Text("or continue with",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                          )))),
+                                          style: theme.textTheme.bodyLarge))),
                               SizedBox(height: 7.v),
                               _buildGoogleButton(context),
                               SizedBox(height: 8.v),
@@ -87,7 +83,7 @@ class LoginPageScreen extends StatelessWidget {
                                         onTapTxtDonthaveanaccount(context);
                                       },
                                       child: Padding(
-                                          padding: EdgeInsets.only(left: 55.h),
+                                          padding: EdgeInsets.only(left: 47.h),
                                           child: RichText(
                                               text: TextSpan(children: [
                                                 TextSpan(
@@ -111,46 +107,33 @@ class LoginPageScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildUserName(BuildContext context) {
-    return Container(
-      height: 39,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50.0),
-        color: Colors.white,
-      ),
-      child: TextFormField(
-          controller: userNameController,
-          textInputAction: TextInputAction.done,
-          // textInputType: TextInputType.visiblePassword,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
-            prefixIcon:
-                Icon(Icons.person, color: Colors.orange.withOpacity(0.7)),
-            hintText: "Username",
-          ),
-          obscureText: true),
-    );
+    return CustomTextFormField(
+        controller: userNameController,
+        hintText: "Username",
+        prefix: Container(
+            margin: EdgeInsets.fromLTRB(29.h, 4.v, 20.h, 3.v),
+            child: CustomImageView(
+                imagePath: ImageConstant.imgEiuserErrorcontainer,
+                height: 39.v,
+                width: 40.h)),
+        prefixConstraints: BoxConstraints(maxHeight: 46.v));
   }
 
   /// Section Widget
   Widget _buildPassword(BuildContext context) {
-    return Container(
-      // margin: EdgeInsets.symmetric(vertical: 10.0), // Adjust vertical margin
-      height: 39,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50.0),
-        color: Colors.white,
-      ),
-      child: TextFormField(
-          controller: passwordController,
-          textInputAction: TextInputAction.done,
-          // textInputType: TextInputType.visiblePassword,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
-            prefixIcon: Icon(Icons.lock, color: Colors.orange.withOpacity(0.7)),
-            hintText: "Password",
-          ),
-          obscureText: true),
-    );
+    return CustomTextFormField(
+        controller: passwordController,
+        hintText: "Password",
+        textInputAction: TextInputAction.done,
+        textInputType: TextInputType.visiblePassword,
+        prefix: Container(
+            margin: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
+            child: CustomImageView(
+                imagePath: ImageConstant.imgLocation,
+                height: 24.v,
+                width: 22.h)),
+        prefixConstraints: BoxConstraints(maxHeight: 46.v),
+        obscureText: true);
   }
 
   /// Section Widget
@@ -168,11 +151,11 @@ class LoginPageScreen extends StatelessWidget {
     return CustomElevatedButton(
         text: "Google",
         leftIcon: Container(
-            margin: EdgeInsets.only(right: 20.h),
+            margin: EdgeInsets.only(right: 29.h),
             child: CustomImageView(
                 imagePath: ImageConstant.imgFlatcoloriconsgoogle,
                 height: 31.v,
-                width: 20.h)));
+                width: 29.h)));
   }
 
   /// Section Widget
@@ -180,14 +163,11 @@ class LoginPageScreen extends StatelessWidget {
     return CustomElevatedButton(
         text: "Facebook",
         leftIcon: Container(
-            margin: EdgeInsets.only(right: 20.h),
-            child:
-                Icon(Icons.facebook, color: Colors.blue[700]))); // Container(
-    // margin: EdgeInsets.only(right: 24.h),
-    // child: CustomImageView(
-    //     imagePath: ImageConstant.imgLogosfacebook,
-    //     height: 28.v,
-    //     width: 18.h)));
+            margin: EdgeInsets.only(right: 24.h),
+            child: CustomImageView(
+                imagePath: ImageConstant.imgLogosfacebook,
+                height: 31.v,
+                width: 29.h)));
   }
 
   /// Section Widget

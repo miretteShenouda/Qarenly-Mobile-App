@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/presentation/search_output_page/search_output_page.dart';
-import 'package:qarenly/widgets/app_bar/appbar_leading_image.dart';
-import 'package:qarenly/widgets/app_bar/appbar_title_searchview_one.dart';
-import 'package:qarenly/widgets/app_bar/appbar_trailing_image.dart';
-import 'package:qarenly/widgets/app_bar/custom_app_bar.dart';
+import 'package:qarenly/common/widgets/app_bar/appbar_leading_image.dart';
+import 'package:qarenly/common/widgets/app_bar/appbar_title_searchview_one.dart';
+import 'package:qarenly/common/widgets/app_bar/appbar_trailing_image.dart';
+import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
 
 class SearchOutputPageTabContainerScreen extends StatefulWidget {
   const SearchOutputPageTabContainerScreen({Key? key}) : super(key: key);

@@ -7,6 +7,7 @@ import 'package:qarenly/presentation/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/presentation/search_output_page_tab_container_screen/search_output_page_tab_container_screen.dart';
 import 'package:qarenly/presentation/side_menu_screen/side_menu_screen.dart';
 import 'package:qarenly/presentation/app_navigation_screen/app_navigation_screen.dart';
+import 'package:qarenly/presentation/viewproduct_page/viewproduct_page.dart';
 
 class AppRoutes {
   static const String saveditemsScreen = '/saveditems_screen';
@@ -39,6 +40,7 @@ class AppRoutes {
     searchOutputPageTabContainerScreen: (context) =>
         SearchOutputPageTabContainerScreen(),
     sideMenuScreen: (context) => SideMenuScreen(),
+    viewproductPage: (context) => ViewproductPage(),
     appNavigationScreen: (context) => AppNavigationScreen()
   };
 }

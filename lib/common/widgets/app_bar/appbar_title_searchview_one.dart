@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/widgets/custom_search_view.dart';
+import 'package:qarenly/common/widgets/custom_search_view.dart';
 
 // ignore: must_be_immutable
 class AppbarTitleSearchviewOne extends StatelessWidget {
