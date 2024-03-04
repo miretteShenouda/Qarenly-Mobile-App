@@ -60,6 +60,10 @@ class SignUpPageScreen extends StatelessWidget {
                                             Align(
                                                 alignment: Alignment.topRight,
                                                 child: Container(
+                                                    padding: EdgeInsets.only(
+                                                        left: 19.h,
+                                                        top: 58.v,
+                                                        right: 19.h),
                                                     width: 291.h,
                                                     decoration: AppDecoration
                                                         .outlineBlack,
@@ -72,8 +76,10 @@ class SignUpPageScreen extends StatelessWidget {
                                             Align(
                                                 alignment: Alignment.bottomLeft,
                                                 child: Text("Create account",
-                                                    style: theme.textTheme
-                                                        .displaySmall))
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 30,
+                                                    )))
                                           ]))),
                               SizedBox(height: 22.v),
                               _buildUserName(context),
@@ -89,7 +95,10 @@ class SignUpPageScreen extends StatelessWidget {
                                   child: Padding(
                                       padding: EdgeInsets.only(left: 102.h),
                                       child: Text("or continue with",
-                                          style: theme.textTheme.bodyLarge))),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          )))),
                               SizedBox(height: 7.v),
                               _buildGoogleButton(context),
                               SizedBox(height: 8.v),
@@ -114,62 +123,90 @@ class SignUpPageScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildUserName(BuildContext context) {
-    return CustomTextFormField(
-        controller: userNameController,
-        hintText: "Username",
-        prefix: Container(
-            margin: EdgeInsets.fromLTRB(29.h, 4.v, 20.h, 3.v),
-            child: CustomImageView(
-                imagePath: ImageConstant.imgEiuserErrorcontainer,
-                height: 39.v,
-                width: 40.h)),
-        prefixConstraints: BoxConstraints(maxHeight: 46.v));
+    return Container(
+      height: 39,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50.0),
+        color: Colors.white,
+      ),
+      child: TextFormField(
+          controller: userNameController,
+          textInputAction: TextInputAction.done,
+          // textInputType: TextInputType.visiblePassword,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
+            prefixIcon:
+                Icon(Icons.person, color: Colors.orange.withOpacity(0.7)),
+            hintText: "Username",
+          ),
+          obscureText: true),
+    );
   }
 
   /// Section Widget
   Widget _buildEmail(BuildContext context) {
-    return CustomTextFormField(
-        controller: emailController,
-        hintText: "Email",
-        textInputType: TextInputType.emailAddress,
-        prefix: Container(
-            margin: EdgeInsets.fromLTRB(30.h, 13.v, 27.h, 13.v),
-            child: CustomImageView(
-                imagePath: ImageConstant.imgEmail, height: 18.v, width: 21.h)),
-        prefixConstraints: BoxConstraints(maxHeight: 46.v));
+    return Container(
+      height: 39,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50.0),
+        color: Colors.white,
+      ),
+      child: TextFormField(
+          controller: userNameController,
+          textInputAction: TextInputAction.done,
+          // textInputType: TextInputType.visiblePassword,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
+            prefixIcon:
+                Icon(Icons.mail_outline, color: Colors.orange.withOpacity(0.7)),
+            hintText: "E-mail",
+          ),
+          obscureText: true),
+    );
   }
 
   /// Section Widget
   Widget _buildPassword(BuildContext context) {
-    return CustomTextFormField(
-        controller: passwordController,
-        hintText: "Password",
-        textInputType: TextInputType.visiblePassword,
-        prefix: Container(
-            margin: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
-            child: CustomImageView(
-                imagePath: ImageConstant.imgLocation,
-                height: 24.v,
-                width: 22.h)),
-        prefixConstraints: BoxConstraints(maxHeight: 46.v),
-        obscureText: true);
+    return Container(
+      // margin: EdgeInsets.symmetric(vertical: 10.0), // Adjust vertical margin
+      height: 39,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50.0),
+        color: Colors.white,
+      ),
+      child: TextFormField(
+          controller: passwordController,
+          textInputAction: TextInputAction.done,
+          // textInputType: TextInputType.visiblePassword,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
+            prefixIcon: Icon(Icons.lock, color: Colors.orange.withOpacity(0.7)),
+            hintText: "Password",
+          ),
+          obscureText: true),
+    );
   }
 
   /// Section Widget
   Widget _buildConfirmPassword(BuildContext context) {
-    return CustomTextFormField(
-        controller: confirmPasswordController,
-        hintText: "Confirm Password",
-        textInputAction: TextInputAction.done,
-        textInputType: TextInputType.visiblePassword,
-        prefix: Container(
-            margin: EdgeInsets.fromLTRB(30.h, 10.v, 18.h, 10.v),
-            child: CustomImageView(
-                imagePath: ImageConstant.imgLocation,
-                height: 24.v,
-                width: 22.h)),
-        prefixConstraints: BoxConstraints(maxHeight: 46.v),
-        obscureText: true);
+    return Container(
+      // margin: EdgeInsets.symmetric(vertical: 10.0), // Adjust vertical margin
+      height: 39,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50.0),
+        color: Colors.white,
+      ),
+      child: TextFormField(
+          controller: passwordController,
+          textInputAction: TextInputAction.done,
+          // textInputType: TextInputType.visiblePassword,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
+            prefixIcon: Icon(Icons.lock, color: Colors.orange.withOpacity(0.7)),
+            hintText: "Confirm Password",
+          ),
+          obscureText: true),
+    );
   }
 
   /// Section Widget
@@ -177,11 +214,11 @@ class SignUpPageScreen extends StatelessWidget {
     return CustomElevatedButton(
         text: "Google",
         leftIcon: Container(
-            margin: EdgeInsets.only(right: 29.h),
+            margin: EdgeInsets.only(right: 20.h),
             child: CustomImageView(
                 imagePath: ImageConstant.imgFlatcoloriconsgoogle,
                 height: 31.v,
-                width: 29.h)));
+                width: 20.h)));
   }
 
   /// Section Widget
@@ -189,11 +226,14 @@ class SignUpPageScreen extends StatelessWidget {
     return CustomElevatedButton(
         text: "Facebook",
         leftIcon: Container(
-            margin: EdgeInsets.only(right: 24.h),
-            child: CustomImageView(
-                imagePath: ImageConstant.imgLogosfacebook,
-                height: 31.v,
-                width: 29.h)));
+            margin: EdgeInsets.only(right: 20.h),
+            child:
+                Icon(Icons.facebook, color: Colors.blue[700]))); // Container(
+    // margin: EdgeInsets.only(right: 24.h),
+    // child: CustomImageView(
+    //     imagePath: ImageConstant.imgLogosfacebook,
+    //     height: 28.v,
+    //     width: 18.h)));
   }
 
   /// Section Widget
