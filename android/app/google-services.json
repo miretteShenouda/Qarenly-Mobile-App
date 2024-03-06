@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "791851892761",
+    "project_id": "qarenly-db",
+    "storage_bucket": "qarenly-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791851892761:android:97df42743accea5b0eaa88",
+        "android_client_info": {
+          "package_name": "com.qarenly.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqbbsBZuGQ-FNnIGn84AIxxUw0NIBsmEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
