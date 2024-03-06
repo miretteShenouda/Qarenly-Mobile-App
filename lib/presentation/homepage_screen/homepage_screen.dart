@@ -1,76 +1,108 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/common/widgets/app_bar/appbar_leading_image.dart';
 import 'package:qarenly/common/widgets/app_bar/appbar_title_searchview.dart';
 import 'package:qarenly/common/widgets/app_bar/appbar_trailing_image.dart';
 import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
+import 'package:qarenly/core/app_export.dart';
+import 'package:qarenly/presentation/homepage_screen/widgets/userprofile_item_widget.dart';
 
-import '../homepage_screen/widgets/userprofile_item_widget.dart';
+class HomepageScreen extends StatefulWidget {
+  const HomepageScreen({Key? key}) : super(key: key);
 
-// ignore_for_file: must_be_immutable
-class HomepageScreen extends StatelessWidget {
-  HomepageScreen({Key? key}) : super(key: key);
+  @override
+  _HomepageScreenState createState() => _HomepageScreenState();
+}
 
-  TextEditingController searchController = TextEditingController();
+class _HomepageScreenState extends State<HomepageScreen> {
+  late TextEditingController searchController;
+  late ScrollController _scrollController;
+  late Timer _timer;
+  int _currentIndex = 0;
+
+  void _scrollNext() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % 3;
+    });
+
+    if (!_scrollController.hasClients) return;
+
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final pixels = _scrollController.position.pixels;
+    if (pixels >= maxScroll) {
+      _scrollController.jumpTo(0);
+    } else {
+      _scrollController.animateTo(
+        pixels + MediaQuery.of(context).size.width,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = TextEditingController();
+    _scrollController = ScrollController();
+    _timer = Timer.periodic(Duration(seconds: 3), (_) {
+      _scrollNext();
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    _scrollController.dispose();
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      appBar: _buildAppBar(context),
-      body: SingleChildScrollView(
-        child: Container(
-          width: 391.h,
-          padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 24.v),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 5.v),
-
-              // Section 1: Horizontal Scrolling
-              _buildHorizontalScrollingSection(),
-              SizedBox(height: 8.v), // Adjust spacing as needed
-              Padding(
-                padding: EdgeInsets.only(left: 13.h),
-              ),
-              SizedBox(height: 18.v),
-              // Section 2: Recent Deals
-              _buildRecentDealsSection(context),
-              SizedBox(height: 34.v),
-              Padding(
-                padding: EdgeInsets.only(left: 8.h),
-              ),
-              // Padding(
-              //   padding: EdgeInsets.only(left: 8.h),
-              // ), // Adjust spacing as needed
-
-              // Section 3: Mostly Viewed
-              _buildMostlyViewedSection(),
-            ],
+      child: Scaffold(
+        appBar: _buildAppBar(context),
+        body: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Section 1: Horizontal Scrolling
+                SizedBox(height: 5.0),
+                _buildHorizontalScrollingSection(),
+                // Section 2: Recent Deals
+                SizedBox(height: 8.0),
+                _buildRecentDealsSection(context),
+                // Section 3: Mostly Viewed
+                SizedBox(height: 34.0),
+                _buildMostlyViewedSection(),
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 
-  /// Section Widget...search bar
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
-      leadingWidth: 69.h,
+      leadingWidth: 69.0,
       leading: Row(
         children: [
           AppbarLeadingImage(
             imagePath: ImageConstant.imgEiUser,
-            margin: EdgeInsets.only(left: 16.h, top: 7.v, bottom: 1.v),
+            margin: EdgeInsets.only(left: 16.0, top: 7.0, bottom: 1.0),
           ),
         ],
       ),
-      centerTitle: false, // Change to false to allow the title to expand
+      centerTitle: false,
       title: Container(
-        // Wrap the title in a container to apply margin
-        margin: EdgeInsets.only(left: 5.h, top: 10.v, bottom: 1.v),
+        margin: EdgeInsets.only(left: 5.0, top: 10.0, bottom: 1.0),
         child: Expanded(
-          // Wrap the container in Expanded to make it flexible
           child: AppbarTitleSearchview(
             hintText: "search",
             controller: searchController,
@@ -80,7 +112,7 @@ class HomepageScreen extends StatelessWidget {
       actions: [
         AppbarTrailingImage(
           imagePath: ImageConstant.imgBasilMenuOutline,
-          margin: EdgeInsets.fromLTRB(6.h, 8.v, 15.h, 1.v),
+          margin: EdgeInsets.fromLTRB(6.0, 8.0, 15.0, 1.0),
           onTap: () {
             onTapBasilMenuOutline(context);
           },
@@ -89,142 +121,118 @@ class HomepageScreen extends StatelessWidget {
     );
   }
 
-  // Widget for Section 1: Horizontal Scrolling
   Widget _buildHorizontalScrollingSection() {
-    // Implement your horizontal scrolling widget here
+    _scrollController = ScrollController();
     return Container(
       decoration: AppDecoration.fillPrimary,
-      height: 198, // Set the height as per your requirement
+      height: 198.0,
       child: ListView.builder(
+        controller: _scrollController,
         scrollDirection: Axis.horizontal,
-        itemCount: 3, // Example itemCount
+        itemCount: 3,
         itemBuilder: (context, index) {
-          return Container(
+          return AnimatedOpacity(
+            duration: Duration(seconds: 1),
+            opacity: index == _currentIndex ? 1.0 : 0.0,
+            child: Container(
               decoration: AppDecoration.fillPrimary,
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 2.v),
-                    CustomImageView(
-                        imagePath: ImageConstant.imgSmartGadgetV3,
-                        height: 211.v,
-                        width: 351.h)
-                  ]));
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 2.0),
+                  CustomImageView(
+                    imagePath: ImageConstant.imgSmartGadgetV3,
+                    height: 196.0,
+                    width: 351.0,
+                  ),
+                ],
+              ),
+            ),
+          );
         },
       ),
     );
   }
 
-  // Widget for Section 2: Recent Deals
-  Widget _buildRecentDealsSection(BuildContext context) {
-    // Implement your recent deals widget here
+  /*
+  Widget _buildHorizontalScrollingSection() {
+    _scrollController = ScrollController();
 
+    return Container(
+      decoration: AppDecoration.fillPrimary,
+      height: 198.0,
+      child: ListView.builder(
+        controller: _scrollController,
+        scrollDirection: Axis.horizontal,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Container(
+            // Wrap the container with another widget
+            child: AnimatedOpacity(
+              duration: Duration(seconds: 1),
+              opacity: index == _currentIndex ? 1.0 : 0.0,
+              child: Container(
+                decoration: AppDecoration.fillPrimary,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 2.0),
+                    CustomImageView(
+                      imagePath: ImageConstant.imgSmartGadgetV3,
+                      height: 196.0,
+                      width: 351.0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+  */
+
+  Widget _buildRecentDealsSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Recent Deals',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10), // Adjust spacing as needed
+        SizedBox(height: 10.0),
         ListView.separated(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 21.v);
-            },
-            itemCount: 2,
-            itemBuilder: (context, index) {
-              return UserprofileItemWidget();
-            }),
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => SizedBox(height: 21.0),
+          itemCount: 2,
+          itemBuilder: (context, index) => UserprofileItemWidget(),
+        ),
       ],
     );
   }
 
-  // Widget for Section 3: Mostly Viewed
   Widget _buildMostlyViewedSection() {
-    // Implement your mostly viewed widget here
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Mostly Viewed',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10), // Adjust spacing as needed
+        SizedBox(height: 10.0),
         ListView.separated(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 21.v);
-            },
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return UserprofileItemWidget();
-            }),
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => SizedBox(height: 21.0),
+          itemCount: 5,
+          itemBuilder: (context, index) => UserprofileItemWidget(),
+        ),
       ],
     );
   }
 
-  // /// Section Widget....Mostly viewed
-  // Widget _buildNinety(BuildContext context) {
-  //   return Container(
-  //       height: 123.v,
-  //       width: 350.h,
-  //       margin: EdgeInsets.only(left: 25.h, right: 16.h),
-  //       child: Stack(alignment: Alignment.centerLeft, children: [
-  //         Align(
-  //             alignment: Alignment.center,
-  //             child: Container(
-  //                 height: 123.v,
-  //                 width: 350.h,
-  //                 decoration: BoxDecoration(
-  //                     color: theme.colorScheme.onPrimaryContainer
-  //                         .withOpacity(0.24),
-  //                     borderRadius: BorderRadius.circular(20.h)))),
-  //         Align(
-  //             alignment: Alignment.centerLeft,
-  //             child: Row(children: [
-  //               CustomImageView(
-  //                   imagePath: ImageConstant.img164691852916392,
-  //                   height: 123.v,
-  //                   width: 105.h,
-  //                   radius: BorderRadius.circular(20.h)),
-  //               Padding(
-  //                   padding: EdgeInsets.only(left: 6.h, top: 23.v, bottom: 8.v),
-  //                   child: Column(mainAxisSize: MainAxisSize.min, children: [
-  //                     SizedBox(
-  //                         width: 209.h,
-  //                         child: Text(
-  //                             "ASUS Laptop Zenbook Pro 14\nSource: sigma\n\n ",
-  //                             maxLines: 2,
-  //                             overflow: TextOverflow.ellipsis,
-  //                             style: theme.textTheme.bodyMedium)),
-  //                     Align(
-  //                         alignment: Alignment.centerRight,
-  //                         child: Padding(
-  //                             padding: EdgeInsets.only(top: 32.v),
-  //                             child: RichText(
-  //                                 text: TextSpan(children: [
-  //                                   TextSpan(
-  //                                       text: "30,400",
-  //                                       style: CustomTextStyles
-  //                                           .titleSmallff000000
-  //                                           .copyWith(
-  //                                               decoration: TextDecoration
-  //                                                   .lineThrough)),
-  //                                   TextSpan(
-  //                                       text: " LE 20,999",
-  //                                       style:
-  //                                           CustomTextStyles.titleSmallff000000)
-  //                                 ]),
-  //                                 textAlign: TextAlign.left)))
-  //                   ]))
-  //             ]))
-  //       ]));
-  // }
-
-  /// Navigates to the sideMenuScreen when the action is triggered.
   onTapBasilMenuOutline(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.sideMenuScreen);
   }
