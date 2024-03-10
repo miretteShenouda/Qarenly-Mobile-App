@@ -14,7 +14,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
   TextEditingController homeController = TextEditingController();
 
   TextEditingController notificationsController = TextEditingController();
-
+  bool isDark = false;
   @override
   void initState() {
     super.initState();
@@ -25,6 +25,9 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Theme(
+      // data: isDark ? ThemeData.dark() : ThemeData.light(),
+      // child: Scaffold(
       body: Stack(
         children: [
           // Side Menu (Drawer)
@@ -32,180 +35,213 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
             top: 0,
             bottom: 0,
             right: 0,
-            child: Drawer(
-              backgroundColor: appTheme.blueGray300,
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  DrawerHeader(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.arrow_back,
+            child: Container(
+              width: MediaQuery.of(context).size.width *
+                  0.8, // Adjust width as needed
+              child: Drawer(
+                // backgroundColor: appTheme.blueGray300,
+                backgroundColor: isDark ? Colors.black : appTheme.blueGray300,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    DrawerHeader(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context); // Close the drawer
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.pop(context); // Close the drawer
-                          },
-                        ),
-                        SizedBox(height: 10.v), // Add vertical space
-                        _buildSixtyThree(context),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 16.v),
-                  Card(
-                    margin: EdgeInsets.only(
-                      left: 18,
-                      right: 22,
-                    ),
-                    // Adjust margin as needed
-                    elevation: 5.0,
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                      // Set the border radius
-                    ),
-                    child: SizedBox(
-                      height: 48,
-                      child: ListTile(
-                        title: Text(
-                          'Home',
-                          style: TextStyle(
-                            color: const Color.fromARGB(255, 6, 51, 89),
-                            fontSize: 23,
-                          ),
-                        ),
-                        leading: CustomImageView(
-                          imagePath: ImageConstant.imgHome,
-                          height: 34.v,
-                          width: 30.h,
-                        ),
-                        onTap: () {
-                          onTapImgHome(context);
-                        },
+                          SizedBox(height: 10.v), // Add vertical space
+                          _buildSixtyThree(context),
+                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(height: 16.v),
-                  Card(
-                      margin: EdgeInsets.only(left: 18, right: 22),
+                    SizedBox(height: 16.v),
+                    Card(
+                      margin: EdgeInsets.only(
+                        left: 18,
+                        right: 22,
+                      ),
+                      // Adjust margin as needed
                       elevation: 5.0,
                       color: Color.fromRGBO(255, 255, 255, 1),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            50.0), // Set the border radius
+                        borderRadius: BorderRadius.circular(50.0),
+                        // Set the border radius
                       ),
                       child: SizedBox(
+                        height: 48,
+                        child: ListTile(
+                          title: Text(
+                            'Home',
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 6, 51, 89),
+                              fontSize: 23,
+                            ),
+                          ),
+                          leading: CustomImageView(
+                            imagePath: ImageConstant.imgHome,
+                            height: 34.v,
+                            width: 30.h,
+                          ),
+                          onTap: () {
+                            onTapImgHome(context);
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.v),
+                    Card(
+                        margin: EdgeInsets.only(left: 18, right: 22),
+                        elevation: 5.0,
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              50.0), // Set the border radius
+                        ),
+                        child: SizedBox(
+                            height: 48,
+                            child: ListTile(
+                              title: Text(
+                                'Saved',
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 6, 51, 89),
+                                  fontSize: 23,
+                                ),
+                              ),
+                              leading: CustomImageView(
+                                imagePath: ImageConstant.imgBookmark,
+                                height: 27.adaptSize,
+                                width: 19.adaptSize,
+                              ),
+                              onTap: () {
+                                onTapImgBookmark(context);
+                              },
+                            ))),
+                    SizedBox(height: 16.v),
+                    Card(
+                        margin: EdgeInsets.only(left: 18, right: 22),
+                        elevation: 5.0,
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              50.0), // Set the border radius
+                        ),
+                        child: SizedBox(
                           height: 48,
                           child: ListTile(
                             title: Text(
-                              'Saved',
+                              'Notifications',
                               style: TextStyle(
                                 color: const Color.fromARGB(255, 6, 51, 89),
                                 fontSize: 23,
                               ),
                             ),
                             leading: CustomImageView(
-                              imagePath: ImageConstant.imgBookmark,
-                              height: 27.adaptSize,
-                              width: 19.adaptSize,
+                              imagePath: ImageConstant.imgNotificationiconpng91,
+                              height: 32.adaptSize,
+                              width: 27.adaptSize,
+                            ),
+                            onTap: () {},
+                          ),
+                        )),
+                    SizedBox(height: 16.v),
+                    Card(
+                        margin: EdgeInsets.only(left: 18, right: 22),
+                        elevation: 5.0,
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              50.0), // Set the border radius
+                        ),
+                        child: SizedBox(
+                          height: 48,
+                          child: ListTile(
+                            title: Text(
+                              'Settings',
+                              style: TextStyle(
+                                color: const Color.fromARGB(255, 6, 51, 89),
+                                fontSize: 23,
+                              ),
+                            ),
+                            leading: CustomImageView(
+                              imagePath: ImageConstant.imgSolarSettingsLinear,
+                              height: 28.adaptSize,
+                              width: 28.adaptSize,
                             ),
                             onTap: () {
-                              onTapImgBookmark(context);
+                              // Handle Settings onTap
                             },
-                          ))),
-                  SizedBox(height: 16.v),
-                  Card(
-                      margin: EdgeInsets.only(left: 18, right: 22),
-                      elevation: 5.0,
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            50.0), // Set the border radius
-                      ),
-                      child: SizedBox(
-                        height: 48,
-                        child: ListTile(
-                          title: Text(
-                            'Notifications',
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 6, 51, 89),
-                              fontSize: 23,
-                            ),
                           ),
-                          leading: CustomImageView(
-                            imagePath: ImageConstant.imgNotificationiconpng91,
-                            height: 32.adaptSize,
-                            width: 27.adaptSize,
-                          ),
-                          onTap: () {},
+                        )),
+                    SizedBox(height: 16.v),
+                    Card(
+                        margin: EdgeInsets.only(left: 18, right: 22),
+                        elevation: 5.0,
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              50.0), // Set the border radius
                         ),
-                      )),
-                  SizedBox(height: 16.v),
-                  Card(
-                      margin: EdgeInsets.only(left: 18, right: 22),
-                      elevation: 5.0,
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            50.0), // Set the border radius
-                      ),
-                      child: SizedBox(
-                        height: 48,
-                        child: ListTile(
-                          title: Text(
-                            'Settings',
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 6, 51, 89),
-                              fontSize: 23,
+                        child: SizedBox(
+                          height: 48,
+                          child: ListTile(
+                            title: Text(
+                              'About Us',
+                              style: TextStyle(
+                                color: const Color.fromARGB(255, 6, 51, 89),
+                                fontSize: 23,
+                              ),
                             ),
-                          ),
-                          leading: CustomImageView(
-                            imagePath: ImageConstant.imgSolarSettingsLinear,
-                            height: 28.adaptSize,
-                            width: 28.adaptSize,
-                          ),
-                          onTap: () {
-                            // Handle Settings onTap
-                          },
-                        ),
-                      )),
-                  SizedBox(height: 16.v),
-                  Card(
-                      margin: EdgeInsets.only(left: 18, right: 22),
-                      elevation: 5.0,
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            50.0), // Set the border radius
-                      ),
-                      child: SizedBox(
-                        height: 48,
-                        child: ListTile(
-                          title: Text(
-                            'About Us',
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 6, 51, 89),
-                              fontSize: 23,
+                            leading: CustomImageView(
+                              imagePath: ImageConstant.aboutUs,
+                              height: 27.adaptSize,
+                              width: 27.adaptSize,
                             ),
+                            onTap: () {
+                              // Handle About Us onTap
+                            },
                           ),
-                          leading: CustomImageView(
-                            imagePath: ImageConstant.aboutUs,
-                            height: 27.adaptSize,
-                            width: 27.adaptSize,
-                          ),
-                          onTap: () {
-                            // Handle About Us onTap
-                          },
+                        )),
+                    SizedBox(height: 16.v),
+                    Spacer(),
+                    Divider(),
+                    SizedBox(height: 190.v),
+                    Card(
+                        margin: EdgeInsets.only(left: 18, right: 70),
+                        elevation: 5.0,
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              50.0), // Set the border radius
                         ),
-                      )),
-                  SizedBox(height: 16.v),
-                  Spacer(),
-                  Divider(),
-                  SizedBox(height: 190.v),
-                  Card(
+                        child: SizedBox(
+                          height: 50,
+                          child: ListTile(
+                            title: Text(
+                              'Dark mode',
+                              style: TextStyle(
+                                color: const Color.fromARGB(255, 6, 51, 89),
+                                fontSize: 23,
+                              ),
+                            ),
+                            leading: CustomImageView(
+                              imagePath: ImageConstant.nightmode,
+                              height: 40.adaptSize,
+                              width: 40.adaptSize,
+                            ),
+                            onTap: () {
+                              darkMode();
+                            },
+                          ),
+                        )),
+                    SizedBox(height: 16.v),
+                    Card(
                       margin: EdgeInsets.only(left: 18, right: 70),
                       elevation: 5.0,
                       color: Color.fromRGBO(255, 255, 255, 1),
@@ -217,60 +253,38 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                         height: 50,
                         child: ListTile(
                           title: Text(
-                            'Dark mode',
+                            'Sign Out',
                             style: TextStyle(
                               color: const Color.fromARGB(255, 6, 51, 89),
                               fontSize: 23,
                             ),
                           ),
                           leading: CustomImageView(
-                            imagePath: ImageConstant.nightmode,
-                            height: 40.adaptSize,
-                            width: 40.adaptSize,
+                            imagePath: ImageConstant.imgUilsignoutalt,
+                            height: 33.adaptSize,
+                            width: 33.adaptSize,
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            onTapSignOut(context);
+                          },
                         ),
-                      )),
-                  SizedBox(height: 16.v),
-                  Card(
-                    margin: EdgeInsets.only(left: 18, right: 70),
-                    elevation: 5.0,
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(50.0), // Set the border radius
-                    ),
-                    child: SizedBox(
-                      height: 50,
-                      child: ListTile(
-                        title: Text(
-                          'Sign Out',
-                          style: TextStyle(
-                            color: const Color.fromARGB(255, 6, 51, 89),
-                            fontSize: 23,
-                          ),
-                        ),
-                        leading: CustomImageView(
-                          imagePath: ImageConstant.imgUilsignoutalt,
-                          height: 33.adaptSize,
-                          width: 33.adaptSize,
-                        ),
-                        onTap: () {
-                          onTapSignOut(context);
-                        },
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
+          )
         ],
       ),
     );
   }
 
-  // Other methods (_buildSixtyThree, _buildFourteen, etc.) remain unchanged
+  void darkMode() {
+    setState(() {
+      isDark = !isDark;
+    });
+  }
 }
 
 Widget _buildFourteen(BuildContext context) {

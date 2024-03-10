@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
+import '../../../controller/savedItems_controller.dart';
+import '../../../model/product_model.dart';
 
-// ignore: must_be_immutable
 class ProductcardItemWidget extends StatelessWidget {
-  const ProductcardItemWidget({Key? key})
-      : super(
-          key: key,
-        );
+  final Product product; // Change the parameter type to Product
+  final SavedItemsController savedItemsController;
+
+  const ProductcardItemWidget(
+      {Key? key, required this.product, required this.savedItemsController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +22,11 @@ class ProductcardItemWidget extends StatelessWidget {
           Row(
             children: [
               CustomImageView(
-                imagePath: ImageConstant.img164691852916392,
+                imagePath: product.imageUrl, // Use laptop image URL
                 height: 128.v,
                 width: 104.h,
                 radius: BorderRadius.circular(
-                  20.h,
+                  30.h,
                 ),
               ),
               Padding(
@@ -38,10 +41,10 @@ class ProductcardItemWidget extends StatelessWidget {
                     SizedBox(
                       width: 115.h,
                       child: Text(
-                        "lenovo gxz45\nSource: Amazon",
+                        "Brand :${product.brand} \nSource: ${product.sources}Name:${product.name}\n",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodyMedium,
+                        style: theme.textTheme.titleLarge,
                       ),
                     ),
                     SizedBox(height: 48.v),
@@ -51,13 +54,13 @@ class ProductcardItemWidget extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: "30700",
+                              //text: "${product.price},
                               style: theme.textTheme.titleSmall!.copyWith(
                                 decoration: TextDecoration.lineThrough,
                               ),
                             ),
                             TextSpan(
-                              text: " LE 35999",
+                              // text: " ${laptop.currentPrice}",
                               style: theme.textTheme.titleSmall,
                             ),
                           ],
@@ -75,8 +78,8 @@ class ProductcardItemWidget extends StatelessWidget {
             right: 10,
             child: GestureDetector(
               onTap: () {
-                // Handle the tap on the trash icon here
-                print('Trash icon tapped!');
+                _deleteProduct(
+                    context); // Handle the tap on the trash icon here
               },
               child: CustomImageView(
                 imagePath: ImageConstant.imgOcticonTrash16,
@@ -88,5 +91,21 @@ class ProductcardItemWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+  // Method to delete a product from Firebase and savedItems list
+//   Future<void> deleteProduct(Product product) async {
+//     try {
+//       // Delete the product from Firebase
+//       await _db.collection('Products').doc(product.id).delete();
+
+//       // Remove the product from the savedItems list
+//       savedItems.removeWhere((p) => p.id == product.id);
+//     } catch (error) {
+//       print("Error deleting product: $error");
+//       // Handle error
+//     }
+//   }
+  void _deleteProduct(BuildContext context) {
+    savedItemsController.deleteProduct(product);
   }
 }
