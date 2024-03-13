@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
-import 'package:qarenly/common/widgets/custom_text_form_field.dart';
 
-// ignore_for_file: must_be_immutable
-class LoginPageScreen extends StatelessWidget {
+class LoginPageScreen extends StatefulWidget {
+  @override
   LoginPageScreen({Key? key}) : super(key: key);
 
-  TextEditingController userNameController = TextEditingController();
+  @override
+  _LoginPageScreenState createState() => _LoginPageScreenState();
+}
 
+// ignore_for_file: must_be_immutable
+class _LoginPageScreenState extends State<LoginPageScreen> {
+  TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -17,12 +21,13 @@ class LoginPageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            extendBody: true,
+            // extendBody: true,
             extendBodyBehindAppBar: true,
             resizeToAvoidBottomInset: false,
             body: Container(
                 width: SizeUtils.width,
                 height: SizeUtils.height,
+                // decoration of the color ballet
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment(0.5, 0),
@@ -33,8 +38,8 @@ class LoginPageScreen extends StatelessWidget {
                       theme.colorScheme.primary.withOpacity(0.93)
                     ])),
                 child: SingleChildScrollView(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    // padding: EdgeInsets.only(
+                    //     bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Form(
                         key: _formKey,
                         child: Container(
@@ -118,49 +123,85 @@ class LoginPageScreen extends StatelessWidget {
         color: Colors.white,
       ),
       child: TextFormField(
-          controller: userNameController,
-          textInputAction: TextInputAction.done,
-          // textInputType: TextInputType.visiblePassword,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
-            prefixIcon:
-                Icon(Icons.person, color: Colors.orange.withOpacity(0.7)),
-            hintText: "Username",
-          ),
-          obscureText: true),
+        controller: userNameController,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: "Username",
+          contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
+          prefixIcon: Icon(Icons.person, color: Colors.orange.withOpacity(0.8)),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter your username';
+          }
+          return null;
+        },
+      ),
     );
   }
 
   /// Section Widget
   Widget _buildPassword(BuildContext context) {
     return Container(
-      // margin: EdgeInsets.symmetric(vertical: 10.0), // Adjust vertical margin
-      height: 39,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50.0),
-        color: Colors.white,
-      ),
-      child: TextFormField(
+        // margin: EdgeInsets.symmetric(vertical: 10.0), // Adjust vertical margin
+        height: 39,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50.0),
+          color: Colors.white,
+        ),
+        child: TextFormField(
           controller: passwordController,
           textInputAction: TextInputAction.done,
-          // textInputType: TextInputType.visiblePassword,
+          keyboardType: TextInputType.visiblePassword,
+          obscureText: true,
           decoration: InputDecoration(
+            hintText: "Password",
             contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
             prefixIcon: Icon(Icons.lock, color: Colors.orange.withOpacity(0.7)),
-            hintText: "Password",
+            suffixIcon: GestureDetector(
+              onTap: _togglePasswordVisibility,
+              child: Icon(Icons.remove_red_eye_outlined,
+                  color: Colors.orange.withOpacity(0.8)),
+            ),
           ),
-          obscureText: true),
-    );
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your password';
+            }
+            return null;
+          },
+        ));
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      // _obscureText = !_obscureText;
+    });
   }
 
   /// Section Widget
   Widget _buildLoginButton(BuildContext context) {
     return CustomElevatedButton(
-        text: "Login",
-        buttonTextStyle: CustomTextStyles.titleLargeBold22,
-        onPressed: () {
-          onTapLoginButton(context);
-        });
+      text: "Login",
+      buttonTextStyle: CustomTextStyles.titleLargeBold22,
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          // Perform login functionality here
+          String username = userNameController.text;
+          String password = passwordController.text;
+          // Validate login credentials (e.g., authenticate with backend)
+          if (username == 'admin' && password == 'password') {
+            // If credentials are valid, navigate to home page
+            Navigator.pushNamed(context, AppRoutes.homepageScreen);
+          } else {
+            // If credentials are invalid, show an error message
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Invalid username or password'),
+            ));
+          }
+        }
+      },
+    );
   }
 
   /// Section Widget
@@ -183,11 +224,6 @@ class LoginPageScreen extends StatelessWidget {
             margin: EdgeInsets.only(right: 20.h),
             child:
                 Icon(Icons.facebook, color: Colors.blue[700]))); // Container(
-    // margin: EdgeInsets.only(right: 24.h),
-    // child: CustomImageView(
-    //     imagePath: ImageConstant.imgLogosfacebook,
-    //     height: 28.v,
-    //     width: 18.h)));
   }
 
   /// Section Widget

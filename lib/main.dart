@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           initialRoute:
               //AppRoutes.saveditemsScreen,
               // AppRoutes.searchOutputPage,
-              AppRoutes.viewproductPage,
+              AppRoutes.loginPageScreen,
           //AppRoutes.homepageScreen,
 
           ///AppRoutes.splashscreenScreen,
