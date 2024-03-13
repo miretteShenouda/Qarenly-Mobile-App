@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qarenly/model/product_model.dart';
 
 class Laptop extends Product {
@@ -41,26 +42,31 @@ class Laptop extends Product {
           dates: dates,
           // avg_prices: avg_prices
         );
+  factory Laptop.fromFirestore(Map<String, dynamic>? data) {
+    if (data == null) {
+      throw ArgumentError('Data is null');
+    }
 
-  factory Laptop.fromFirestore(Map<String, dynamic> data) {
     return Laptop(
-      sources: List<String>.from(data['sources']),
-      aboutItem: data['about_item'],
-      aboutTable: data['about_table'],
-      brand: data['brand'],
-      id: data['id'],
-      name: data['name'],
-      description: data['desc'],
-      techDescription: data['tech_desc'],
-      imageUrl: data['image_URL'],
-      benchmark: (data['benchmark']).toDouble(),
+      sources: List<String>.from(data['sources'] ?? []),
+      aboutItem: data['about_item'] ?? '',
+      aboutTable: data['about_table'] ?? '',
+      brand: data['brand'] ?? '',
+      id: data['id'] ?? '',
+      name: data['name'] ?? '',
+      description: data['desc'] ?? '',
+      techDescription: data['tech_desc'] ?? '',
+      imageUrl: data['image_URL'] ?? '',
+      benchmark: (data['benchmark'] as num?)?.toDouble() ?? 0.0,
       // lowest_prices: List<double>.from(data['lowest_prices'].map((price) => price.toDouble())),
-      dates: List<DateTime>.from(
-          data['dates'].map((timestamp) => timestamp.toDate())),
-      cpu: data['CPU'],
-      gpu: data['GPU'],
-      storage: data['storage'],
-      model: data['model'],
+      dates: (data['dates'] as List<dynamic>?)
+              ?.map((timestamp) => (timestamp as Timestamp).toDate())
+              .toList() ??
+          [],
+      cpu: data['CPU'] ?? '',
+      gpu: data['GPU'] ?? '',
+      storage: data['storage'] ?? '',
+      model: data['model'] ?? '',
     );
   }
 }
