@@ -10,9 +10,9 @@ class Product {
   String aboutTable;
   String aboutItem;
   String imageUrl;
-  Float benchmark;
+  double benchmark;
   List<String> sources;
-  List<Float> lowest_prices;
+  //List<double> lowest_prices;
   late List<DateTime> dates;
   Product({
     required this.brand,
@@ -25,8 +25,8 @@ class Product {
     required this.imageUrl,
     required this.benchmark,
     required this.sources,
-    required this.lowest_prices,
+    // required this.lowest_prices,
     required this.dates,
-    required avg_prices,
+    // required avg_prices,
   });
 }
