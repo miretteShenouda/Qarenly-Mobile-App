@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/common/widgets/custom_elevated_button.dart';
+import 'package:qarenly/presentation/login_page_screen/login_form.dart';
+import 'package:qarenly/presentation/login_page_screen/login_footer.dart';
 
 class LoginPageScreen extends StatefulWidget {
   @override
@@ -21,13 +22,12 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            // extendBody: true,
             extendBodyBehindAppBar: true,
             resizeToAvoidBottomInset: false,
             body: Container(
                 width: SizeUtils.width,
                 height: SizeUtils.height,
-                // decoration of the color ballet
+                // decoration of the color ballet "background"
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment(0.5, 0),
@@ -38,218 +38,29 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
                       theme.colorScheme.primary.withOpacity(0.93)
                     ])),
                 child: SingleChildScrollView(
-                    // padding: EdgeInsets.only(
-                    //     bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: Form(
-                        key: _formKey,
-                        child: Container(
-                            width: double.maxFinite,
-                            padding: EdgeInsets.only(
-                                left: 19.h, top: 98.v, right: 19.h),
-                            child: Column(children: [
-                              Container(
-                                  decoration: AppDecoration.outlineBlack,
-                                  child: Text("Qarenly",
-                                      style: theme.textTheme.displayLarge)),
-                              SizedBox(height: 68.v),
-                              _buildUserName(context),
-                              SizedBox(height: 13.v),
-                              _buildPassword(context),
-                              SizedBox(height: 20.v),
-                              _buildLoginButton(context),
-                              SizedBox(height: 10.v),
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                      padding: EdgeInsets.only(left: 4.h),
-                                      child: Text("forgot your password?",
-                                          style: CustomTextStyles.bodyMedium14
-                                              .copyWith(
-                                                  color: Colors.white,
-                                                  decoration: TextDecoration
-                                                      .underline)))),
-                              SizedBox(height: 23.v),
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                      padding: EdgeInsets.only(left: 110.h),
-                                      child: Text("or continue with",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                          )))),
-                              SizedBox(height: 7.v),
-                              _buildGoogleButton(context),
-                              SizedBox(height: 8.v),
-                              _buildFacebookButton(context),
-                              SizedBox(height: 20.v),
-                              _buildGuestButton(context),
-                              SizedBox(height: 21.v),
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        onTapTxtDonthaveanaccount(context);
-                                      },
-                                      child: Padding(
-                                          padding: EdgeInsets.only(left: 55.h),
-                                          child: RichText(
-                                              text: TextSpan(children: [
-                                                TextSpan(
-                                                    text:
-                                                        "don’t have an account?   ",
-                                                    style: theme
-                                                        .textTheme.titleMedium),
-                                                TextSpan(
-                                                    text: "sign up",
-                                                    style: theme
-                                                        .textTheme.titleMedium!
-                                                        .copyWith(
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .underline))
-                                              ]),
-                                              textAlign: TextAlign.left)))),
-                              SizedBox(height: 5.v)
-                            ])))))));
-  }
+                    child: Container(
+                        width: double.maxFinite,
+                        padding:
+                            EdgeInsets.only(left: 19.h, top: 98.v, right: 19.h),
+                        child: Column(children: [
+                          // The page Header section
+                          Container(
+                              decoration: AppDecoration.outlineBlack,
+                              child: Text("Qarenly",
+                                  style: theme.textTheme.displayLarge)),
+                          // End of the section
 
-  /// Section Widget
-  Widget _buildUserName(BuildContext context) {
-    return Container(
-      height: 39,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50.0),
-        color: Colors.white,
-      ),
-      child: TextFormField(
-        controller: userNameController,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          hintText: "Username",
-          contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
-          prefixIcon: Icon(Icons.person, color: Colors.orange.withOpacity(0.8)),
-        ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter your username';
-          }
-          return null;
-        },
-      ),
-    );
-  }
+                          SizedBox(height: 68.v),
 
-  /// Section Widget
-  Widget _buildPassword(BuildContext context) {
-    return Container(
-        // margin: EdgeInsets.symmetric(vertical: 10.0), // Adjust vertical margin
-        height: 39,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50.0),
-          color: Colors.white,
-        ),
-        child: TextFormField(
-          controller: passwordController,
-          textInputAction: TextInputAction.done,
-          keyboardType: TextInputType.visiblePassword,
-          obscureText: true,
-          decoration: InputDecoration(
-            hintText: "Password",
-            contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
-            prefixIcon: Icon(Icons.lock, color: Colors.orange.withOpacity(0.7)),
-            suffixIcon: GestureDetector(
-              onTap: _togglePasswordVisibility,
-              child: Icon(Icons.remove_red_eye_outlined,
-                  color: Colors.orange.withOpacity(0.8)),
-            ),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter your password';
-            }
-            return null;
-          },
-        ));
-  }
+                          //LoginForm section
+                          LoginForm(
+                              userNameController: userNameController,
+                              passwordController: passwordController),
+                          SizedBox(height: 23.v),
 
-  void _togglePasswordVisibility() {
-    setState(() {
-      // _obscureText = !_obscureText;
-    });
-  }
-
-  /// Section Widget
-  Widget _buildLoginButton(BuildContext context) {
-    return CustomElevatedButton(
-      text: "Login",
-      buttonTextStyle: CustomTextStyles.titleLargeBold22,
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          // Perform login functionality here
-          String username = userNameController.text;
-          String password = passwordController.text;
-          // Validate login credentials (e.g., authenticate with backend)
-          if (username == 'admin' && password == 'password') {
-            // If credentials are valid, navigate to home page
-            Navigator.pushNamed(context, AppRoutes.homepageScreen);
-          } else {
-            // If credentials are invalid, show an error message
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('Invalid username or password'),
-            ));
-          }
-        }
-      },
-    );
-  }
-
-  /// Section Widget
-  Widget _buildGoogleButton(BuildContext context) {
-    return CustomElevatedButton(
-        text: "Google",
-        leftIcon: Container(
-            margin: EdgeInsets.only(right: 20.h),
-            child: CustomImageView(
-                imagePath: ImageConstant.imgFlatcoloriconsgoogle,
-                height: 31.v,
-                width: 20.h)));
-  }
-
-  /// Section Widget
-  Widget _buildFacebookButton(BuildContext context) {
-    return CustomElevatedButton(
-        text: "Facebook",
-        leftIcon: Container(
-            margin: EdgeInsets.only(right: 20.h),
-            child:
-                Icon(Icons.facebook, color: Colors.blue[700]))); // Container(
-  }
-
-  /// Section Widget
-  Widget _buildGuestButton(BuildContext context) {
-    return CustomElevatedButton(
-        height: 40.v,
-        text: "Enter as a guest",
-        margin: EdgeInsets.only(left: 23.h, right: 24.h),
-        buttonStyle: CustomButtonStyles.fillPrimaryTL20,
-        onPressed: () {
-          onTapGuestButton(context);
-        });
-  }
-
-  /// Navigates to the homepageScreen when the action is triggered.
-  onTapLoginButton(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.homepageScreen);
-  }
-
-  /// Navigates to the homepageScreen when the action is triggered.
-  onTapGuestButton(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.homepageScreen);
-  }
-
-  /// Navigates to the signUpPageScreen when the action is triggered.
-  onTapTxtDonthaveanaccount(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.signUpPageScreen);
+                          //LoginFooter section
+                          LoginFooterWidget(),
+                          SizedBox(height: 5.v)
+                        ]))))));
   }
 }

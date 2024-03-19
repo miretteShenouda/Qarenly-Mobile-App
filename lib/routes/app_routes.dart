@@ -9,6 +9,7 @@ import 'package:qarenly/presentation/side_menu_screen/side_menu_screen.dart';
 import 'package:qarenly/presentation/sign_up_page_screen/sign_up_page_screen.dart';
 import 'package:qarenly/presentation/splashscreen_screen/splashscreen_screen.dart';
 import 'package:qarenly/presentation/viewproduct_page/viewproduct_page.dart';
+// import 'package:qarenly/presentation/forget_password_screen/forget_password_mail/mail_screen.dart';
 
 class AppRoutes {
   static const String saveditemsScreen = '/saveditems_screen';
