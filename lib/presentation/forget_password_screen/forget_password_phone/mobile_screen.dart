@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
+import 'package:get/get.dart';
+import 'package:qarenly/presentation/forget_password_screen/forget_password_OTP/OTP_screen.dart';
 
 class MobileScreen extends StatelessWidget {
   const MobileScreen({Key? key}) : super(key: key);
@@ -30,7 +32,7 @@ class MobileScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Text("Please enter your phone number to reset your password",
+              Text("Please enter your number to reset your password",
                   style: TextStyle(
                     color: Colors.orange[200],
                   )
@@ -58,7 +60,7 @@ class MobileScreen extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                             onPressed: () {
-                              //Get.to();
+                              Get.to(() => const OTPScreen());
                             },
                             child: const Text("Reset your password"))),
                   ],
