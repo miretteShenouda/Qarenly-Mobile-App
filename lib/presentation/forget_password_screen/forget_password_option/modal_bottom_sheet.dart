@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/presentation/forget_password_screen/forget_password_option/password_button.dart';
-import 'package:qarenly/presentation/forget_password_screen/forget_passwrod_mail/mail_screen.dart';
+import 'package:qarenly/presentation/forget_password_screen/forget_password_mail/mail_screen.dart';
+import 'package:qarenly/presentation/forget_password_screen/forget_password_phone/mobile_screen.dart';
+import 'package:get/get.dart';
 
 class ForgetPasswordScreen {
   static Future<dynamic> showModalSheet(BuildContext context) {
@@ -20,7 +22,8 @@ class ForgetPasswordScreen {
             title: "Email",
             subTitle: "Reset via E-mail",
             ontap: () {
-              //Navigator.pushNamed(context, AppRoutes.MailScreen());
+              Navigator.pop(context);
+              Get.to(() => const MailScreen());
             },
           ),
           SizedBox(height: 20),
@@ -28,7 +31,10 @@ class ForgetPasswordScreen {
             buttonIcon: Icons.mobile_screen_share,
             title: "Mobile",
             subTitle: "Reset via your mobile phone number",
-            ontap: () {},
+            ontap: () {
+              Navigator.pop(context);
+              Get.to(() => const MobileScreen());
+            },
           ),
         ]),
       ),

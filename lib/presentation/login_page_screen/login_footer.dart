@@ -9,14 +9,14 @@ class LoginFooterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return Column(children: [
       Align(
           alignment: Alignment.centerLeft,
           child: Padding(
               padding: EdgeInsets.only(left: 110.h),
               child: Text("or continue with",
                   style: TextStyle(
+                    fontWeight: FontWeight.w600,
                     color: Colors.white,
                     fontSize: 15,
                   )))),
