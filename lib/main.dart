@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
           theme: theme,
           title: 'qarenly',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.loginPageScreen,
+          // initialRoute: AppRoutes.saveditemsScreen,
+          initialRoute: AppRoutes.appNavigationScreen,
+
           routes: AppRoutes.routes,
         );
       },

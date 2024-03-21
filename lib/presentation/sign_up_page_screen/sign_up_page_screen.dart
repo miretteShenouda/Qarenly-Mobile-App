@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_leading_iconbutton.dart';
-import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
+// import 'package:qarenly/common/widgets/app_bar/appbar_leading_iconbutton.dart';
+// import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 
 // ignore_for_file: must_be_immutable
@@ -25,7 +25,6 @@ class SignUpPageScreen extends StatelessWidget {
             extendBody: true,
             extendBodyBehindAppBar: true,
             resizeToAvoidBottomInset: false,
-            appBar: _buildAppBar(context),
             body: Container(
                 width: SizeUtils.width,
                 height: SizeUtils.height,
@@ -108,17 +107,17 @@ class SignUpPageScreen extends StatelessWidget {
                             ])))))));
   }
 
-  /// Section Widget
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return CustomAppBar(
-        leadingWidth: double.maxFinite,
-        leading: AppbarLeadingIconbutton(
-            imagePath: ImageConstant.imgArrowLeft,
-            margin: EdgeInsets.fromLTRB(20.h, 5.v, 317.h, 5.v),
-            onTap: () {
-              onTapArrowLeft(context);
-            }));
-  }
+  // /// Section Widget
+  // PreferredSizeWidget _buildAppBar(BuildContext context) {
+  //   return CustomAppBar(
+  //       leadingWidth: double.maxFinite,
+  //       leading: AppbarLeadingIconbutton(
+  //           imagePath: ImageConstant.imgArrowLeft,
+  //           margin: EdgeInsets.fromLTRB(20.h, 5.v, 317.h, 5.v),
+  //           onTap: () {
+  //             onTapArrowLeft(context);
+  //           }));
+  // }
 
   /// Section Widget
   Widget _buildUserName(BuildContext context) {

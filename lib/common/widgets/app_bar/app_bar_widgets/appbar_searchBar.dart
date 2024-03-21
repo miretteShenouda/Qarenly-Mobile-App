@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class AppbarTitleSearchview extends StatelessWidget {
-  AppbarTitleSearchview({
+class AppbarSearchBar extends StatelessWidget {
+  AppbarSearchBar({
     Key? key,
     this.hintText,
     this.controller,
@@ -44,13 +44,5 @@ class AppbarTitleSearchview extends StatelessWidget {
         )),
       ),
     );
-    //  Padding(
-    //   padding: margin ?? EdgeInsets.zero,
-    //   child: CustomSearchView(
-    //     width: 240.h,
-    //     controller: controller,
-    //     hintText: "Search..",
-    //   ),
-    // );
   }
 }

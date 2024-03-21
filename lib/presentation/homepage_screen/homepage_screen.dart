@@ -1,15 +1,24 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_leading_image.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_title_searchview.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_trailing_image.dart';
-import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
-import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/presentation/homepage_screen/widgets/userprofile_item_widget.dart';
+import 'package:get/get.dart';
+
+//import 'package:qarenly/presentation/homepage_screen/widgets/userprofile_item_widget.dart';
+
+import '../../common/theme/app_decoration.dart';
+import '../../common/widgets/ProductcardItemWidgetHome.dart';
+// import '../../common/widgets/app_bar/appbar_leading_image.dart';
+// import '../../common/widgets/app_bar/appbar_title_searchview.dart';
+// import '../../common/widgets/app_bar/appbar_trailing_image.dart';
+// import '../../common/widgets/app_bar/custom_app_bar.dart';
+import '../../common/widgets/app_bar/app_bar.dart';
+import '../../common/widgets/custom_image_view.dart';
+import '../../controller/homePage_controller.dart';
+import '../../core/utils/image_constant.dart';
+import '../../routes/app_routes.dart';
 
 class HomepageScreen extends StatefulWidget {
-  const HomepageScreen({Key? key}) : super(key: key);
+  HomepageScreen({Key? key}) : super(key: key);
 
   @override
   _HomepageScreenState createState() => _HomepageScreenState();
@@ -20,6 +29,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
   late ScrollController _scrollController;
   late Timer _timer;
   int _currentIndex = 0;
+  final controller = Get.put(HomePageController());
 
   void _scrollNext() {
     setState(() {
@@ -35,7 +45,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
     } else {
       _scrollController.animateTo(
         pixels + MediaQuery.of(context).size.width,
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
     }
@@ -46,7 +56,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
     super.initState();
     searchController = TextEditingController();
     _scrollController = ScrollController();
-    _timer = Timer.periodic(Duration(seconds: 3), (_) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (_) {
       _scrollNext();
     });
   }
@@ -63,22 +73,23 @@ class _HomepageScreenState extends State<HomepageScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: _buildAppBar(context),
+        appBar: BuildAppBar(searchController: searchController),
         body: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Section 1: Horizontal Scrolling
-                SizedBox(height: 5.0),
+                const SizedBox(height: 5.0),
                 _buildHorizontalScrollingSection(),
                 // Section 2: Recent Deals
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 _buildRecentDealsSection(context),
                 // Section 3: Mostly Viewed
-                SizedBox(height: 34.0),
+                const SizedBox(height: 34.0),
                 _buildMostlyViewedSection(),
               ],
             ),
@@ -88,38 +99,38 @@ class _HomepageScreenState extends State<HomepageScreen> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return CustomAppBar(
-      leadingWidth: 69.0,
-      leading: Row(
-        children: [
-          AppbarLeadingImage(
-            imagePath: ImageConstant.imgEiUser,
-            margin: EdgeInsets.only(left: 16.0, top: 7.0, bottom: 1.0),
-          ),
-        ],
-      ),
-      centerTitle: false,
-      title: Container(
-        margin: EdgeInsets.only(left: 5.0, top: 10.0, bottom: 1.0),
-        child: Expanded(
-          child: AppbarTitleSearchview(
-            hintText: "search",
-            controller: searchController,
-          ),
-        ),
-      ),
-      actions: [
-        AppbarTrailingImage(
-          imagePath: ImageConstant.imgBasilMenuOutline,
-          margin: EdgeInsets.fromLTRB(6.0, 8.0, 15.0, 1.0),
-          onTap: () {
-            onTapBasilMenuOutline(context);
-          },
-        ),
-      ],
-    );
-  }
+  // PreferredSizeWidget _buildAppBar(BuildContext context) {
+  //   return CustomAppBar(
+  //     leadingWidth: 69.0,
+  //     leading: Row(
+  //       children: [
+  //         AppbarLeadingImage(
+  //           imagePath: ImageConstant.imgEiUser,
+  //           margin: const EdgeInsets.only(left: 16.0, top: 7.0, bottom: 1.0),
+  //         ),
+  //       ],
+  //     ),
+  //     centerTitle: false,
+  //     title: Container(
+  //       margin: const EdgeInsets.only(left: 5.0, top: 10.0, bottom: 1.0),
+  //       child: Expanded(
+  //         child: AppbarTitleSearchview(
+  //           hintText: "search",
+  //           controller: searchController,
+  //         ),
+  //       ),
+  //     ),
+  //     actions: [
+  //       AppbarTrailingImage(
+  //         imagePath: ImageConstant.imgBasilMenuOutline,
+  //         margin: const EdgeInsets.fromLTRB(6.0, 8.0, 15.0, 1.0),
+  //         onTap: () {
+  //           onTapBasilMenuOutline(context);
+  //         },
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildHorizontalScrollingSection() {
     _scrollController = ScrollController();
@@ -132,14 +143,14 @@ class _HomepageScreenState extends State<HomepageScreen> {
         itemCount: 3,
         itemBuilder: (context, index) {
           return AnimatedOpacity(
-            duration: Duration(seconds: 1),
+            duration: const Duration(seconds: 1),
             opacity: index == _currentIndex ? 1.0 : 0.0,
             child: Container(
               decoration: AppDecoration.fillPrimary,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 2.0),
+                  const SizedBox(height: 2.0),
                   CustomImageView(
                     imagePath: ImageConstant.imgSmartGadgetV3,
                     height: 196.0,
@@ -197,17 +208,20 @@ class _HomepageScreenState extends State<HomepageScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Recent Deals',
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         ListView.separated(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          separatorBuilder: (context, index) => SizedBox(height: 21.0),
-          itemCount: 2,
-          itemBuilder: (context, index) => UserprofileItemWidget(),
+          separatorBuilder: (context, index) => const SizedBox(height: 21.0),
+          itemCount: controller.savedItems.length,
+          itemBuilder: (context, index) => ProductcardItemWidgetHome(
+            product: controller.savedItems[index],
+            homePageController: controller,
+          ),
         ),
       ],
     );
@@ -217,23 +231,26 @@ class _HomepageScreenState extends State<HomepageScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Mostly Viewed',
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         ListView.separated(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          separatorBuilder: (context, index) => SizedBox(height: 21.0),
-          itemCount: 5,
-          itemBuilder: (context, index) => UserprofileItemWidget(),
+          separatorBuilder: (context, index) => const SizedBox(height: 21.0),
+          itemCount: controller.savedItems.length,
+          itemBuilder: (context, index) => ProductcardItemWidgetHome(
+            product: controller.savedItems[index],
+            homePageController: controller,
+          ),
         ),
       ],
     );
   }
 
-  onTapBasilMenuOutline(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.sideMenuScreen);
-  }
+  // onTapBasilMenuOutline(BuildContext context) {
+  //   Navigator.pushNamed(context, AppRoutes.sideMenuScreen);
+  // }
 }

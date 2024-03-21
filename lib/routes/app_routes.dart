@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qarenly/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:qarenly/presentation/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/presentation/login_page_screen/login_page_screen.dart';
 import 'package:qarenly/presentation/saveditems_screen/saveditems_screen.dart';
@@ -44,6 +43,5 @@ class AppRoutes {
     searchOutputPage: (context) => SearchOutputPage(),
     sideMenuScreen: (context) => SideMenuScreen(),
     viewproductPage: (context) => ViewproductPage(),
-    appNavigationScreen: (context) => AppNavigationScreen()
   };
 }

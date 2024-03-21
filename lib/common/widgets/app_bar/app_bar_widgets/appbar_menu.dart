@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
 
 // ignore: must_be_immutable
-class AppbarTrailingImage extends StatelessWidget {
-  AppbarTrailingImage({
+class AppbarMenu extends StatelessWidget {
+  AppbarMenu({
     Key? key,
     this.imagePath,
     this.margin,
@@ -28,8 +28,8 @@ class AppbarTrailingImage extends StatelessWidget {
         padding: margin ?? EdgeInsets.zero,
         child: CustomImageView(
           imagePath: imagePath,
-          height: 53.v,
-          width: 48.h,
+          height: 53.adaptSize,
+          width: 53.adaptSize,
           fit: BoxFit.contain,
         ),
       ),

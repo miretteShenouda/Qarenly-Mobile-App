@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/controller/savedItems_controller.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_leading_image.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_title_searchview.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_trailing_image.dart';
-import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
-import 'widgets/productcard_item_widget.dart';
+import '../../common/widgets/app_bar/app_bar.dart';
+import '../../common/widgets/productcard_item_widget.dart';
 import 'package:get/get.dart';
 
 class SaveditemsScreen extends StatefulWidget {
@@ -24,7 +21,7 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: _buildAppBar(context),
+        appBar: BuildAppBar(searchController: searchController),
         body: Obx(() {
           if (controller.isLoading.value) {
             return Center(child: CircularProgressIndicator());
@@ -96,40 +93,40 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return CustomAppBar(
-      leadingWidth: 69.h,
-      leading: Row(
-        children: [
-          AppbarLeadingImage(
-            imagePath: ImageConstant.imgEiUser,
-            margin: EdgeInsets.only(left: 16.h, top: 7.v, bottom: 1.v),
-          ),
-        ],
-      ),
-      centerTitle: false,
-      title: Container(
-        margin: EdgeInsets.only(left: 5.h, top: 10.v, bottom: 1.v),
-        child: Expanded(
-          child: AppbarTitleSearchview(
-            hintText: "search",
-            controller: searchController,
-          ),
-        ),
-      ),
-      actions: [
-        AppbarTrailingImage(
-          imagePath: ImageConstant.imgBasilMenuOutline,
-          margin: EdgeInsets.fromLTRB(6.h, 8.v, 15.h, 1.v),
-          onTap: () {
-            onTapBasilMenuOutline(context);
-          },
-        ),
-      ],
-    );
-  }
+  // PreferredSizeWidget _buildAppBar(BuildContext context) {
+  //   return CustomAppBar(
+  //     leadingWidth: 69.h,
+  //     leading: Row(
+  //       children: [
+  //         AppbarLeadingImage(
+  //           imagePath: ImageConstant.imgEiUser,
+  //           margin: EdgeInsets.only(left: 16.h, top: 7.v, bottom: 1.v),
+  //         ),
+  //       ],
+  //     ),
+  //     centerTitle: false,
+  //     title: Container(
+  //       margin: EdgeInsets.only(left: 5.h, top: 10.v, bottom: 1.v),
+  //       child: Expanded(
+  //         child: AppbarTitleSearchview(
+  //           hintText: "search",
+  //           controller: searchController,
+  //         ),
+  //       ),
+  //     ),
+  //     actions: [
+  //       AppbarTrailingImage(
+  //         imagePath: ImageConstant.imgBasilMenuOutline,
+  //         margin: EdgeInsets.fromLTRB(6.h, 8.v, 15.h, 1.v),
+  //         onTap: () {
+  //           onTapBasilMenuOutline(context);
+  //         },
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  void onTapBasilMenuOutline(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.sideMenuScreen);
-  }
+  // void onTapBasilMenuOutline(BuildContext context) {
+  //   Navigator.pushNamed(context, AppRoutes.sideMenuScreen);
+  // }
 }

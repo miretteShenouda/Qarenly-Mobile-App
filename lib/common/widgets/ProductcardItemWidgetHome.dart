@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:qarenly/core/app_export.dart';
-import '../../../controller/savedItems_controller.dart';
+
+import '../../../controller/homePage_controller.dart';
 import '../../../model/product_model.dart';
+import '../../core/app_export.dart';
 
-class ProductcardItemWidget extends StatelessWidget {
-  final Product product;
-  final SavedItemsController savedItemsController;
+class ProductcardItemWidgetHome extends StatelessWidget {
+  final Product product; // Change the parameter type to Product
+  final HomePageController homePageController;
 
-  const ProductcardItemWidget({
-    Key? key,
-    required this.product,
-    required this.savedItemsController,
-  }) : super(key: key);
+  const ProductcardItemWidgetHome(
+      {Key? key, required this.product, required this.homePageController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +18,15 @@ class ProductcardItemWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
-      color: Color.fromRGBO(0, 48, 73, 0.0001),
+      color: const Color.fromRGBO(0, 48, 73, 0.0001),
       child: ListTile(
-        contentPadding: EdgeInsets.all(16.0),
+        contentPadding: const EdgeInsets.all(16.0),
         leading: CustomImageView(
+          fit: BoxFit.fill,
+          margin: EdgeInsets.zero,
           imagePath: product.imageUrl,
-          height: 128.0,
-          width: 104.0,
+          //height: 128.0,
+          //width: 104.0,
           radius: BorderRadius.circular(30.0),
         ),
         title: Text(
@@ -64,13 +65,13 @@ class ProductcardItemWidget extends StatelessWidget {
         ),
         trailing: GestureDetector(
           onTap: () => _deleteProduct(context),
-          child: Icon(Icons.delete),
+          child: const Icon(Icons.delete),
         ),
       ),
     );
   }
 
   void _deleteProduct(BuildContext context) {
-    savedItemsController.deleteProduct(product);
+    homePageController.deleteProduct(product);
   }
 }

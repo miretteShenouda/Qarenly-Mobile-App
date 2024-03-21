@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+// import 'package:qarenly/common/widgets/app_bar/appbar_title_searchview.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/presentation/search_output_page/search_output_page.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_leading_image.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_title_searchview_one.dart';
-import 'package:qarenly/common/widgets/app_bar/appbar_trailing_image.dart';
-import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
+
+import '../../common/widgets/app_bar/app_bar.dart';
+// import 'package:qarenly/common/widgets/app_bar/appbar_leading_image.dart';
+// import 'package:qarenly/common/widgets/app_bar/appbar_trailing_image.dart';
+// import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
 
 class SearchOutputPageTabContainerScreen extends StatefulWidget {
   const SearchOutputPageTabContainerScreen({Key? key}) : super(key: key);
@@ -32,7 +34,7 @@ class SearchOutputPageTabContainerScreenState
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            appBar: _buildAppBar(context),
+            appBar: BuildAppBar(searchController: searchController),
             body: SizedBox(
                 width: double.maxFinite,
                 child: Column(children: [
@@ -50,25 +52,25 @@ class SearchOutputPageTabContainerScreenState
                 ]))));
   }
 
-  /// Section Widget
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return CustomAppBar(
-        leadingWidth: 67.h,
-        leading: AppbarLeadingImage(
-            imagePath: ImageConstant.imgEiUser,
-            margin: EdgeInsets.only(left: 14.h, top: 1.v, bottom: 1.v)),
-        centerTitle: true,
-        title: AppbarTitleSearchviewOne(
-            hintText: "dell inspiron", controller: searchController),
-        actions: [
-          AppbarTrailingImage(
-              imagePath: ImageConstant.imgBasilMenuOutline,
-              margin: EdgeInsets.fromLTRB(6.h, 3.v, 16.h, 4.v),
-              onTap: () {
-                onTapBasilMenuOutline(context);
-              })
-        ]);
-  }
+  // /// Section Widget
+  // PreferredSizeWidget _buildAppBar(BuildContext context) {
+  //   return CustomAppBar(
+  //       leadingWidth: 67.h,
+  //       leading: AppbarLeadingImage(
+  //           imagePath: ImageConstant.imgEiUser,
+  //           margin: EdgeInsets.only(left: 14.h, top: 1.v, bottom: 1.v)),
+  //       centerTitle: true,
+  //       title: AppbarTitleSearchview(
+  //           hintText: "search", controller: searchController),
+  //       actions: [
+  //         AppbarTrailingImage(
+  //             imagePath: ImageConstant.imgBasilMenuOutline,
+  //             margin: EdgeInsets.fromLTRB(6.h, 3.v, 16.h, 4.v),
+  //             onTap: () {
+  //               onTapBasilMenuOutline(context);
+  //             })
+  //       ]);
+  // }
 
   /// Section Widget
   Widget _buildTabview(BuildContext context) {

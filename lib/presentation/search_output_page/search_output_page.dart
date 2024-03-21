@@ -1,6 +1,9 @@
-import '../search_output_page/widgets/userprofilesection_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
+import 'package:get/get.dart';
+
+import '../../common/widgets/ProductcardItemWidgetHome.dart';
+import '../../controller/homePage_controller.dart';
 
 // ignore_for_file: must_be_immutable
 class SearchOutputPage extends StatefulWidget {
@@ -15,6 +18,8 @@ class SearchOutputPage extends StatefulWidget {
 
 class SearchOutputPageState extends State<SearchOutputPage>
     with AutomaticKeepAliveClientMixin<SearchOutputPage> {
+  final controller = Get.put(HomePageController());
+
   @override
   bool get wantKeepAlive => true;
   @override
@@ -52,7 +57,10 @@ class SearchOutputPageState extends State<SearchOutputPage>
         },
         itemCount: 4,
         itemBuilder: (context, index) {
-          return UserprofilesectionItemWidget();
+          return ProductcardItemWidgetHome(
+            product: controller.savedItems[index],
+            homePageController: controller,
+          );
         },
       ),
     );
