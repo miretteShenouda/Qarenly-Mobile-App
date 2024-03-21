@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qarenly/core/app_export.dart';
+import 'package:qarenly/presentation/forget_password_screen/forget_password_OTP/OTP_screen.dart';
 
 class MailScreen extends StatelessWidget {
   const MailScreen({Key? key}) : super(key: key);
@@ -59,9 +61,12 @@ class MailScreen extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                             onPressed: () {
-                              //Get.to();
+                              Get.to(() => const OTPScreen());
                             },
-                            child: const Text("Reset your password"))),
+                            child: const Text(
+                              "Reset your password",
+                              style: TextStyle(color: Colors.black),
+                            ))),
                   ],
                 ),
               ),
