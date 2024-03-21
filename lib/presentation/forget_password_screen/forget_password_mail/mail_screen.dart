@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qarenly/core/app_export.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/presentation/forget_password_screen/forget_password_OTP/OTP_screen.dart';
 
 class MailScreen extends StatelessWidget {
@@ -63,7 +63,10 @@ class MailScreen extends StatelessWidget {
                             onPressed: () {
                               Get.to(() => const OTPScreen());
                             },
-                            child: const Text("Reset your password"))),
+                            child: const Text(
+                              "Reset your password",
+                              style: TextStyle(color: Colors.black),
+                            ))),
                   ],
                 ),
               ),
