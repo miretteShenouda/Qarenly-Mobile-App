@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Product {
   String brand;
   String id;
@@ -11,9 +13,9 @@ class Product {
   String aboutItem;
   String imageUrl;
   double benchmark;
-  List<String> sources;
-  //List<double> lowest_prices;
-  late List<DateTime> dates;
+  List<Map> sources;
+  List<double> lowestPrices;
+  List<DateTime> dates;
   Product({
     required this.brand,
     required this.id,
@@ -25,8 +27,9 @@ class Product {
     required this.imageUrl,
     required this.benchmark,
     required this.sources,
-    // required this.lowest_prices,
+    required this.lowestPrices,
     required this.dates,
+
     // required avg_prices,
   });
 }

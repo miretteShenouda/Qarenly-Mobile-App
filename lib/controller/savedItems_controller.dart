@@ -109,8 +109,8 @@ class SavedItemsController extends GetxController {
       if (userDocSnapshot.exists) {
         final userData = userDocSnapshot.data();
         if (userData != null) {
-          final List<dynamic> savedItemsData = userData['SavedItems'] ?? [];
-          final List<DocumentReference> savedItemsReferences =
+          List<dynamic> savedItemsData = userData['SavedItems'] ?? [];
+          List<DocumentReference> savedItemsReferences =
               savedItemsData.map((data) => data as DocumentReference).toList();
 
           for (final DocumentReference ref in savedItemsReferences) {
@@ -119,7 +119,8 @@ class SavedItemsController extends GetxController {
             final List<String> parts = referencePath.split('/');
             final String productType = parts[0];
             final String documentId = parts[1];
-
+            print("Product Type: $productType");
+            print("Document ID: $documentId");
             final DocumentSnapshot productDocSnapshot1 =
                 await _db.collection(productType).doc(documentId).get();
 

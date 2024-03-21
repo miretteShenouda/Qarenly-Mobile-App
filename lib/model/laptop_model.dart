@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qarenly/model/product_model.dart';
@@ -19,10 +18,9 @@ class Laptop extends Product {
       required String aboutItem,
       required String imageUrl,
       required double benchmark,
-      required List<String> sources,
-      //required List<Float> lowest_prices,
+      required List<Map> sources,
+      required List<double> lowestPrices,
       required List<DateTime> dates,
-      //required avg_prices,
       required this.cpu,
       required this.gpu,
       required this.storage,
@@ -38,9 +36,8 @@ class Laptop extends Product {
           imageUrl: imageUrl,
           benchmark: benchmark,
           sources: sources,
-          // lowest_prices: lowest_prices,
+          lowestPrices: lowestPrices,
           dates: dates,
-          // avg_prices: avg_prices
         );
   factory Laptop.fromFirestore(Map<String, dynamic>? data) {
     if (data == null) {
@@ -48,7 +45,7 @@ class Laptop extends Product {
     }
 
     return Laptop(
-      sources: List<String>.from(data['sources'] ?? []),
+      sources: List<Map>.from(data['sources'] ?? []),
       aboutItem: data['about_item'] ?? '',
       aboutTable: data['about_table'] ?? '',
       brand: data['brand'] ?? '',
@@ -58,7 +55,8 @@ class Laptop extends Product {
       techDescription: data['tech_desc'] ?? '',
       imageUrl: data['image_URL'] ?? '',
       benchmark: (data['benchmark'] as num?)?.toDouble() ?? 0.0,
-      // lowest_prices: List<double>.from(data['lowest_prices'].map((price) => price.toDouble())),
+      lowestPrices: List<double>.from(
+          data['lowestPrices'].map((price) => price.toDouble())),
       dates: (data['dates'] as List<dynamic>?)
               ?.map((timestamp) => (timestamp as Timestamp).toDate())
               .toList() ??

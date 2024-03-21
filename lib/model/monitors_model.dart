@@ -9,26 +9,25 @@ class Monitors extends Product {
   String displayType;
   String dimensions;
 
-  Monitors(
-      {required this.screenSize,
-      required this.refreshRate,
-      required this.displayResolution,
-      required this.displayType,
-      required this.dimensions,
-      required String brand,
-      required String id,
-      required String name,
-      required String description,
-      required String techDescription,
-      required String aboutTable,
-      required String aboutItem,
-      required String imageUrl,
-      required double benchmark,
-      required List<String> sources,
-      required List<double> lowest_prices,
-      required List<DateTime> dates,
-      required avg_prices})
-      : super(
+  Monitors({
+    required this.screenSize,
+    required this.refreshRate,
+    required this.displayResolution,
+    required this.displayType,
+    required this.dimensions,
+    required String brand,
+    required String id,
+    required String name,
+    required String description,
+    required String techDescription,
+    required String aboutTable,
+    required String aboutItem,
+    required String imageUrl,
+    required double benchmark,
+    required List<Map> sources,
+    required List<double> lowestPrices,
+    required List<DateTime> dates,
+  }) : super(
           brand: brand,
           id: id,
           name: name,
@@ -39,8 +38,7 @@ class Monitors extends Product {
           imageUrl: imageUrl,
           benchmark: benchmark,
           sources: sources,
-          // lowest_prices: lowest_prices,
+          lowestPrices: lowestPrices,
           dates: dates,
-          // avg_prices: avg_prices
         );
 }
