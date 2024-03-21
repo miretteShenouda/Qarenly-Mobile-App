@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           title: 'qarenly',
           debugShowCheckedModeBanner: false,
           // initialRoute: AppRoutes.saveditemsScreen,
-          initialRoute: AppRoutes.appNavigationScreen,
+          initialRoute: AppRoutes.homepageScreen,
 
           routes: AppRoutes.routes,
         );

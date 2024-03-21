@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:qarenly/common/widgets/app_bar/appbar_title_searchview.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/presentation/search_output_page/search_output_page.dart';
+import 'package:qarenly/view/search_output_page/search_output_page.dart';
 
 import '../../common/widgets/app_bar/app_bar.dart';
 // import 'package:qarenly/common/widgets/app_bar/appbar_leading_image.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/presentation/forget_password_screen/forget_password_OTP/OTP_screen.dart';
+import 'package:qarenly/view/forget_password_screen/forget_password_OTP/OTP_screen.dart';
 
-class MailScreen extends StatelessWidget {
-  const MailScreen({Key? key}) : super(key: key);
+class MobileScreen extends StatelessWidget {
+  const MobileScreen({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +30,9 @@ class MailScreen extends StatelessWidget {
               const SizedBox(height: 30 * 4),
               Text("Forgot Password", style: theme.textTheme.displayMedium),
               SizedBox(
-                height: 5,
+                height: 10,
               ),
-              Text("Please enter your mail to reset your password",
+              Text("Please enter your number to reset your password",
                   style: TextStyle(
                     color: Colors.orange[200],
                   )
@@ -50,9 +50,8 @@ class MailScreen extends StatelessWidget {
                       ),
                       child: TextFormField(
                         decoration: const InputDecoration(
-                            label: Text("Email"),
-                            hintText: "Email",
-                            prefixIcon: Icon(Icons.mail_outline_rounded)),
+                            label: Text("Mobile Number"),
+                            prefixIcon: Icon(Icons.phone)),
                       ),
                     ),
                     const SizedBox(height: 20.0),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:qarenly/presentation/homepage_screen/homepage_screen.dart';
-import 'package:qarenly/presentation/login_page_screen/login_page_screen.dart';
-import 'package:qarenly/presentation/saveditems_screen/saveditems_screen.dart';
-import 'package:qarenly/presentation/search_output_page/search_output_page.dart';
-import 'package:qarenly/presentation/search_output_page_tab_container_screen/search_output_page_tab_container_screen.dart';
-import 'package:qarenly/presentation/side_menu_screen/side_menu_screen.dart';
-import 'package:qarenly/presentation/sign_up_page_screen/sign_up_page_screen.dart';
-import 'package:qarenly/presentation/splashscreen_screen/splashscreen_screen.dart';
-import 'package:qarenly/presentation/viewproduct_page/viewproduct_page.dart';
+import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
+import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
+import 'package:qarenly/view/saveditems_screen/saveditems_screen.dart';
+import 'package:qarenly/view/search_output_page/search_output_page.dart';
+import 'package:qarenly/view/search_output_page_tab_container_screen/search_output_page_tab_container_screen.dart';
+import 'package:qarenly/view/side_menu_screen/side_menu_screen.dart';
+import 'package:qarenly/view/sign_up_page_screen/sign_up_page_screen.dart';
+import 'package:qarenly/view/splashscreen_screen/splashscreen_screen.dart';
+import 'package:qarenly/view/viewproduct_page/viewproduct_page.dart';
 // import 'package:qarenly/presentation/forget_password_screen/forget_password_mail/mail_screen.dart';
 
 class AppRoutes {

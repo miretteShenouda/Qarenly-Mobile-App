@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qarenly/presentation/forget_password_screen/forget_password_option/password_button.dart';
-import 'package:qarenly/presentation/forget_password_screen/forget_password_mail/mail_screen.dart';
-import 'package:qarenly/presentation/forget_password_screen/forget_password_phone/mobile_screen.dart';
+import 'package:qarenly/view/forget_password_screen/forget_password_option/password_button.dart';
+import 'package:qarenly/view/forget_password_screen/forget_password_mail/mail_screen.dart';
+import 'package:qarenly/view/forget_password_screen/forget_password_phone/mobile_screen.dart';
 import 'package:get/get.dart';
 
 class ForgetPasswordScreen {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
-import 'package:qarenly/presentation/forget_password_screen/forget_password_option/modal_bottom_sheet.dart';
+import 'package:qarenly/view/forget_password_screen/forget_password_option/modal_bottom_sheet.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/presentation/login_page_screen/login_form.dart';
-import 'package:qarenly/presentation/login_page_screen/login_footer.dart';
+import 'package:qarenly/view/login_page_screen/login_form.dart';
+import 'package:qarenly/view/login_page_screen/login_footer.dart';
 
 class LoginPageScreen extends StatefulWidget {
   @override
