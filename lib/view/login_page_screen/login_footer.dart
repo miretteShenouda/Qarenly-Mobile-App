@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qarenly/common/widgets/api_widget.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
 
@@ -22,28 +23,13 @@ class LoginFooterWidget extends StatelessWidget {
                   )))),
       SizedBox(height: 7.v),
 
-      // start of google login section
-      CustomElevatedButton(
-          text: "Google",
-          onPressed: null,
-          leftIcon: Container(
-              margin: EdgeInsets.only(right: 20.h),
-              child: CustomImageView(
-                  imagePath: ImageConstant.imgFlatcoloriconsgoogle,
-                  height: 31.v,
-                  width: 20.h))),
-      // end of the section
+      ApiButton(text: "Google", img: ImageConstant.imgGoogle),
 
       SizedBox(height: 8.v),
 
       // start of facebook section
-      CustomElevatedButton(
-          text: "Facebook",
-          onPressed: null,
-          leftIcon: Container(
-              margin: EdgeInsets.only(right: 20.h),
-              child: Icon(Icons.facebook, color: Colors.blue[700]))),
-      // end of the section
+      ApiButton(text: "Facebook", img: ImageConstant.imgLogosfacebook),
+      // endt of the section
 
       SizedBox(height: 20.v),
 

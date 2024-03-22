@@ -57,7 +57,7 @@ class ImageConstant {
 
   static String imgLocation = '$imagePath/password_icon.png';
 
-  static String imgFlatcoloriconsgoogle = '$imagePath/google.png';
+  static String imgGoogle = '$imagePath/google.png';
 
   static String imgLogosfacebook = '$imagePath/facebook.png';
 
