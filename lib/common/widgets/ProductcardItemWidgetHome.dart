@@ -63,15 +63,7 @@ class ProductcardItemWidgetHome extends StatelessWidget {
                 )))
           ],
         ),
-        trailing: GestureDetector(
-          onTap: () => _deleteProduct(context),
-          child: const Icon(Icons.delete),
-        ),
       ),
     );
-  }
-
-  void _deleteProduct(BuildContext context) {
-    homePageController.deleteProduct(product);
   }
 }

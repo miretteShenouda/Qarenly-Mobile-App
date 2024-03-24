@@ -55,8 +55,9 @@ class Laptop extends Product {
       techDescription: data['tech_desc'] ?? '',
       imageUrl: data['image_URL'] ?? '',
       benchmark: (data['benchmark'] as num?)?.toDouble() ?? 0.0,
-      lowestPrices: List<double>.from(
-          data['lowestPrices'].map((price) => price.toDouble())),
+      lowestPrices: List<double>.from((data['lowestPrices'] as List<dynamic>?)
+              ?.map((price) => (price as num).toDouble()) ??
+          []),
       dates: (data['dates'] as List<dynamic>?)
               ?.map((timestamp) => (timestamp as Timestamp).toDate())
               .toList() ??

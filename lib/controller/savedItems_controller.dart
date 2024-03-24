@@ -128,6 +128,8 @@ class SavedItemsController extends GetxController {
               if (productType == "Laptops") {
                 final Map<String, dynamic>? productData =
                     productDocSnapshot1.data() as Map<String, dynamic>?;
+                print("Product Data: $productData");
+
                 if (productData != null) {
                   final Laptop laptop = Laptop.fromFirestore(productData);
                   savedItems.add(laptop);
