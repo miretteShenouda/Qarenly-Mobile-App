@@ -21,7 +21,11 @@ class signUpFooter extends StatelessWidget {
                     fontSize: 15,
                   )))),
       SizedBox(height: 10),
-      ApiButton(text: "Google", img: ImageConstant.imgGoogle),
+      ApiButton(
+        text: "Google",
+        img: ImageConstant.imgGoogle,
+        onPressed: () {},
+      ),
     ]);
   }
 }
