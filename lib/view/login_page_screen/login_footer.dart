@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:qarenly/common/widgets/api_widget.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
@@ -23,13 +25,22 @@ class LoginFooterWidget extends StatelessWidget {
                   )))),
       SizedBox(height: 7.v),
 
-      ApiButton(text: "Google", img: ImageConstant.imgGoogle),
+      ApiButton(
+        text: "Google",
+        img: ImageConstant.imgGoogle,
+        onPressed: () {},
+      ),
 
       SizedBox(height: 8.v),
 
       // start of facebook section
-      ApiButton(text: "Facebook", img: ImageConstant.imgLogosfacebook),
-      // endt of the section
+      ApiButton(
+        text: "Facebook",
+        img: ImageConstant.imgLogosfacebook,
+        onPressed: () {
+          signInWithFacebook(context);
+        },
+      ),
 
       SizedBox(height: 20.v),
 
@@ -58,5 +69,23 @@ class LoginFooterWidget extends StatelessWidget {
                 ])),
           )),
     ]);
+  }
+
+  Future<void> signInWithFacebook(BuildContext context) async {
+    try {
+      final LoginResult result =
+          await FacebookAuth.instance.login(permissions: ['email']);
+      if (result.status == LoginStatus.success) {
+        final OAuthCredential credential =
+            FacebookAuthProvider.credential(result.accessToken!.token);
+        await FirebaseAuth.instance.signInWithCredential(credential);
+        Navigator.pushReplacementNamed(context,
+            '/homepage_screen'); // Navigate to home screen after successful login
+      } else {
+        print(result.message);
+      }
+    } catch (e) {
+      print('Error signing in with Facebook: $e');
+    }
   }
 }

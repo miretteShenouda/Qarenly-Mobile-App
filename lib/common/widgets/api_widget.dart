@@ -7,11 +7,13 @@ class ApiButton extends StatelessWidget {
   const ApiButton({
     required this.text,
     required this.img,
+    required this.onPressed, // Function parameter to handle onPressed event
     Key? key,
   }) : super(key: key);
 
   final String text;
   final String? img;
+  final VoidCallback onPressed; // Define the type of function parameter
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +23,19 @@ class ApiButton extends StatelessWidget {
         color: Colors.white,
       ),
       child: SizedBox(
-          width: double.infinity,
-          child: CustomElevatedButton(
-            onPressed: () {},
-            text: text,
-            leftIcon: Container(
-              margin: EdgeInsets.only(right: 20),
-              child: CustomImageView(
-                imagePath: img,
-                width: 20.0,
-              ),
+        width: double.infinity,
+        child: CustomElevatedButton(
+          onPressed: onPressed, // Call the function passed from outside
+          text: text,
+          leftIcon: Container(
+            margin: EdgeInsets.only(right: 20),
+            child: CustomImageView(
+              imagePath: img,
+              width: 20.0,
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
