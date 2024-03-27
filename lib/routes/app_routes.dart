@@ -8,6 +8,8 @@ import 'package:qarenly/view/side_menu_screen/side_menu_screen.dart';
 import 'package:qarenly/view/sign_up_page_screen/sign_up_page_screen.dart';
 import 'package:qarenly/view/splashscreen_screen/splashscreen_screen.dart';
 import 'package:qarenly/view/viewproduct_page/viewproduct_page.dart';
+import 'package:qarenly/view/profile_update_screen/update_profile.dart';
+
 // import 'package:qarenly/presentation/forget_password_screen/forget_password_mail/mail_screen.dart';
 
 class AppRoutes {
@@ -30,7 +32,9 @@ class AppRoutes {
 
   static const String sideMenuScreen = '/side_menu_screen';
 
-  static const String appNavigationScreen = '/app_navigation_screen';
+  static const String profilePage = '/profile_update_screen';
+
+  // static const String appNavigationScreen = '/app_navigation_screen';
 
   static Map<String, WidgetBuilder> routes = {
     saveditemsScreen: (context) => SaveditemsScreen(),
@@ -43,5 +47,6 @@ class AppRoutes {
     searchOutputPage: (context) => SearchOutputPage(),
     sideMenuScreen: (context) => SideMenuScreen(),
     viewproductPage: (context) => ViewproductPage(),
+    profilePage: (context) => UpdateProfileScreen(),
   };
 }
