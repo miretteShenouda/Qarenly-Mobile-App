@@ -56,7 +56,9 @@ class LoginFooterWidget extends StatelessWidget {
       Align(
           alignment: Alignment.centerLeft,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.signUpPageScreen);
+            },
             child: const Text.rich(TextSpan(
                 text: "Don't have an account?",
                 style: TextStyle(color: Color.fromARGB(255, 5, 30, 69)),

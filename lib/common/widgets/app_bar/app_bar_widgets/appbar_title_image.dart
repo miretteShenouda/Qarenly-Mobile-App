@@ -22,7 +22,8 @@ class AppbarTitleImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onTap!.call();
+        // onTap!.call();
+        Navigator.pushNamed(context, AppRoutes.profilePage);
       },
       child: Padding(
         padding: margin ?? EdgeInsets.zero,

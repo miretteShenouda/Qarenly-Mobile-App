@@ -14,7 +14,13 @@ dependencies:
   cloud_firestore: ^4.14.0
   firebase_auth: ^4.16.0
   flutter_otp_text_field: ^1.1.1
+<<<<<<< HEAD
   flutter_facebook_auth: ^6.1.1
+=======
+  google_sign_in: ^6.0.2
+  cupertino_icons: ^1.0.2
+  line_awesome_flutter: ^2.0.0
+>>>>>>> 5ecc371146b70f741ad10f1d6ec1081ce5fc8591
   
 
 dev_dependencies: 
