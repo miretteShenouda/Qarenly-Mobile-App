@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:qarenly/repository/authentication%20repository/exception/login_email_pass_failure.dart';
 import 'package:qarenly/repository/authentication%20repository/exception/signup_email_pass_failure.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
@@ -41,16 +42,17 @@ class AuthenticationRepo extends GetxController {
     return null;
   }
 
-  // Future<String?> loginWithEmailAndPassword(String email, String password) async {
-  //   try {
-  //     await _auth.signInWithEmailAndPassword(email: email, password: password);
-  //   } on FirebaseAuthException catch (e) {
-  //     final ex = LogInWithEmailAndPasswordFailure.fromCode(e.code);
-  //     return ex.message;
-  //   } catch (_) {
-  //     const ex = LogInWithEmailAndPasswordFailure();
-  //     return ex.message;
-  //   }
-  //   return null;
-  // }
+  Future<String?> loginWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      final ex = LogInWithEmailAndPasswordFailure.Code(e.code);
+      return ex.message;
+    } catch (_) {
+      const ex = LogInWithEmailAndPasswordFailure();
+      return ex.message;
+    }
+    return null;
+  }
 }
