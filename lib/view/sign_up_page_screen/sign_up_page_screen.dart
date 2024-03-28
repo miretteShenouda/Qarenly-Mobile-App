@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/common/widgets/api_widget.dart';
-import 'package:qarenly/common/widgets/custom_elevated_button.dart';
+// import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
+import 'package:qarenly/view/sign_up_page_screen/sign_up_footer.dart';
 import 'package:qarenly/view/sign_up_page_screen/sign_up_form.dart';
-import 'package:qarenly/view/sign_up_page_screen/tff_widget.dart';
+// import 'package:qarenly/view/sign_up_page_screen/tff_widget.dart';
 // import 'package:qarenly/common/widgets/app_bar/appbar_leading_iconbutton.dart';
 // import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
 // import 'package:qarenly/common/widgets/custom_elevated_button.dart';
@@ -11,15 +12,13 @@ import 'package:qarenly/view/sign_up_page_screen/tff_widget.dart';
 class SignUpPageScreen extends StatelessWidget {
   SignUpPageScreen({Key? key}) : super(key: key);
 
-  TextEditingController userNameController = TextEditingController();
+  // TextEditingController userNameController = TextEditingController();
 
-  TextEditingController emailController = TextEditingController();
+  // TextEditingController emailController = TextEditingController();
 
-  TextEditingController passwordController = TextEditingController();
+  // TextEditingController passwordController = TextEditingController();
 
-  TextEditingController confirmPasswordController = TextEditingController();
-
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,37 +53,17 @@ class SignUpPageScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              SignUpForm(
-                  userNameController: userNameController,
-                  emailController: emailController,
-                  passwordController: passwordController,
-                  confirmPasswordController: confirmPasswordController),
+              SignUpForm(),
               SizedBox(
                 height: 30,
               ),
-              Column(children: [
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 110.h),
-                        child: Text("or continue with",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              fontSize: 15,
-                            )))),
-                SizedBox(height: 10),
-                ApiButton(
-                  text: "Google",
-                  img: ImageConstant.imgGoogle,
-                  onPressed: () {},
-                ),
-              ]),
+              signUpFooter(),
               SizedBox(height: 10),
               ApiButton(
-                  text: "Facebook",
-                  img: ImageConstant.imgLogosfacebook,
-                  onPressed: () {}),
+                text: "Facebook",
+                img: ImageConstant.imgLogosfacebook,
+                onPressed: () {},
+              ),
               SizedBox(height: 20),
             ],
           )),

@@ -2,12 +2,12 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../model/product_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import '../model/product_model.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-import '../model/laptop_model.dart';
-import '../model/product_model.dart';
+//import '../model/laptop_model.dart';
+//import '../model/product_model.dart';
 
 // class ViewProductController extends GetxController {
 //   static ViewProductController get instance => Get.find();

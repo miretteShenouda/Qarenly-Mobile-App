@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:core';
 import 'package:qarenly/model/product_model.dart';
 
