@@ -58,13 +58,6 @@ class SignUpPageScreen extends StatelessWidget {
                 height: 30,
               ),
               signUpFooter(),
-              SizedBox(height: 10),
-              ApiButton(
-                text: "Facebook",
-                img: ImageConstant.imgLogosfacebook,
-                onPressed: () {},
-              ),
-              SizedBox(height: 20),
             ],
           )),
     )));

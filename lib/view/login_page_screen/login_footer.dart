@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:qarenly/common/widgets/api_widget.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
+import 'package:qarenly/controller/authentication_controller/authentication_controller.dart';
 import 'package:qarenly/core/app_export.dart';
 
 class LoginFooterWidget extends StatelessWidget {
-  const LoginFooterWidget({
-    Key? key,
-  }) : super(key: key);
+  AuthenticationController _authController = AuthenticationController();
+
+  // const LoginFooterWidget({
+  //   Key? key,
+  // }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class LoginFooterWidget extends StatelessWidget {
         text: "Facebook",
         img: ImageConstant.imgLogosfacebook,
         onPressed: () {
-          signInWithFacebook(context);
+          _authController.loginWithFacebook(context);
         },
       ),
 
@@ -71,23 +74,5 @@ class LoginFooterWidget extends StatelessWidget {
                 ])),
           )),
     ]);
-  }
-
-  Future<void> signInWithFacebook(BuildContext context) async {
-    try {
-      final LoginResult result =
-          await FacebookAuth.instance.login(permissions: ['email']);
-      if (result.status == LoginStatus.success) {
-        final OAuthCredential credential =
-            FacebookAuthProvider.credential(result.accessToken!.token);
-        await FirebaseAuth.instance.signInWithCredential(credential);
-        Navigator.pushReplacementNamed(context,
-            '/homepage_screen'); // Navigate to home screen after successful login
-      } else {
-        print(result.message);
-      }
-    } catch (e) {
-      print('Error signing in with Facebook: $e');
-    }
   }
 }

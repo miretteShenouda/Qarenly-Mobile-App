@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/common/widgets/api_widget.dart';
+import 'package:qarenly/controller/authentication_controller/authentication_controller.dart';
 import 'package:qarenly/core/app_export.dart';
 
 class signUpFooter extends StatelessWidget {
-  const signUpFooter({
-    Key? key,
-  }) : super(key: key);
+  AuthenticationController _authController = AuthenticationController();
+  // const signUpFooter({
+  //   Key? key,
+  // }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,15 @@ class signUpFooter extends StatelessWidget {
         img: ImageConstant.imgGoogle,
         onPressed: () {},
       ),
+      SizedBox(height: 10),
+      ApiButton(
+        text: "Facebook",
+        img: ImageConstant.imgLogosfacebook,
+        onPressed: () {
+          _authController.signUpWithFacebook(context);
+        },
+      ),
+      SizedBox(height: 20),
     ]);
   }
 }

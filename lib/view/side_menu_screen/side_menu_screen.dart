@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
+import 'package:qarenly/controller/authentication_controller/authentication_controller.dart';
 import 'package:qarenly/core/app_export.dart';
 
 class SideMenuScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
   TextEditingController homeController = TextEditingController();
 
   TextEditingController notificationsController = TextEditingController();
+  AuthenticationController _authController = AuthenticationController();
   bool isDark = false;
   @override
   void initState() {
@@ -265,7 +267,8 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                             width: 33.adaptSize,
                           ),
                           onTap: () {
-                            onTapSignOut(context);
+                            // onTapSignOut(context);
+                            _authController.signOutFacebook(context);
                           },
                         ),
                       ),
@@ -372,9 +375,10 @@ onTapImgBookmark(BuildContext context) {
 }
 
 /// Navigates to the loginPageScreen when the action is triggered.
-onTapSignOut(BuildContext context) {
-  Navigator.pushNamed(context, AppRoutes.loginPageScreen);
-}
+// onTapSignOut(BuildContext context) {
+
+//   Navigator.pushNamed(context, AppRoutes.loginPageScreen);
+// }
 
 onTapImgHome(BuildContext context) {
   Navigator.pushNamed(context, AppRoutes.homepageScreen);
