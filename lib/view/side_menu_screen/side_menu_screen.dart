@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
-import 'package:qarenly/controller/authentication_controller/authentication_controller.dart';
 import 'package:qarenly/core/app_export.dart';
+import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 class SideMenuScreen extends StatefulWidget {
   SideMenuScreen({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
   TextEditingController homeController = TextEditingController();
 
   TextEditingController notificationsController = TextEditingController();
-  AuthenticationController _authController = AuthenticationController();
+  AuthenticationRepo _authenticationRepo = AuthenticationRepo();
   bool isDark = false;
   @override
   void initState() {
@@ -268,7 +268,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                           ),
                           onTap: () {
                             // onTapSignOut(context);
-                            _authController.signOutFacebook(context);
+                            _authenticationRepo.signOutFacebook(context);
                           },
                         ),
                       ),

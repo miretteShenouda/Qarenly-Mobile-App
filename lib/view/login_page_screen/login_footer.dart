@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:qarenly/common/widgets/api_widget.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
-import 'package:qarenly/controller/authentication_controller/authentication_controller.dart';
 import 'package:qarenly/core/app_export.dart';
+import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 class LoginFooterWidget extends StatelessWidget {
-  AuthenticationController _authController = AuthenticationController();
-
+  // AuthenticationRepo _authController = AuthenticationController();
+  AuthenticationRepo _authenticationRepo = AuthenticationRepo();
   // const LoginFooterWidget({
   //   Key? key,
   // }) : super(key: key);
@@ -41,7 +41,7 @@ class LoginFooterWidget extends StatelessWidget {
         text: "Facebook",
         img: ImageConstant.imgLogosfacebook,
         onPressed: () {
-          _authController.loginWithFacebook(context);
+          _authenticationRepo.loginWithFacebook(context);
         },
       ),
 
