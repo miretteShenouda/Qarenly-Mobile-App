@@ -9,6 +9,7 @@ class Product {
   String aboutTable;
   String aboutItem;
   String imageUrl;
+  String? type;
   double benchmark;
   List<Map> sources;
   List<double> lowestPrices;

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           theme: theme,
           title: 'qarenly',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.loginPageScreen,
+          initialRoute: AppRoutes.viewproductPage,
           // AppRoutes.signUpPageScreen,
           routes: AppRoutes.routes,
         );
