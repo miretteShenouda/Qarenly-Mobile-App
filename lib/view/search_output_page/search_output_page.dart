@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qarenly/core/app_export.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/core/app_export.dart';
 
 import '../../common/widgets/ProductcardItemWidgetHome.dart';
 import '../../controller/homePage_controller.dart';
@@ -58,7 +58,7 @@ class SearchOutputPageState extends State<SearchOutputPage>
         itemCount: 4,
         itemBuilder: (context, index) {
           return ProductcardItemWidgetHome(
-            product: controller.savedItems[index],
+            product: controller.laptops[index],
             homePageController: controller,
           );
         },

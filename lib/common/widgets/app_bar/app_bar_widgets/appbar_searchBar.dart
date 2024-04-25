@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../view/search_results_page/search_results_page.dart';
+
 class AppbarSearchBar extends StatelessWidget {
   AppbarSearchBar({
     Key? key,
@@ -46,27 +48,6 @@ class AppbarSearchBar extends StatelessWidget {
             }
           },
         ),
-      ),
-    );
-  }
-}
-
-class SearchResultsPage extends StatelessWidget {
-  final String query;
-
-  SearchResultsPage({required this.query});
-
-  @override
-  Widget build(BuildContext context) {
-    // Implement your search logic here, e.g., fetching data from a database
-    // You can use the query variable to perform the search
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Search Results'),
-      ),
-      body: Center(
-        child: Text('Display search results for: $query'),
       ),
     );
   }
