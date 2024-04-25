@@ -24,7 +24,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   void _scrollNext() {
     setState(() {
-      // _currentIndex = (_currentIndex + 1) % controller.savedItems.length;
+      _currentIndex = (_currentIndex + 1) % controller.laptops.length;
     });
 
     if (!_scrollController.hasClients) return;
@@ -95,9 +95,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
       child: ListView.builder(
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
-        itemCount: controller.savedItems.length,
+        itemCount: controller.laptops.length,
         itemBuilder: (context, index) {
-          final imageUrl = controller.savedItems[index].imageUrl;
+          final imageUrl = controller.laptops[index].imageUrl;
           return Container(
             margin: EdgeInsets.symmetric(
                 horizontal: 5.0), // Add margin for spacing between items
@@ -125,9 +125,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           separatorBuilder: (context, index) => const SizedBox(height: 21.0),
-          itemCount: controller.savedItems.length,
+          itemCount: controller.laptops.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
-            product: controller.savedItems[index],
+            product: controller.laptops[index],
             homePageController: controller,
           ),
         ),
@@ -148,9 +148,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           separatorBuilder: (context, index) => const SizedBox(height: 21.0),
-          itemCount: controller.savedItems.length,
+          itemCount: controller.laptops.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
-            product: controller.savedItems[index],
+            product: controller.laptops[index],
             homePageController: controller,
           ),
         ),
