@@ -41,7 +41,7 @@ class LoginForm extends StatelessWidget {
               controller: controller.email,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                hintText: "E-mail",
+                hintText: "Email",
                 contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
                 prefixIcon:
                     Icon(Icons.person, color: Colors.orange.withOpacity(0.8)),
@@ -69,7 +69,6 @@ class LoginForm extends StatelessWidget {
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                   hintText: "Password",
-                  labelText: "Password",
                   contentPadding: EdgeInsets.fromLTRB(30.h, 10.v, 26.h, 10.v),
                   prefixIcon:
                       Icon(Icons.lock, color: Colors.orange.withOpacity(0.7)),

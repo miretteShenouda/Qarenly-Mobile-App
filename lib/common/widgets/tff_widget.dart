@@ -5,13 +5,13 @@ class TFF_widget extends StatelessWidget {
     Key? key,
     required this.Controller,
     required this.ticon,
-    required this.labelText,
+    required this.hintText,
     this.validator,
   }) : super(key: key);
 
   final TextEditingController Controller;
   final IconData ticon;
-  final String labelText;
+  final String hintText;
   final String? Function(String?)? validator;
 
   @override
@@ -28,7 +28,7 @@ class TFF_widget extends StatelessWidget {
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             prefixIcon: Icon(ticon, color: Colors.orange.withOpacity(0.8)),
-            labelText: labelText,
+            hintText: hintText,
           )),
     );
   }

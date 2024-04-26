@@ -21,7 +21,7 @@ class SignUpForm extends StatelessWidget {
           children: [
             TFF_widget(
               Controller: controller.username,
-              labelText: "Username",
+              hintText: "Username",
               ticon: Icons.person,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -43,7 +43,7 @@ class SignUpForm extends StatelessWidget {
                   return null;
                 },
                 Controller: controller.email,
-                labelText: "e-mail",
+                hintText: "e-mail",
                 ticon: Icons.email_outlined),
             SizedBox(
               height: 10,
@@ -58,7 +58,7 @@ class SignUpForm extends StatelessWidget {
                 return null;
               },
               Controller: controller.password,
-              labelText: "Password",
+              hintText: "Password",
               ticon: Icons.fingerprint,
             ),
             SizedBox(
@@ -72,7 +72,7 @@ class SignUpForm extends StatelessWidget {
                 return null;
               },
               Controller: controller.confirmPassword,
-              labelText: "Confirm Password",
+              hintText: "Confirm Password",
               ticon: Icons.fingerprint,
             ),
             SizedBox(

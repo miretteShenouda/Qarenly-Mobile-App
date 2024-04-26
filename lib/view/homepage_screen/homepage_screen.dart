@@ -24,7 +24,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
   void _scrollNext() {
     setState(() {
-      _currentIndex = (_currentIndex + 1) % controller.laptops.length;
+      // _currentIndex = (_currentIndex + 1) % controller.laptops.length;
     });
 
     if (!_scrollController.hasClients) return;

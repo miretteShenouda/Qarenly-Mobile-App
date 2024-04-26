@@ -4,6 +4,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:qarenly/common/widgets/tff_widget.dart';
 import 'package:qarenly/controller/profile_controller.dart';
 import 'package:qarenly/core/app_export.dart';
+import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
@@ -76,22 +77,22 @@ class UpdateProfileScreen extends StatelessWidget {
                     TFF_widget(
                         Controller: controller.username,
                         ticon: Icons.person,
-                        labelText: "Full Name"),
+                        hintText: "Full Name"),
                     const SizedBox(height: 10),
                     TFF_widget(
                         Controller: controller.email,
                         ticon: Icons.email,
-                        labelText: "email"),
+                        hintText: "email"),
                     const SizedBox(height: 10),
                     TFF_widget(
                         Controller: controller.password,
                         ticon: Icons.fingerprint,
-                        labelText: "Password"),
+                        hintText: "Password"),
                     const SizedBox(height: 10),
                     TFF_widget(
                         Controller: controller.confirmPassword,
                         ticon: Icons.fingerprint,
-                        labelText: "Confirm Password"),
+                        hintText: "Confirm Password"),
                     const SizedBox(height: 30),
 
                     // -- Form Submit Button
@@ -99,8 +100,9 @@ class UpdateProfileScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 30,
                       child: ElevatedButton(
-                        onPressed: () =>
-                            Get.to(() => const UpdateProfileScreen()),
+                        onPressed: () {
+                          controller.updateProfile();
+                        },
                         style: ElevatedButton.styleFrom(
                             side: BorderSide.none,
                             shape: const StadiumBorder()),

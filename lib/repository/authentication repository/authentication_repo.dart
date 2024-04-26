@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qarenly/repository/authentication%20repository/exception/login_email_pass_failure.dart';
-import 'package:qarenly/repository/authentication%20repository/exception/signup_email_pass_failure.dart';
+// import 'package:qarenly/repository/authentication%20repository/exception/signup_email_pass_failure.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -29,20 +30,18 @@ class AuthenticationRepo extends GetxController {
   }
 
 /*---------------------------------AUTHENTICATION------------------------------------------*/
-  Future<Object?> createUserWithEmailAndPassword(
+  Future<User?> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
       firebaseUser.value != null
           ? Get.offAll(() => HomepageScreen())
           : Get.to(() => LoginPageScreen());
-    } on FirebaseAuthException catch (e) {
-      final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
-      return ex.message;
-    } catch (_) {
-      const ex = SignUpWithEmailAndPasswordFailure();
-      return ex.message;
+      User? user = userCredential.user;
+      return user;
+    } catch (e) {
+      print('Error registering user: $e');
     }
     return null;
   }
@@ -176,5 +175,30 @@ class AuthenticationRepo extends GetxController {
       }
     }
     return false;
+  }
+
+/*----------------------------------USER_DATA-----------------------------------------*/
+  Future<void> InsertUser(
+      User? user, String username, String email, String password) async {
+    await FirebaseFirestore.instance.collection('Users').doc(user!.uid).set({
+      'username': username,
+      'email': email,
+      'password': password,
+    });
+  }
+
+  Future<void> UpdateUser(
+    String username,
+    String email,
+    String password,
+  ) async {
+    final user = FirebaseAuth.instance.currentUser;
+    final userDocRef =
+        FirebaseFirestore.instance.collection('Users').doc(user!.uid);
+    await userDocRef.update({
+      'username': username,
+      'email': email,
+      'password': password,
+    });
   }
 }
