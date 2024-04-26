@@ -268,6 +268,8 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                           ),
                           onTap: () {
                             // onTapSignOut(context);
+                            _authenticationRepo.logout();
+                            _authenticationRepo.signOutFromGoogle();
                             _authenticationRepo.signOutFacebook(context);
                           },
                         ),

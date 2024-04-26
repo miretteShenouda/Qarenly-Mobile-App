@@ -6,11 +6,13 @@ import 'package:qarenly/repository/authentication%20repository/exception/login_e
 import 'package:qarenly/repository/authentication%20repository/exception/signup_email_pass_failure.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationRepo extends GetxController {
   static AuthenticationRepo get instance => Get.find();
 
   final _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   late final Rx<User?> firebaseUser;
 
   @override
@@ -26,6 +28,7 @@ class AuthenticationRepo extends GetxController {
         : Get.offAll(() => HomepageScreen());
   }
 
+/*---------------------------------AUTHENTICATION------------------------------------------*/
   Future<Object?> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -57,6 +60,40 @@ class AuthenticationRepo extends GetxController {
     }
     return null;
   }
+
+  Future<void> logout() async => await _auth.signOut();
+
+/*----------------------------------GOOGLE-----------------------------------------*/
+  Future<User?> signInWithGoogle() async {
+    try {
+      GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        GoogleSignInAuthentication googleAuth =
+            await googleSignInAccount.authentication;
+        AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+        return userCredential.user;
+      }
+    } catch (error) {
+      print(error);
+    }
+    return null;
+  }
+
+  Future<bool> signOutFromGoogle() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } on Exception catch (_) {
+      return false;
+    }
+  }
+
+/*------------------------------FACEBOOK---------------------------------------------*/
   Future<void> loginWithFacebook(BuildContext context) async {
     try {
       final LoginResult result =
@@ -140,5 +177,4 @@ class AuthenticationRepo extends GetxController {
     }
     return false;
   }
-
 }

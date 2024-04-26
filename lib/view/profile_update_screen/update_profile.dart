@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:qarenly/common/widgets/tff_widget.dart';
+import 'package:qarenly/controller/profile_controller.dart';
 import 'package:qarenly/core/app_export.dart';
-
-// import 'package:qarenly/controller/profile_controller.dart';
-// import 'package:qarenly/core/constant/color.dart';
-// import 'package:qarenly/core/constant/image.dart';
-// import 'package:qarenly/core/constant/string.dart';
-// import 'package:qarenly/core/constant/theme.dart';
-// import 'package:qarenly/view/profile_update_screen/widgets/custom_text_form_field.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // final controller = Get.put(ProfileController());
+    final controller = Get.put(ProfileController());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.colorScheme.onPrimary,
@@ -44,29 +40,31 @@ class UpdateProfileScreen extends StatelessWidget {
           child: Column(
             children: [
               // -- IMAGE with ICON
-              Stack(
+              CircleAvatar(
+                radius: 60,
+                // backgroundImage: _imageFile != null
+                // ? FileImage(_imageFile!)
+                // : const AssetImage(
+                //     'assets/default.png',
+                //   ) as ImageProvider<Object>?),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: const Image(
-                            image: AssetImage('assets/images/profile.png'))),
+                  ElevatedButton(
+                      onPressed: () {
+                        // _pickImage(ImageSource.camera);
+                      },
+                      child: const Text("Camera")),
+                  const SizedBox(
+                    width: 10,
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: const Icon(LineAwesomeIcons.camera,
-                          color: Colors.white, size: 20),
-                    ),
-                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        // _pickImage(ImageSource.gallery);
+                      },
+                      child: const Text("Gallery")),
                 ],
               ),
               const SizedBox(height: 50),
@@ -75,34 +73,25 @@ class UpdateProfileScreen extends StatelessWidget {
               Form(
                 child: Column(
                   children: [
-                    TextFormField(
-                      decoration: const InputDecoration(
-                          label: Text("Full Name"),
-                          prefixIcon: Icon(LineAwesomeIcons.user)),
-                    ),
+                    TFF_widget(
+                        Controller: controller.username,
+                        ticon: Icons.person,
+                        labelText: "Full Name"),
                     const SizedBox(height: 10),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                          label: Text("Email"),
-                          prefixIcon: Icon(LineAwesomeIcons.envelope_1)),
-                    ),
+                    TFF_widget(
+                        Controller: controller.email,
+                        ticon: Icons.email,
+                        labelText: "email"),
                     const SizedBox(height: 10),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                          label: Text("Phone"),
-                          prefixIcon: Icon(LineAwesomeIcons.phone)),
-                    ),
+                    TFF_widget(
+                        Controller: controller.password,
+                        ticon: Icons.fingerprint,
+                        labelText: "Password"),
                     const SizedBox(height: 10),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        label: const Text("Password"),
-                        prefixIcon: const Icon(Icons.fingerprint),
-                        suffixIcon: IconButton(
-                            icon: const Icon(LineAwesomeIcons.eye_slash),
-                            onPressed: () {}),
-                      ),
-                    ),
+                    TFF_widget(
+                        Controller: controller.confirmPassword,
+                        ticon: Icons.fingerprint,
+                        labelText: "Confirm Password"),
                     const SizedBox(height: 30),
 
                     // -- Form Submit Button
@@ -131,7 +120,7 @@ class UpdateProfileScreen extends StatelessWidget {
                             style: TextStyle(fontSize: 12),
                             children: [
                               TextSpan(
-                                  text: "Joined At",
+                                  text: " El Tareeee5",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12))

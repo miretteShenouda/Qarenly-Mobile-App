@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/common/theme/custom_text_style.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
+import 'package:qarenly/common/widgets/tff_widget.dart';
 import 'package:qarenly/controller/authentication_controller/signup_controller.dart';
-import 'package:qarenly/view/sign_up_page_screen/tff_widget.dart';
 import 'package:get/get.dart';
 
 class SignUpForm extends StatelessWidget {

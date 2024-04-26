@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:qarenly/common/widgets/api_widget.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
@@ -31,7 +31,15 @@ class LoginFooterWidget extends StatelessWidget {
       ApiButton(
         text: "Google",
         img: ImageConstant.imgGoogle,
-        onPressed: () {},
+        onPressed: () async {
+          User? user = await _authenticationRepo.signInWithGoogle();
+          if (user != null) {
+            // Navigate to the next screen or do something with the signed-up user
+            Navigator.pushNamed(context, AppRoutes.homepageScreen);
+          } else {
+            // Handle sign-up failure
+          }
+        },
       ),
 
       SizedBox(height: 8.v),
