@@ -18,47 +18,47 @@ class HomePageController extends GetxController {
   void onInit() {
     super.onInit();
     fetchSavedItems();
-    fetchLaptops();
+    //fetchLaptops();
   }
 
-  Future<void> fetchLaptops() async {
-    try {
-      if (kDebugMode) {
-        print("Fetching laptops...");
-      }
-      isLoading.value = true;
+  // Future<void> fetchLaptops() async {
+  //   try {
+  //     if (kDebugMode) {
+  //       print("Fetching laptops...");
+  //     }
+  //     isLoading.value = true;
 
-      final laptopsSnapshot = await _firestore.collection("Laptops").get();
+  //     final laptopsSnapshot = await _firestore.collection("Laptops").get();
 
-      if (laptopsSnapshot.docs.isNotEmpty) {
-        laptops.clear();
-        laptops.addAll(
-          laptopsSnapshot.docs.map(
-            (doc) {
-              Laptop laptop =
-                  Laptop.fromFirestore(doc.data() as Map<String, dynamic>);
-              return laptop as Product;
-            },
-          ),
-        );
-      }
+  //     if (laptopsSnapshot.docs.isNotEmpty) {
+  //       laptops.clear();
+  //       laptops.addAll(
+  //         laptopsSnapshot.docs.map(
+  //           (doc) {
+  //             Laptop laptop =
+  //                 Laptop.fromFirestore(doc.data() as Map<String, dynamic>);
+  //             return laptop as Product;
+  //           },
+  //         ),
+  //       );
+  //     }
 
-      isLoading.value = false;
-    } catch (error) {
-      if (kDebugMode) {
-        print("Error retrieving laptops: $error");
-      }
-      isLoading.value = false;
-      // Handle error gracefully, show feedback to user
-      Get.snackbar(
-        'Error',
-        'Failed to retrieve laptops. Please try again later.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-  }
+  //     isLoading.value = false;
+  //   } catch (error) {
+  //     if (kDebugMode) {
+  //       print("Error retrieving laptops: $error");
+  //     }
+  //     isLoading.value = false;
+  //     // Handle error gracefully, show feedback to user
+  //     Get.snackbar(
+  //       'Error',
+  //       'Failed to retrieve laptops. Please try again later.',
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //     );
+  //   }
+  // }
 
   Future<void> fetchSavedItems() async {
     try {
@@ -82,6 +82,7 @@ class HomePageController extends GetxController {
             final String documentId = parts[1];
             print("Product Type: $productType");
             print("Document ID: $documentId");
+
             final DocumentSnapshot productDocSnapshot1 =
                 await _firestore.collection(productType).doc(documentId).get();
 
@@ -93,7 +94,7 @@ class HomePageController extends GetxController {
                 if (productData != null) {
                   final Laptop laptop = Laptop.fromFirestore(productData);
                   laptop.type = productType;
-                  savedItems.add(laptop);
+                  laptops.add(laptop);
                 }
               } else {}
             }

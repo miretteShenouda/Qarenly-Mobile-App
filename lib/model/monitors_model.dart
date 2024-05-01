@@ -25,7 +25,7 @@ class Monitors extends Product {
     required double benchmark,
     required List<Map> sources,
     required List<double> lowestPrices,
-    required List<DateTime> dates,
+    required List<String> dates,
   }) : super(
           brand: brand,
           id: id,

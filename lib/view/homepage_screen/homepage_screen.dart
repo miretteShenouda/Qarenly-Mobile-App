@@ -128,7 +128,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
           itemCount: controller.laptops.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
             product: controller.laptops[index],
-            homePageController: controller,
+            // homePageController: controller,
           ),
         ),
       ],
@@ -151,7 +151,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
           itemCount: controller.laptops.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
             product: controller.laptops[index],
-            homePageController: controller,
+            // homePageController: controller,
           ),
         ),
       ],

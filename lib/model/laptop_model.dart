@@ -20,7 +20,7 @@ class Laptop extends Product {
       required double benchmark,
       required List<Map> sources,
       required List<double> lowestPrices,
-      required List<DateTime> dates,
+      required List<String> dates,
       required this.cpu,
       required this.gpu,
       required this.storage,
@@ -55,13 +55,12 @@ class Laptop extends Product {
       techDescription: data['tech_desc'] ?? '',
       imageUrl: data['image_URL'] ?? '',
       benchmark: (data['benchmark'] as num?)?.toDouble() ?? 0.0,
-      lowestPrices: List<double>.from((data['lowestPrices'] as List<dynamic>?)
+      lowestPrices: List<double>.from((data['lowest_prices'] as List<dynamic>?)
               ?.map((price) => (price as num).toDouble()) ??
           []),
-      dates: (data['dates'] as List<dynamic>?)
-              ?.map((timestamp) => (timestamp as Timestamp).toDate())
-              .toList() ??
-          [],
+      dates: (data['dates'] ?? [])
+          .map<String>((timestamp) => timestamp.toString())
+          .toList(),
       cpu: data['CPU'] ?? '',
       gpu: data['GPU'] ?? '',
       storage: data['storage'] ?? '',
