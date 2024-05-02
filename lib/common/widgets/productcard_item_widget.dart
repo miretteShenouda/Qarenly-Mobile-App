@@ -44,22 +44,18 @@ class ProductcardItemWidget extends StatelessWidget {
               // overflow: TextOverflow.ellipsis,
             ),
             Align(
-                alignment: Alignment.centerRight,
-                child: RichText(
-                    text: TextSpan(
+              alignment: Alignment.centerRight,
+              child: RichText(
+                text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "0000",
-                      style: theme.textTheme.titleSmall!.copyWith(
-                        decoration: TextDecoration.lineThrough,
-                      ),
-                    ),
-                    TextSpan(
-                      text: "99999",
+                      text: "Lowest price: ${product.lowestPrices}",
                       style: theme.textTheme.titleSmall,
                     ),
                   ],
-                )))
+                ),
+              ),
+            )
           ],
         ),
         trailing: GestureDetector(

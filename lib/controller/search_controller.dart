@@ -1,25 +1,22 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-
-// class SearchResultController {
-//   Stream<QuerySnapshot> searchLaptops(String query) {
-//     return FirebaseFirestore.instance
-//         .collection('Laptops')
-//         .where('name', arrayContains: query.toLowerCase())
-//         .snapshots();
-//   }
-// }
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../model/product_model.dart';
+import 'package:get/get.dart';
 
 class SearchResultController {
-  Stream<QuerySnapshot> searchLaptops(String query) {
-    return FirebaseFirestore.instance
-        .collection('Laptops')
-        .orderBy('name') // Order the documents by name
-        .startAt(
-            [query.toLowerCase()]) // Start at documents where name >= query
-        .endAt([
-      query.toLowerCase() + '\uf8ff'
-    ]) // End at documents where name < query + '\uf8ff'
-        .snapshots();
+  Future<RxList> searchLaptops(String query) async {
+    RxList<Product> searchReturn = <Product>[].obs;
+
+    QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('Laptops').get();
+
+    snapshot.docs.forEach((doc) {
+      final Product product =
+          Product.fromFirestore(doc.data() as Map<String, dynamic>);
+      if (product.name.toLowerCase().contains(query.toLowerCase())) {
+        searchReturn.add(product);
+      }
+    });
+
+    return searchReturn;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../controller/homePage_controller.dart';
 import '../../../model/product_model.dart';
@@ -6,10 +7,9 @@ import '../../core/app_export.dart';
 
 class ProductcardItemWidgetHome extends StatelessWidget {
   final Product product; // Change the parameter type to Product
-  final HomePageController homePageController;
+  // final HomePageController homePageController;
 
-  const ProductcardItemWidgetHome(
-      {Key? key, required this.product, required this.homePageController})
+  const ProductcardItemWidgetHome({Key? key, required this.product})
       : super(key: key);
 
   @override
@@ -54,20 +54,11 @@ class ProductcardItemWidgetHome extends StatelessWidget {
                 Align(
                     alignment: Alignment.centerRight,
                     child: RichText(
-                        text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "0000",
-                          style: theme.textTheme.titleSmall!.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                        TextSpan(
-                          text: "99999",
-                          style: theme.textTheme.titleSmall,
-                        ),
-                      ],
-                    )))
+                      text: TextSpan(
+                        text: "Lowest price: ${product.lowestPrices}",
+                        style: theme.textTheme.titleSmall,
+                      ),
+                    ))
               ],
             ),
           ),
