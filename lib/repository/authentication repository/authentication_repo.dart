@@ -3,11 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/repository/authentication%20repository/exception/login_email_pass_failure.dart';
-// import 'package:qarenly/repository/authentication%20repository/exception/signup_email_pass_failure.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/material.dart';
 
 class AuthenticationRepo extends GetxController {
   static AuthenticationRepo get instance => Get.find();
@@ -15,6 +16,7 @@ class AuthenticationRepo extends GetxController {
   final _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   late final Rx<User?> firebaseUser;
+  var verificationId = ''.obs;
 
   @override
   void onReady() {
@@ -200,5 +202,48 @@ class AuthenticationRepo extends GetxController {
       'email': email,
       'password': password,
     });
+  }
+
+/*----------------------------------MOBILE_VERIFICATION-----------------------------------------*/
+  Future<void> sendOTP(String phoneNumber) async {
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // Auto-retrieval of SMS code completed
+          await _auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          // Handle verification failure
+          if (e.code == 'invalid-phone-number') {
+            Get.snackbar('Error', 'The provided phone number is not valid');
+          } else {
+            Get.snackbar('Error', 'Please try again');
+          }
+        },
+        codeSent: (verificationId, int? resendToken) {
+          this.verificationId.value = verificationId;
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          this.verificationId.value = verificationId;
+        },
+      );
+      // OTP sent successfully
+    } catch (e) {
+      // Error handling
+    }
+  }
+
+  Future<void> verifyOTP(String otp, String verificationId) async {
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: otp,
+      );
+
+      var result = await _auth.signInWithCredential(credential);
+    } catch (e) {
+      // OTP verification failed
+    }
   }
 }

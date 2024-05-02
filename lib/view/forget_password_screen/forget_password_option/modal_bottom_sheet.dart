@@ -33,7 +33,7 @@ class ForgetPasswordScreen {
             subTitle: "Reset via your mobile phone number",
             ontap: () {
               Navigator.pop(context);
-              Get.to(() => const MobileScreen());
+              Get.to(() => MobileScreen());
             },
           ),
         ]),

@@ -1,142 +1,151 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/widgets.dart';
+import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:qarenly/controller/viewProduct_controller.dart';
+import 'package:get/get.dart';
 
 class ViewproductPage extends StatefulWidget {
   ViewproductPage({Key? key}) : super(key: key);
+  final controller = Get.put(ViewProductController());
 
   @override
   _ViewProductPageState createState() => _ViewProductPageState();
 }
 
 class _ViewProductPageState extends State<ViewproductPage> {
-  late TextEditingController searchController;
-  late ViewProductController _controller;
-  late Future<DocumentSnapshot?> _documentFuture;
-  String? _productId;
-  String? _productType;
+  late ViewProductController _controller = Get.put(ViewProductController());
 
   @override
   void initState() {
     super.initState();
-    _controller = ViewProductController();
-    searchController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
+    _controller.onInit();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Map<String, dynamic>? args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-
-    if (args != null) {
-      _productId = args['productId'] as String?;
-      _productType = args['productType'] as String?;
-    }
-    _documentFuture = _initializeDocumentFuture();
+    _controller.initDependencies(context);
   }
 
-  Future<DocumentSnapshot?> _initializeDocumentFuture() async {
-    print('productID: ${_productId} product Type: ${_productType} blaaaaabb');
-
-    if (_productId != null && _productType != null) {
-      print('productID: ${_productId} product Type: ${_productType} blaaaaa');
-      final result =
-          await _controller.getProductDetails(_productId!, _productType!);
-      print("this is the result");
-      print(result);
-      if (result is DocumentSnapshot) {
-        return result;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
-
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//       child: SingleChildScrollView(
+//         child: Scaffold(
+//             appBar: BuildAppBar(searchController: _controller.searchController),
+//             body: Column(children: [
+//               Row(children: [
+//                 Text("Product Name:\n" +
+//                     _controller.documentData!['name'].toString()),
+//               ])
+//             ])),
+//       ),
+//     );
+//   }
+// }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('View Product'),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.onError,
-        body: FutureBuilder<DocumentSnapshot?>(
-          future: _documentFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+        appBar: BuildAppBar(searchController: _controller.searchController),
+        body: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Obx(() {
+            if (_controller.isLoading.value) {
               return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (snapshot.data == null) {
-              return Center(child: Text('Document not found.'));
+            } else if (_controller.documentData.value != null) {
+              final documentData = _controller.documentData.value!;
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Product Name:\n" + documentData['name'].toString(),
+                          maxLines: 2,
+                        ),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {},
+                          child: Icon(
+                            Icons.android_rounded,
+                            color: Colors.black,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: CircleBorder(),
+                            padding: EdgeInsets.all(20),
+                          )),
+                      ElevatedButton(
+                          onPressed: () {},
+                          child: Icon(
+                            Icons.android_rounded,
+                            color: Colors.black,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: CircleBorder(),
+                            padding: EdgeInsets.all(20),
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Image(
+                    image: NetworkImage(documentData['image_URL'].toString()),
+                    width: 300,
+                    height: 300,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Flexible(
+                      child: Text("Product Description:\n" +
+                          documentData['desc'].toString())),
+                ],
+              );
             } else {
-              print('object');
-              print(snapshot.data);
-              return Center(child: Text('Document found.'));
+              return Center(child: Text('Product not found.'));
             }
-          },
+          }),
         ),
       ),
     );
   }
 }
-
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   _productId = ModalRoute.of(context)?.settings.arguments as String?;
-  //   _productFuture = _controller
-  //       .getProductDetailsById(
-  //         _productId ?? "",
-  //         (productData) => Product.fromFirestore(productData),
-  //       )
-  //       .then((product) => product!);
-  // }
-
 //   @override
 //   void dispose() {
 //     searchController.dispose();
 //     super.dispose();
 //   }
 
-//   @override
+
+  // @override
 //   Widget build(BuildContext context) {
 //     return SafeArea(
-//         child: Scaffold(
-//             appBar: BuildAppBar(searchController: searchController),
-//             backgroundColor: Theme.of(context).colorScheme.onError,
-//             body: FutureBuilder<DocumentSnapshot?>(
-//                 future: _documentFuture,
-//                 builder: (context, snapshot) {
-//                   if (snapshot.connectionState == ConnectionState.waiting) {
-//                     return Center(child: CircularProgressIndicator());
-//                   } else if (snapshot.hasError) {
-//                     return Center(child: Text('Error: ${snapshot.error}'));
-//                   } else if (snapshot.data == null) {
-//                     return Center(child: Text('Document not found.'));
-//                   } else {
-//                     // Document found, you can access its data here
-//                     // For example:
-//                     // final data = snapshot.data!.data();
-//                     // print(data);
-//                     return Center(child: Text('Document found.'));
-//                   }
-//                 })));
-//   }
-
-//   void printProductDetails(Product product) {
-//     print('Product Name: ${product.name}');
-//     print('product id:${product.id}');
-//     // Add more properties to print as needed
+//       child: Scaffold(
+//         appBar: AppBar(
+//           title: Text('View Product'),
+//         ),
+//         backgroundColor: Theme.of(context).colorScheme.onError,
+//         body: FutureBuilder<DocumentSnapshot?>(
+//           future: _controller.documentFuture,
+//           builder: (context, snapshot) {
+//             if (snapshot.connectionState == ConnectionState.waiting) {
+//               return Center(child: CircularProgressIndicator());
+//             } else if (snapshot.hasError) {
+//               return Center(child: Text('Error: ${snapshot.error}'));
+//             } else if (snapshot.data == null) {
+//               return Center(child: Text('Document not found.'));
+//             } else {
+//               print('object');
+//               print(snapshot.data);
+//               return Center(child: Text('Document found.'));
+//             }
+//           },
+//         ),
+//       ),
+//     );
 //   }
 // }

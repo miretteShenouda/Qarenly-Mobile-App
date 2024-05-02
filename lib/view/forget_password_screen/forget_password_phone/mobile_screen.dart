@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/controller/authentication_controller/phone_auth_controller.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/view/forget_password_screen/forget_password_OTP/OTP_screen.dart';
 
-class MobileScreen extends StatelessWidget {
-  const MobileScreen({Key? key}) : super(key: key);
+class MobileScreen extends StatefulWidget {
+  @override
+  MobileScreen({Key? key}) : super(key: key);
+
+  @override
+  _MobileScreenState createState() => _MobileScreenState();
+}
+
+class _MobileScreenState extends State<MobileScreen> {
+  PhoneAuthController _controller = Get.put(PhoneAuthController());
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,10 +44,7 @@ class MobileScreen extends StatelessWidget {
               Text("Please enter your number to reset your password",
                   style: TextStyle(
                     color: Colors.orange[200],
-                  )
-                  //theme.textTheme.bodyLarge,
-
-                  ),
+                  )),
               const SizedBox(height: 20),
               Form(
                 child: Column(
@@ -49,6 +55,8 @@ class MobileScreen extends StatelessWidget {
                         color: Colors.white,
                       ),
                       child: TextFormField(
+                        controller: _controller.phoneNumberController,
+                        keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
                             label: Text("Mobile Number"),
                             prefixIcon: Icon(Icons.phone)),
@@ -60,6 +68,7 @@ class MobileScreen extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                             onPressed: () {
+                              _controller.sendOTP();
                               Get.to(() => const OTPScreen());
                             },
                             child: const Text(

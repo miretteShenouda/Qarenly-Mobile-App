@@ -22,6 +22,9 @@ class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
           AppbarTitleImage(
             imagePath: ImageConstant.imgEiUser,
             margin: EdgeInsets.only(left: 16.h, top: 7.v, bottom: 1.v),
+            onTap: () {
+              onTapBasilProfile(context);
+            },
           ),
         ],
       ),
@@ -53,4 +56,8 @@ class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 void onTapBasilMenuOutline(BuildContext context) {
   Navigator.pushNamed(context, AppRoutes.sideMenuScreen);
+}
+
+void onTapBasilProfile(BuildContext context) {
+  Navigator.pushNamed(context, AppRoutes.profilePage);
 }

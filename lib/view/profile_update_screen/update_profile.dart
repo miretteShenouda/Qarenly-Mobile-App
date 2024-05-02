@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:qarenly/common/widgets/tff_widget.dart';
 import 'package:qarenly/controller/profile_controller.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
+// import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
@@ -20,8 +20,9 @@ class UpdateProfileScreen extends StatelessWidget {
         leading: IconButton(
             onPressed: () => Get.back(),
             icon: const Icon(
-              LineAwesomeIcons.angle_left,
-              color: Colors.white,
+              Icons.arrow_back,
+              // LineAwesomeIcons.angle_left,
+              // color: Colors.white,
             )),
         title: Text("Edit Profile",
             style: TextStyle(fontSize: 30, color: Colors.white)),
@@ -57,7 +58,10 @@ class UpdateProfileScreen extends StatelessWidget {
                       onPressed: () {
                         // _pickImage(ImageSource.camera);
                       },
-                      child: const Text("Camera")),
+                      child: const Text(
+                        "Camera",
+                        style: TextStyle(color: Colors.black),
+                      )),
                   const SizedBox(
                     width: 10,
                   ),
@@ -65,7 +69,8 @@ class UpdateProfileScreen extends StatelessWidget {
                       onPressed: () {
                         // _pickImage(ImageSource.gallery);
                       },
-                      child: const Text("Gallery")),
+                      child: const Text("Gallery",
+                          style: TextStyle(color: Colors.black))),
                 ],
               ),
               const SizedBox(height: 50),

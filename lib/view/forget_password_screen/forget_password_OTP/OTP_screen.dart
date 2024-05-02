@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:qarenly/controller/authentication_controller/phone_auth_controller.dart';
+import 'package:get/get.dart';
 
-class OTPScreen extends StatelessWidget {
+class OTPScreen extends StatefulWidget {
   const OTPScreen({Key? key}) : super(key: key);
 
+  _OTPScreenState createState() => _OTPScreenState();
+}
+
+class _OTPScreenState extends State<OTPScreen> {
+  PhoneAuthController _controller = Get.put(PhoneAuthController());
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -29,18 +38,22 @@ class OTPScreen extends StatelessWidget {
                   )),
               SizedBox(height: 20.0),
               OtpTextField(
-                mainAxisAlignment: MainAxisAlignment.center,
-                numberOfFields: 6,
-                fillColor: Colors.black.withOpacity(0.1),
-                filled: true,
-                // onSubmit: (code) => print("OTP is =>")
-              ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  numberOfFields: 6,
+                  fillColor: Colors.black.withOpacity(0.1),
+                  filled: true,
+                  onSubmit: (code) {
+                    _controller.otpController = code as TextEditingController;
+                    print("OTP is => {$code}");
+                  }),
               SizedBox(height: 20.0),
               SizedBox(
                   width: double.infinity,
                   height: 50.0,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _controller.verifyOTP();
+                    },
                     child: Text("Submit"),
                   )),
             ],
