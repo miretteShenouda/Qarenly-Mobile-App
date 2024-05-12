@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +10,7 @@ import '../../common/widgets/app_bar/app_bar.dart';
 import '../../controller/homePage_controller.dart';
 
 class HomepageScreen extends StatefulWidget {
-  HomepageScreen({Key? key}) : super(key: key);
+  HomepageScreen(User user, {Key? key}) : super(key: key);
 
   @override
   _HomepageScreenState createState() => _HomepageScreenState();

@@ -23,7 +23,7 @@ class ForgetPasswordScreen {
             subTitle: "Reset via E-mail",
             ontap: () {
               Navigator.pop(context);
-              Get.to(() => const MailScreen());
+              Get.to(() => MailScreen());
             },
           ),
           SizedBox(height: 20),
