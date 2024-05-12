@@ -6,6 +6,8 @@ import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:qarenly/controller/viewProduct_controller.dart';
 import 'package:get/get.dart';
 
+import '../../common/theme/app_decoration.dart';
+
 class ViewproductPage extends StatefulWidget {
   ViewproductPage({Key? key}) : super(key: key);
   final controller = Get.put(ViewProductController());
@@ -16,6 +18,9 @@ class ViewproductPage extends StatefulWidget {
 
 class _ViewProductPageState extends State<ViewproductPage> {
   late ViewProductController _controller = Get.put(ViewProductController());
+  late ScrollController _scrollController;
+  int _currentIndex = 0;
+
 
   @override
   void initState() {
@@ -28,6 +33,27 @@ class _ViewProductPageState extends State<ViewproductPage> {
     super.didChangeDependencies();
     _controller.initDependencies(context);
   }
+
+
+  // void _scrollNext() {
+  //   setState(() {
+  //     _currentIndex = (_currentIndex + 1) % _controller.documentData.value?['sources'] ;
+  //   });
+  //
+  //   if (!_scrollController.hasClients) return;
+  //
+  //   //final maxScroll = _scrollController.position.maxScrollExtent;
+  //   final itemWidth = MediaQuery.of(context).size.width;
+  //   final targetScroll = _currentIndex * itemWidth;
+  //
+  //   _scrollController.animateTo(
+  //     targetScroll,
+  //     duration: const Duration(milliseconds: 500),
+  //     curve: Curves.easeInOut,
+  //   );
+  // }
+
+
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -58,51 +84,89 @@ class _ViewProductPageState extends State<ViewproductPage> {
             } else if (_controller.documentData.value != null) {
               final documentData = _controller.documentData.value!;
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Text(
-                          "Product Name:\n" + documentData['name'].toString(),
-                          maxLines: 2,
-                        ),
+                      Text("Product Name",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _controller.isNotified =
+                                      !_controller.isNotified;
+                                });
+                                if (_controller.isNotified) {
+                                  print("Notified");
+                                }
+                              },
+                              child: Icon(
+                                _controller.isNotified
+                                    ? Icons.notifications_active
+                                    : Icons.notifications_none,
+                                color: Colors.black,
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                shape: CircleBorder(),
+                                padding: EdgeInsets.all(20),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _controller.isSaved = !_controller.isSaved;
+                                });
+                                if (_controller.isSaved) {
+                                  print('Added to saved items');
+                                } else {
+                                  print('Removed from saved items');
+                                }
+                              },
+                              child: Icon(
+                                _controller.isSaved
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: Colors.black,
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                shape: CircleBorder(),
+                                padding: EdgeInsets.all(20),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      ElevatedButton(
-                          onPressed: () {},
-                          child: Icon(
-                            Icons.android_rounded,
-                            color: Colors.black,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(20),
-                          )),
-                      ElevatedButton(
-                          onPressed: () {},
-                          child: Icon(
-                            Icons.android_rounded,
-                            color: Colors.black,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(20),
-                          )),
                     ],
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    documentData['name'].toString(),
+                    maxLines: 2,
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Image(
+                  Center(
+                  child :Image(
                     image: NetworkImage(documentData['image_URL'].toString()),
                     width: 300,
                     height: 300,
-                  ),
+                  ),),
                   SizedBox(
                     height: 10,
                   ),
-                  Flexible(
-                      child: Text("Product Description:\n" +
-                          documentData['desc'].toString())),
+                  Text("Product Name",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  Flexible(child: Text(documentData['desc'].toString())),
                 ],
               );
             } else {
@@ -113,6 +177,49 @@ class _ViewProductPageState extends State<ViewproductPage> {
       ),
     );
   }
+
+
+
+  void _scrollNext() {
+    if (_controller.documentData.value == null) return;
+
+    setState(() {
+      // _currentIndex = (_currentIndex + 1) % _controller.documentData.value!['sources']!.length;
+    });
+
+    if (!_scrollController.hasClients) return;
+
+    final itemWidth = MediaQuery.of(context).size.width;
+    final targetScroll = _currentIndex * itemWidth;
+
+    _scrollController.animateTo(
+      targetScroll,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+  Widget _buildHorizontalScrollingSection() {
+    return Container(
+      decoration: AppDecoration.fillPrimary,
+      height: 198.0,
+      child: ListView.builder(
+        controller: _scrollController,
+        scrollDirection: Axis.horizontal,
+        itemCount: _controller.documentData.value?['sources'].length,
+        itemBuilder: (context, index) {
+          // final imageUrl = controller.laptops[index].imageUrl;
+          return Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: 5.0), // Add margin for spacing between items
+
+
+
+          );
+        },
+      ),
+    );
+  }
+
 }
 //   @override
 //   void dispose() {
@@ -120,8 +227,7 @@ class _ViewProductPageState extends State<ViewproductPage> {
 //     super.dispose();
 //   }
 
-
-  // @override
+// @override
 //   Widget build(BuildContext context) {
 //     return SafeArea(
 //       child: Scaffold(

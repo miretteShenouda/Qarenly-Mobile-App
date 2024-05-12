@@ -98,6 +98,9 @@ class ViewProductController extends GetxController {
   Rxn<Map<String, dynamic>> documentData = Rxn<Map<String, dynamic>>();
   RxBool isLoading = RxBool(true); // Initial value is true
 
+  bool isNotified = false;
+  bool isSaved = false;
+
   String? _productId;
   String? _productType;
 

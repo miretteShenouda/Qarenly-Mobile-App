@@ -6,6 +6,7 @@ class User {
   String email;
   UserType type;
   List<String> searchHistory;
+  List<String> savedItems;
   User({
     required this.id,
     required this.username,
@@ -13,6 +14,8 @@ class User {
     required this.email,
     required this.type,
     required this.searchHistory,
+    required this.savedItems,
+
   });
 }
 
