@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/repository/authentication%20repository/exception/login_email_pass_failure.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
@@ -12,23 +11,65 @@ import 'package:flutter/material.dart';
 
 class AuthenticationRepo extends GetxController {
   static AuthenticationRepo get instance => Get.find();
-
   final _auth = FirebaseAuth.instance;
+
   final GoogleSignIn googleSignIn = GoogleSignIn();
   late final Rx<User?> firebaseUser;
   var verificationId = ''.obs;
+  User? currentUser;
 
   @override
   void onReady() {
     firebaseUser = Rx<User?>(_auth.currentUser);
-    firebaseUser.bindStream(_auth.userChanges());
+    firebaseUser.bindStream(
+        _auth.authStateChanges()); // Listen to authentication state changes
+    ever(firebaseUser, _handleUserAuthentication);
     ever(firebaseUser, _setInitialScreen);
+
+    ///firebaseUser.bindStream(_auth.userChanges());
   }
+
+  _handleUserAuthentication(User? user) {
+    if (user != null) {
+      print("gowa el handleuser");
+      currentUser = user;
+      print(user.uid);
+      // If user is not null, fetch user data from Firestore
+      ///  _fetchUserData(user.uid);
+    } else {
+      // If user is null, navigate to login page
+      Get.offAll(() => LoginPageScreen());
+    }
+  }
+
+  // // Fetch user data from Firestore based on uid
+  // Future<void> _fetchUserData(String uid) async {
+  //   try {
+  //     final userData =
+  //         await FirebaseFirestore.instance.collection('Users').doc(uid).get();
+
+  //     if (userData.exists) {
+  //       // User data exists in Firestore
+  //       // Extract user properties and do something with them
+  //       final username = userData.get('username');
+  //       final email = userData.get('email');
+  //       final password = userData.get('password');
+
+  //       // You can use the fetched user data as needed
+  //     } else {
+  //       // User data does not exist in Firestore
+  //       // Handle the case where user data is missing
+  //     }
+  //   } catch (e) {
+  //     // Error handling
+  //     print('Error fetching user data: $e');
+  //   }
+  // }
 
   _setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => LoginPageScreen())
-        : Get.offAll(() => HomepageScreen());
+        : Get.offAll(() => HomepageScreen(user));
   }
 
 /*---------------------------------AUTHENTICATION------------------------------------------*/
@@ -37,10 +78,12 @@ class AuthenticationRepo extends GetxController {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      firebaseUser.value != null
-          ? Get.offAll(() => HomepageScreen())
-          : Get.to(() => LoginPageScreen());
       User? user = userCredential.user;
+
+      firebaseUser.value != null
+          ? Get.offAll(() => HomepageScreen(user!))
+          : Get.to(() => LoginPageScreen());
+      // User? user = userCredential.user;
       return user;
     } catch (e) {
       print('Error registering user: $e');

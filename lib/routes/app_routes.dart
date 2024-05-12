@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
@@ -41,7 +42,7 @@ class AppRoutes {
     splashscreenScreen: (context) => SplashscreenScreen(),
     loginPageScreen: (context) => LoginPageScreen(),
     signUpPageScreen: (context) => SignUpPageScreen(),
-    homepageScreen: (context) => HomepageScreen(),
+    homepageScreen: (context) => HomepageScreen(User as User),
     searchOutputPageTabContainerScreen: (context) =>
         SearchOutputPageTabContainerScreen(),
     searchOutputPage: (context) => SearchOutputPage(),
