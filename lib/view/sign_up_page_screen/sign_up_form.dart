@@ -60,6 +60,7 @@ class SignUpForm extends StatelessWidget {
               Controller: controller.password,
               hintText: "Password",
               ticon: Icons.fingerprint,
+              obscureText: true,
             ),
             SizedBox(
               height: 10,
@@ -74,9 +75,10 @@ class SignUpForm extends StatelessWidget {
               Controller: controller.confirmPassword,
               hintText: "Confirm Password",
               ticon: Icons.fingerprint,
+              obscureText: true,
             ),
             SizedBox(
-              height: 10,
+              height: 15,
             ),
             CustomElevatedButton(
               text: "Register",

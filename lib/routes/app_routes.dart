@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:qarenly/controller/authentication_controller/login_controller.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
 import 'package:qarenly/view/saveditems_screen/saveditems_screen.dart';
@@ -42,7 +43,8 @@ class AppRoutes {
     splashscreenScreen: (context) => SplashscreenScreen(),
     loginPageScreen: (context) => LoginPageScreen(),
     signUpPageScreen: (context) => SignUpPageScreen(),
-    homepageScreen: (context) => HomepageScreen(User as User),
+    homepageScreen: (context) =>
+        HomepageScreen(LoginController.instance.currentUser!),
     searchOutputPageTabContainerScreen: (context) =>
         SearchOutputPageTabContainerScreen(),
     searchOutputPage: (context) => SearchOutputPage(),
@@ -50,4 +52,9 @@ class AppRoutes {
     viewproductPage: (context) => ViewproductPage(),
     profilePage: (context) => UpdateProfileScreen(),
   };
+
+  // Helper method to navigate to the Distance screen with parameters
+  // static void navigateToHomeScreen(BuildContext context, User user) {
+  //   Navigator.pushNamed(context, homepageScreen, arguments: user);
+  // }
 }

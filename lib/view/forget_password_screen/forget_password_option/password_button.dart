@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ForgetPasswordWidget extends StatelessWidget {
   const ForgetPasswordWidget({
@@ -29,8 +27,17 @@ class ForgetPasswordWidget extends StatelessWidget {
             Icon(buttonIcon, size: 50),
             SizedBox(width: 20),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(title, style: Theme.of(context).textTheme.headlineSmall),
-              Text(subTitle, style: Theme.of(context).textTheme.bodyMedium),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              Container(
+                width: 200,
+                child: Text(
+                  subTitle,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
             ])
           ],
         ),

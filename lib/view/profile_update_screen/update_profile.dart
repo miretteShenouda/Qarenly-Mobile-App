@@ -11,7 +11,7 @@ class UpdateProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProfileController());
+    final profileController = Get.put(ProfileController());
 
     return Scaffold(
       appBar: AppBar(
@@ -21,8 +21,6 @@ class UpdateProfileScreen extends StatelessWidget {
             onPressed: () => Get.back(),
             icon: const Icon(
               Icons.arrow_back,
-              // LineAwesomeIcons.angle_left,
-              // color: Colors.white,
             )),
         title: Text("Edit Profile",
             style: TextStyle(fontSize: 30, color: Colors.white)),
@@ -41,7 +39,6 @@ class UpdateProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(30),
           child: Column(
             children: [
-              // -- IMAGE with ICON
               CircleAvatar(
                 radius: 60,
                 // backgroundImage: _imageFile != null
@@ -80,22 +77,22 @@ class UpdateProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     TFF_widget(
-                        Controller: controller.username,
+                        Controller: profileController.username,
                         ticon: Icons.person,
                         hintText: "Full Name"),
                     const SizedBox(height: 10),
                     TFF_widget(
-                        Controller: controller.email,
+                        Controller: profileController.email,
                         ticon: Icons.email,
                         hintText: "email"),
                     const SizedBox(height: 10),
                     TFF_widget(
-                        Controller: controller.password,
+                        Controller: profileController.password,
                         ticon: Icons.fingerprint,
                         hintText: "Password"),
                     const SizedBox(height: 10),
                     TFF_widget(
-                        Controller: controller.confirmPassword,
+                        Controller: profileController.confirmPassword,
                         ticon: Icons.fingerprint,
                         hintText: "Confirm Password"),
                     const SizedBox(height: 30),
@@ -106,7 +103,7 @@ class UpdateProfileScreen extends StatelessWidget {
                       height: 30,
                       child: ElevatedButton(
                         onPressed: () {
-                          controller.updateProfile();
+                          profileController.updateProfile();
                         },
                         style: ElevatedButton.styleFrom(
                             side: BorderSide.none,

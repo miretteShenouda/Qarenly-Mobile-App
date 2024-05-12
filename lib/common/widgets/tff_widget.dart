@@ -7,29 +7,31 @@ class TFF_widget extends StatelessWidget {
     required this.ticon,
     required this.hintText,
     this.validator,
+    this.obscureText = false,
   }) : super(key: key);
 
   final TextEditingController Controller;
   final IconData ticon;
   final String hintText;
   final String? Function(String?)? validator;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 45,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50.0),
-        color: Colors.white,
-      ),
-      child: TextFormField(
-          validator: validator,
-          controller: Controller,
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            prefixIcon: Icon(ticon, color: Colors.orange.withOpacity(0.8)),
-            hintText: hintText,
-          )),
-    );
+    return TextFormField(
+        validator: validator,
+        controller: Controller,
+        obscureText: obscureText,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(30, 10, 26, 10),
+          fillColor: Colors.white,
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          prefixIcon: Icon(ticon, color: Colors.orange.withOpacity(0.8)),
+          hintText: hintText,
+        ));
   }
 }

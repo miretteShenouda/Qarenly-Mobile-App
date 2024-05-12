@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:qarenly/common/theme/theme_helper.dart';
+// import 'package:qarenly/common/theme/theme_helper.dart';
+import 'package:qarenly/core/app_export.dart';
 
 // class ResetPasswordScreen extends StatefulWidget {
 //   final String email;
@@ -185,6 +186,8 @@ class MailScreen extends StatelessWidget {
                               "A password reset link has been sent to $email",
                               snackPosition: SnackPosition.BOTTOM,
                             );
+                            Navigator.pushReplacementNamed(
+                                context, AppRoutes.loginPageScreen);
                             // Get.to(ResetPasswordScreen(
                             //     email: email)); // Pass email as named parameter
                           },
