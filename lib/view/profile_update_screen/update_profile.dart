@@ -8,16 +8,24 @@ import 'package:qarenly/model/user_model.dart';
 // import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
-  const UpdateProfileScreen({Key? key}) : super(key: key);
-
+  UpdateProfileScreen({Key? key}) : super(key: key);
   @override
   State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
 }
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
+
+  final profileController = Get.put(ProfileController());
+  var futureUserData;
+
+  @override
+  void initState() {
+    super.initState();
+    futureUserData = profileController.fetchUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final profileController = Get.put(ProfileController());
 
     return Scaffold(
       appBar: AppBar(
@@ -32,7 +40,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             style: TextStyle(fontSize: 30, color: Colors.white)),
       ),
       body: FutureBuilder<UserModel?>(
-          future: profileController.fetchUserData(),
+          future: futureUserData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // While waiting for the future to resolve
@@ -41,7 +49,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               // If an error occurred
               return Text('Error: ${snapshot.error}');
             } else {
-              profileController.controllerSetters(snapshot.data!);
               // When the future completes successfully
               return SingleChildScrollView(
                 child: Container(

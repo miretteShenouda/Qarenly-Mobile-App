@@ -29,12 +29,14 @@ class ProfileController extends GetxController {
   }
 
   Future<UserModel?> fetchUserData() async {
-    return await AuthenticationRepo.instance.fetchUserData();
+    UserModel? user =  await AuthenticationRepo.instance.fetchUserData();
+    controllerSetters(user!);
+    return user;
   }
 
   void controllerSetters(UserModel user) {
-    username.text = username.text.isEmpty ? user.username : username.text;
-    email.text = email.text.isEmpty ? user.email : email.text;
-    password.text = password.text.isEmpty ? user.password : password.text;
+    username.text = user.username;
+    email.text = user.email;
+    password.text = user.password;
   }
 }
