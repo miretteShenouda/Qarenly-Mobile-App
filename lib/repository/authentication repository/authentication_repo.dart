@@ -257,6 +257,15 @@ class AuthenticationRepo extends GetxController {
     return null;
   }
 
+  Future<void> updateUserPassword(String newPassword) async {
+      try {
+        await currentUser!.updatePassword(newPassword);
+      }
+      catch (e) {
+        print(e);
+      }
+  }
+
 /*----------------------------------MOBILE_VERIFICATION-----------------------------------------*/
   Future<void> sendOTP(String phoneNumber) async {
     try {

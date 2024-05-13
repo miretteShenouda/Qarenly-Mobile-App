@@ -18,6 +18,7 @@ class ProfileController extends GetxController {
   void updateProfile() {
     AuthenticationRepo.instance
         .UpdateUser(username.text, email.text, password.text);
+    AuthenticationRepo.instance.updateUserPassword(password.text);
   }
 
   Future<void> deleteUser() async{
