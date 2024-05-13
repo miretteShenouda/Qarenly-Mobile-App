@@ -5,10 +5,8 @@ import 'package:get/get.dart';
 import 'package:qarenly/model/product_model.dart';
 import 'package:qarenly/routes/app_routes.dart';
 
-import '../../common/theme/app_decoration.dart';
 import '../../common/widgets/ProductcardItemWidgetHome.dart';
 import '../../common/widgets/app_bar/app_bar.dart';
-import '../../controller/homePage_controller.dart';
 import '../../controller/search_controller.dart';
 
 class SearchResultsPage extends StatefulWidget {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qarenly/common/widgets/api_widget.dart';
 // import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/view/sign_up_page_screen/sign_up_footer.dart';

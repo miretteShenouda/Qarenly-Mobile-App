@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:qarenly/model/user_model.dart';
 import 'package:qarenly/repository/authentication%20repository/exception/login_email_pass_failure.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
@@ -42,29 +43,7 @@ class AuthenticationRepo extends GetxController {
     }
   }
 
-  // // Fetch user data from Firestore based on uid
-  // Future<void> _fetchUserData(String uid) async {
-  //   try {
-  //     final userData =
-  //         await FirebaseFirestore.instance.collection('Users').doc(uid).get();
 
-  //     if (userData.exists) {
-  //       // User data exists in Firestore
-  //       // Extract user properties and do something with them
-  //       final username = userData.get('username');
-  //       final email = userData.get('email');
-  //       final password = userData.get('password');
-
-  //       // You can use the fetched user data as needed
-  //     } else {
-  //       // User data does not exist in Firestore
-  //       // Handle the case where user data is missing
-  //     }
-  //   } catch (e) {
-  //     // Error handling
-  //     print('Error fetching user data: $e');
-  //   }
-  // }
 
   _setInitialScreen(User? user) {
     user == null
@@ -245,6 +224,39 @@ class AuthenticationRepo extends GetxController {
     });
   }
 
+  Future<void> deleteUser() async {
+      await FirebaseFirestore.instance.collection('Users').doc(this.currentUser!.uid).delete();
+  }
+
+  // Fetch user data from Firestore based on uid
+  Future<UserModel?> fetchUserData() async {
+    String uid = currentUser!.uid;
+    try {
+      final userData =
+          await FirebaseFirestore.instance.collection('Users').doc(uid).get();
+
+      if (userData.exists) {
+        // User data exists in Firestore
+        // Extract user properties and do something with them
+        final username = userData.get('username');
+        final email = userData.get('email');
+        final password = userData.get('password');
+
+        UserModel user = UserModel(id: uid, username: username, email: email, password: password);
+        return user;
+
+        // You can use the fetched user data as needed
+      } else {
+        // User data does not exist in Firestore
+        // Handle the case where user data is missing
+      }
+    } catch (e) {
+      // Error handling
+      print('Error fetching user data: $e');
+    }
+    return null;
+  }
+
 /*----------------------------------MOBILE_VERIFICATION-----------------------------------------*/
   Future<void> sendOTP(String phoneNumber) async {
     try {
@@ -287,4 +299,5 @@ class AuthenticationRepo extends GetxController {
       // OTP verification failed
     }
   }
+
 }
