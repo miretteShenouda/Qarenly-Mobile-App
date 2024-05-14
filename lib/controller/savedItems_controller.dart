@@ -1,8 +1,52 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/model/user_model.dart';
+import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 import '../model/laptop_model.dart';
 import '../model/product_model.dart';
+
+class SavedItemsController extends GetxController {
+  Future<List<Product>> fetchSavedItems() async {
+    final List<Product> savedItems = [];
+    try {
+      final userId = AuthenticationRepo.instance.currentUser!.uid;
+      UserModel userData = AuthenticationRepo.instance.userData!;
+
+      if (userData.savedItems!.isNotEmpty) {
+        for (DocumentReference map in userData.savedItems!) {
+          DocumentSnapshot productDocSnapshot = await map.get();
+          Map<String, dynamic>? data =
+              productDocSnapshot.data() as Map<String, dynamic>?;
+
+          if (data != null) {
+            Product product = Product.fromFirestore(data);
+            savedItems.add(product);
+          }
+        }
+      }
+      return savedItems;
+    } catch (error) {}
+    return [];
+  }
+  Future<void> deleteProduct(Product product) async {
+    try {
+      final savedItemsData = AuthenticationRepo.instance.userData!.savedItems;
+
+      if (savedItemsData != null) {
+        savedItemsData.removeWhere(( ref) => ref.id == product.id);
+
+        AuthenticationRepo.instance.userData!.savedItems = savedItemsData;
+        AuthenticationRepo.instance.UpdateUser(AuthenticationRepo.instance.userData!);
+      }
+    } catch (error) {
+      print("Error deleting product: $error");
+    }
+  }
+
+}
+
+
 
 // class SavedItemsController extends GetxController {
 //   static SavedItemsController get instance => Get.find();
@@ -87,81 +131,3 @@ import '../model/product_model.dart';
 //     }
 //   }
 // }
-class SavedItemsController extends GetxController {
-  static SavedItemsController get instance => Get.find();
-
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-  final RxList<Product> savedItems = <Product>[].obs;
-  final RxBool isLoading = true.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    fetchSavedItems();
-  }
-
-  Future<void> fetchSavedItems() async {
-    try {
-      isLoading.value = true;
-      final userId = 'kqX7HeWwwOZGKhvqdQCf'; // Replace with the actual user ID
-      final userDocSnapshot = await _db.collection("Users").doc(userId).get();
-
-      if (userDocSnapshot.exists) {
-        final userData = userDocSnapshot.data();
-        if (userData != null) {
-          List<dynamic> savedItemsData = userData['SavedItems'] ?? [];
-          List<DocumentReference> savedItemsReferences =
-              savedItemsData.map((data) => data as DocumentReference).toList();
-
-          for (final DocumentReference ref in savedItemsReferences) {
-            final DocumentSnapshot productDocSnapshot = await ref.get();
-            final String referencePath = productDocSnapshot.reference.path;
-            final List<String> parts = referencePath.split('/');
-            final String productType = parts[0];
-            final String documentId = parts[1];
-            print("Product Type: $productType");
-            print("Document ID: $documentId");
-            final DocumentSnapshot productDocSnapshot1 =
-                await _db.collection(productType).doc(documentId).get();
-
-            if (productDocSnapshot1.exists) {
-              if (productType == "Laptops") {
-                final Map<String, dynamic>? productData =
-                    productDocSnapshot1.data() as Map<String, dynamic>?;
-                print("Product Data: $productData");
-
-                if (productData != null) {
-                  final Laptop laptop = Laptop.fromFirestore(productData);
-                  savedItems.add(laptop);
-                }
-              }
-            }
-          }
-        }
-      }
-
-      isLoading.value = false;
-    } catch (error) {
-      print("Error retrieving saved items: $error");
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> deleteProduct(Product product) async {
-    try {
-      final userId = 'kqX7HeWwwOZGKhvqdQCf'; // Replace with the actual user ID
-      final userDocRef = _db.collection('Users').doc(userId);
-      final savedItemsData = (await userDocRef.get()).data()?['SavedItems'];
-
-      if (savedItemsData != null) {
-        final updatedSavedItems =
-            savedItemsData.where((ref) => ref.id != product.id).toList();
-
-        await userDocRef.update({'SavedItems': updatedSavedItems});
-        savedItems.remove(product);
-      }
-    } catch (error) {
-      print("Error deleting product: $error");
-    }
-  }
-}

@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:qarenly/model/product_model.dart';
+import 'dart:ffi';
 
 class Storage extends Product {
   String architecture;

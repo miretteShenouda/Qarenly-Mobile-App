@@ -21,7 +21,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
   late ScrollController _scrollController;
   int _currentIndex = 0;
 
-
   @override
   void initState() {
     super.initState();
@@ -34,43 +33,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
     _controller.initDependencies(context);
   }
 
-
-  // void _scrollNext() {
-  //   setState(() {
-  //     _currentIndex = (_currentIndex + 1) % _controller.documentData.value?['sources'] ;
-  //   });
-  //
-  //   if (!_scrollController.hasClients) return;
-  //
-  //   //final maxScroll = _scrollController.position.maxScrollExtent;
-  //   final itemWidth = MediaQuery.of(context).size.width;
-  //   final targetScroll = _currentIndex * itemWidth;
-  //
-  //   _scrollController.animateTo(
-  //     targetScroll,
-  //     duration: const Duration(milliseconds: 500),
-  //     curve: Curves.easeInOut,
-  //   );
-  // }
-
-
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: SingleChildScrollView(
-//         child: Scaffold(
-//             appBar: BuildAppBar(searchController: _controller.searchController),
-//             body: Column(children: [
-//               Row(children: [
-//                 Text("Product Name:\n" +
-//                     _controller.documentData!['name'].toString()),
-//               ])
-//             ])),
-//       ),
-//     );
-//   }
-// }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -121,15 +83,11 @@ class _ViewProductPageState extends State<ViewproductPage> {
                           Align(
                             alignment: Alignment.topRight,
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
+                                await _controller.toggleSavedItem();
                                 setState(() {
                                   _controller.isSaved = !_controller.isSaved;
                                 });
-                                if (_controller.isSaved) {
-                                  print('Added to saved items');
-                                } else {
-                                  print('Removed from saved items');
-                                }
                               },
                               child: Icon(
                                 _controller.isSaved
@@ -156,15 +114,16 @@ class _ViewProductPageState extends State<ViewproductPage> {
                     height: 10,
                   ),
                   Center(
-                  child :Image(
-                    image: NetworkImage(documentData['image_URL'].toString()),
-                    width: 300,
-                    height: 300,
-                  ),),
+                    child: Image(
+                      image: NetworkImage(documentData['image_URL'].toString()),
+                      width: 300,
+                      height: 300,
+                    ),
+                  ),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Product Name",
+                  Text("Product description",
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   Flexible(child: Text(documentData['desc'].toString())),
                 ],
@@ -177,8 +136,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
       ),
     );
   }
-
-
 
   void _scrollNext() {
     if (_controller.documentData.value == null) return;
@@ -198,29 +155,28 @@ class _ViewProductPageState extends State<ViewproductPage> {
       curve: Curves.easeInOut,
     );
   }
-  Widget _buildHorizontalScrollingSection() {
-    return Container(
-      decoration: AppDecoration.fillPrimary,
-      height: 198.0,
-      child: ListView.builder(
-        controller: _scrollController,
-        scrollDirection: Axis.horizontal,
-        itemCount: _controller.documentData.value?['sources'].length,
-        itemBuilder: (context, index) {
-          // final imageUrl = controller.laptops[index].imageUrl;
-          return Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: 5.0), // Add margin for spacing between items
 
-
-
-          );
-        },
-      ),
-    );
-  }
-
+//   Widget _buildHorizontalScrollingSection() {
+//     return Container(
+//       decoration: AppDecoration.fillPrimary,
+//       height: 198.0,
+//       child: ListView.builder(
+//         controller: _scrollController,
+//         scrollDirection: Axis.horizontal,
+//         itemCount: _controller.documentData.value?['sources'].length,
+//         itemBuilder: (context, index) {
+//           // final imageUrl = controller.laptops[index].imageUrl;
+//           return Container(
+//             margin: EdgeInsets.symmetric(
+//                 horizontal: 5.0), // Add margin for spacing between items
+//           );
+//         },
+//       ),
+//     );
+//   }
 }
+
+
 //   @override
 //   void dispose() {
 //     searchController.dispose();
@@ -251,6 +207,42 @@ class _ViewProductPageState extends State<ViewproductPage> {
 //             }
 //           },
 //         ),
+//       ),
+//     );
+//   }
+// }
+  // void _scrollNext() {
+  //   setState(() {
+  //     _currentIndex = (_currentIndex + 1) % _controller.documentData.value?['sources'] ;
+  //   });
+  //
+  //   if (!_scrollController.hasClients) return;
+  //
+  //   //final maxScroll = _scrollController.position.maxScrollExtent;
+  //   final itemWidth = MediaQuery.of(context).size.width;
+  //   final targetScroll = _currentIndex * itemWidth;
+  //
+  //   _scrollController.animateTo(
+  //     targetScroll,
+  //     duration: const Duration(milliseconds: 500),
+  //     curve: Curves.easeInOut,
+  //   );
+  // }
+
+
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//       child: SingleChildScrollView(
+//         child: Scaffold(
+//             appBar: BuildAppBar(searchController: _controller.searchController),
+//             body: Column(children: [
+//               Row(children: [
+//                 Text("Product Name:\n" +
+//                     _controller.documentData!['name'].toString()),
+//               ])
+//             ])),
 //       ),
 //     );
 //   }

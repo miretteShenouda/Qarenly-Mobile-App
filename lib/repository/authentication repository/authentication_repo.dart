@@ -18,6 +18,7 @@ class AuthenticationRepo extends GetxController {
   late final Rx<User?> firebaseUser;
   var verificationId = ''.obs;
   User? currentUser;
+  UserModel? userData;
 
   @override
   void onReady() {
@@ -30,20 +31,19 @@ class AuthenticationRepo extends GetxController {
     ///firebaseUser.bindStream(_auth.userChanges());
   }
 
-  _handleUserAuthentication(User? user) {
+  _handleUserAuthentication(User? user) async {
     if (user != null) {
       print("gowa el handleuser");
       currentUser = user;
       print(user.uid);
       // If user is not null, fetch user data from Firestore
-      ///  _fetchUserData(user.uid);
+      // /  _fetchUserData(user.uid);
+      userData = await fetchUserData();
     } else {
       // If user is null, navigate to login page
       Get.offAll(() => LoginPageScreen());
     }
   }
-
-
 
   _setInitialScreen(User? user) {
     user == null
@@ -209,23 +209,20 @@ class AuthenticationRepo extends GetxController {
     });
   }
 
-  Future<void> UpdateUser(
-    String username,
-    String email,
-    String password,
-  ) async {
-    final user = FirebaseAuth.instance.currentUser;
+  Future<void> UpdateUser(UserModel user) async {
+    final currentUser = FirebaseAuth.instance.currentUser;
     final userDocRef =
-        FirebaseFirestore.instance.collection('Users').doc(user!.uid);
-    await userDocRef.update({
-      'username': username,
-      'email': email,
-      'password': password,
-    });
+        FirebaseFirestore.instance.collection('Users').doc(currentUser!.uid);
+    await userDocRef.update(user.toMap());
+
+    userData = user;
   }
 
   Future<void> deleteUser() async {
-      await FirebaseFirestore.instance.collection('Users').doc(this.currentUser!.uid).delete();
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(this.currentUser!.uid)
+        .delete();
   }
 
   // Fetch user data from Firestore based on uid
@@ -241,8 +238,14 @@ class AuthenticationRepo extends GetxController {
         final username = userData.get('username');
         final email = userData.get('email');
         final password = userData.get('password');
+        final savedItems = userData.get('savedItems');
 
-        UserModel user = UserModel(id: uid, username: username, email: email, password: password);
+        final List<DocumentReference> updatedSavedItems =
+            savedItems!.cast<DocumentReference>(); 
+
+
+        UserModel user = UserModel(
+            id: uid, username: username, email: email, password: password , savedItems: updatedSavedItems,);
         return user;
 
         // You can use the fetched user data as needed
@@ -258,12 +261,11 @@ class AuthenticationRepo extends GetxController {
   }
 
   Future<void> updateUserPassword(String newPassword) async {
-      try {
-        await currentUser!.updatePassword(newPassword);
-      }
-      catch (e) {
-        print(e);
-      }
+    try {
+      await currentUser!.updatePassword(newPassword);
+    } catch (e) {
+      print(e);
+    }
   }
 
 /*----------------------------------MOBILE_VERIFICATION-----------------------------------------*/
@@ -308,5 +310,4 @@ class AuthenticationRepo extends GetxController {
       // OTP verification failed
     }
   }
-
 }

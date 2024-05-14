@@ -49,7 +49,7 @@ class ProductcardItemWidget extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "Lowest price: ${product.lowestPrices}",
+                      text: product.lowestPrices.length == 0 ? "Lowest price: ${'N/A'}" : "Lowest price: ${product.lowestPrices.last.toDouble()}",
                       style: theme.textTheme.titleSmall,
                     ),
                   ],

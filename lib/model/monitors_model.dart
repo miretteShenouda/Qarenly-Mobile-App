@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:qarenly/model/product_model.dart';
+import 'dart:ffi';
 
 class Monitors extends Product {
   String screenSize;

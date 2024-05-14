@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+
+
 class Product {
   String brand;
   String id;
@@ -43,7 +45,11 @@ class Product {
       imageUrl: data['image_URL'] ?? '',
       benchmark: (data['benchmark'] ?? 0.0).toDouble(),
       sources: (data['sources'] ?? []).cast<Map>(),
-      lowestPrices: (data['lowest_prices'] ?? []).cast<double>(),
+
+      lowestPrices: List<double>.from((data['lowest_prices'] as List<dynamic>?)
+              ?.map((price) => (price as num).toDouble()) ??
+          []),
+          
       dates: (data['dates'] ?? [])
           .map<String>((timestamp) => timestamp.toString())
           .toList(),

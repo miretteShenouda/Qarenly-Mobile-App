@@ -15,7 +15,9 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
   TextEditingController homeController = TextEditingController();
 
   TextEditingController notificationsController = TextEditingController();
+
   AuthenticationRepo _authenticationRepo = AuthenticationRepo();
+
   bool isDark = false;
   @override
   void initState() {
@@ -332,7 +334,7 @@ Widget _buildSixtyThree(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Username",
+            AuthenticationRepo.instance.userData!.username,
             style: CustomTextStyles.headlineSmallSemiBold,
           ),
           // Add some vertical space between the username and the bottom edge of the header
@@ -383,5 +385,5 @@ onTapImgBookmark(BuildContext context) {
 // }
 
 onTapImgHome(BuildContext context) {
-  Navigator.pushNamed(context, AppRoutes.homepageScreen);
+  Navigator.pushReplacementNamed(context, AppRoutes.homepageScreen);
 }

@@ -16,21 +16,26 @@ class ProfileController extends GetxController {
   bool passwordConfirmIsObsecure = true;
 
   void updateProfile() {
-    AuthenticationRepo.instance
-        .UpdateUser(username.text, email.text, password.text);
+    UserModel user = AuthenticationRepo.instance.userData!;
+    user.username = username.text;
+    user.email = email.text;
+    user.password = password.text;
+    AuthenticationRepo.instance.UpdateUser(user);
     AuthenticationRepo.instance.updateUserPassword(password.text);
   }
 
-  Future<void> deleteUser() async{
+  Future<void> deleteUser() async {
     // Delete Firestore user
     await AuthenticationRepo.instance.deleteUser();
     // Delete Firebase Auth user
     await AuthenticationRepo.instance.currentUser!.delete();
+    AuthenticationRepo.instance.userData = null;
   }
 
   Future<UserModel?> fetchUserData() async {
-    UserModel? user =  await AuthenticationRepo.instance.fetchUserData();
+    UserModel? user = await AuthenticationRepo.instance.fetchUserData();
     controllerSetters(user!);
+    AuthenticationRepo.instance.userData = user;
     return user;
   }
 

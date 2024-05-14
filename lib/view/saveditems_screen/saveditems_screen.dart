@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/controller/savedItems_controller.dart';
 import 'package:qarenly/core/app_export.dart';
+import 'package:qarenly/model/product_model.dart';
 import '../../common/widgets/app_bar/app_bar.dart';
 import '../../common/widgets/productcard_item_widget.dart';
 import 'package:get/get.dart';
@@ -15,39 +16,45 @@ class SaveditemsScreen extends StatefulWidget {
 class _SaveditemsScreenState extends State<SaveditemsScreen> {
   bool value = false; // Initial value for the checkbox
   TextEditingController searchController = TextEditingController();
-  final controller = Get.put(SavedItemsController());
+  final savedItemsController = Get.put(SavedItemsController());
+
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: BuildAppBar(searchController: searchController),
-        body: Obx(() {
-          if (controller.isLoading.value) {
-            return Center(child: CircularProgressIndicator());
-          } else {
-            return SingleChildScrollView(
-              child: Container(
-                width: 391.h,
-                padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 24.v),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 5.v),
-                    _buildCheckbox(),
-                    _buildSavedItemsSection(context),
-                    SizedBox(height: 8.v),
-                    Padding(
-                      padding: EdgeInsets.only(left: 13.h),
+          appBar: BuildAppBar(searchController: searchController),
+          body: FutureBuilder(
+              future: savedItemsController.fetchSavedItems(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return SingleChildScrollView(
+                    child: Container(
+                      width: 391.h,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.h, vertical: 24.v),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 5.v),
+                          _buildCheckbox(),
+                          _buildSavedItemsSection(context , snapshot),
+                          SizedBox(height: 8.v),
+                          Padding(
+                            padding: EdgeInsets.only(left: 13.h),
+                          ),
+                          SizedBox(height: 18.v),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 18.v),
-                  ],
-                ),
-              ),
-            );
-          }
-        }),
-      ),
+                  );
+                }
+              })),
     );
   }
 
@@ -66,7 +73,8 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
     );
   }
 
-  Widget _buildSavedItemsSection(BuildContext context) {
+  Widget _buildSavedItemsSection(BuildContext context , AsyncSnapshot<Object?> snapshot) {
+    var data = snapshot.data! as List<Product>;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -81,11 +89,11 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
           separatorBuilder: (context, index) {
             return SizedBox(height: 21.v);
           },
-          itemCount: controller.savedItems.length,
+          itemCount: data.length,
           itemBuilder: (context, index) {
             return ProductcardItemWidget(
-              product: controller.savedItems[index],
-              savedItemsController: controller,
+              product: data[index],
+              savedItemsController: savedItemsController,
             );
           },
         ),
