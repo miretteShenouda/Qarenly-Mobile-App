@@ -14,7 +14,6 @@ class UpdateProfileScreen extends StatefulWidget {
 }
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
-
   final profileController = Get.put(ProfileController());
   var futureUserData;
 
@@ -26,7 +25,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.colorScheme.onPrimary,
@@ -44,7 +42,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // While waiting for the future to resolve
-              return Center(child: CircularProgressIndicator()); // Display a loading indicator();
+              return Center(
+                  child:
+                      CircularProgressIndicator()); // Display a loading indicator();
             } else if (snapshot.hasError) {
               // If an error occurred
               return Text('Error: ${snapshot.error}');
@@ -52,6 +52,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               // When the future completes successfully
               return SingleChildScrollView(
                 child: Container(
+                  height: MediaQuery.of(context).size.longestSide,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           begin: Alignment(0.5, 0),
@@ -64,40 +65,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   padding: const EdgeInsets.all(30),
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        radius: 60,
-                        // backgroundImage: _imageFile != null
-                        // ? FileImage(_imageFile!)
-                        // : const AssetImage(
-                        //     'assets/default.png',
-                        //   ) as ImageProvider<Object>?),
+                      Text(
+                        "Update Your Profile",
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                // _pickImage(ImageSource.camera);
-                              },
-                              child: const Text(
-                                "Camera",
-                                style: TextStyle(color: Colors.black),
-                              )),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                // _pickImage(ImageSource.gallery);
-                              },
-                              child: const Text("Gallery",
-                                  style: TextStyle(color: Colors.black))),
-                        ],
+                      SizedBox(
+                        height: 30,
                       ),
-                      const SizedBox(height: 50),
-
-                      // -- Form Fields
                       Form(
                         key: profileController.formKey,
                         child: Column(
@@ -202,14 +179,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               height: 30,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  if (profileController.formKey.currentState!.validate())
-                                  {
-                                      profileController.updateProfile();
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Profile Updated'),
-                                        )
-                                      );
+                                  if (profileController.formKey.currentState!
+                                      .validate()) {
+                                    profileController.updateProfile();
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content: Text('Profile Updated'),
+                                    ));
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(

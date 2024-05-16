@@ -48,7 +48,9 @@ class AuthenticationRepo extends GetxController {
   _setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => LoginPageScreen())
-        : Get.offAll(() => HomepageScreen(user));
+        : Get.offAll(() => LoginPageScreen());
+
+    // Get.offAll(() => HomepageScreen(user)
   }
 
 /*---------------------------------AUTHENTICATION------------------------------------------*/
@@ -201,9 +203,8 @@ class AuthenticationRepo extends GetxController {
 
 /*----------------------------------USER_DATA-----------------------------------------*/
   Future<void> InsertUser(UserModel userModel) async {
-
     await FirebaseFirestore.instance.collection('Users').doc(userModel.id).set({
-      'id' : userModel.id,
+      'id': userModel.id,
       'username': userModel.username,
       'email': userModel.email,
       'password': userModel.password,
@@ -243,11 +244,15 @@ class AuthenticationRepo extends GetxController {
         final savedItems = userData.get('savedItems');
 
         final List<DocumentReference> updatedSavedItems =
-            savedItems!.cast<DocumentReference>(); 
-
+            savedItems!.cast<DocumentReference>();
 
         UserModel user = UserModel(
-            id: uid, username: username, email: email, password: password , savedItems: updatedSavedItems,);
+          id: uid,
+          username: username,
+          email: email,
+          password: password,
+          savedItems: updatedSavedItems,
+        );
         return user;
 
         // You can use the fetched user data as needed

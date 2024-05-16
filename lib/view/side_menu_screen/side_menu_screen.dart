@@ -322,29 +322,8 @@ Widget _buildFourteen(BuildContext context) {
 Widget _buildSixtyThree(BuildContext context) {
   return Row(
     children: [
-      CustomImageView(
-        imagePath: ImageConstant.imgEllipse6,
-        height: 70.adaptSize,
-        width: 70.adaptSize,
-        radius: BorderRadius.circular(40.h),
-        margin: EdgeInsets.only(
-            right: 20.h), // Increase the right margin for spacing
-      ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            AuthenticationRepo.instance.userData!.username,
-            style: CustomTextStyles.headlineSmallSemiBold,
-          ),
-          // Add some vertical space between the username and the bottom edge of the header
-          CustomImageView(
-            imagePath: ImageConstant.imgMobile,
-            height: 15.adaptSize,
-            width: 15.adaptSize,
-          ),
-        ],
-      ),
+      Text("Hi, ${AuthenticationRepo.instance.userData!.username}",
+          style: CustomTextStyles.headlineSmallSemiBold),
     ],
   );
 }
