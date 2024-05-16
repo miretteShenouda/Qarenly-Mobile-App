@@ -200,12 +200,14 @@ class AuthenticationRepo extends GetxController {
   }
 
 /*----------------------------------USER_DATA-----------------------------------------*/
-  Future<void> InsertUser(
-      User? user, String username, String email, String password) async {
-    await FirebaseFirestore.instance.collection('Users').doc(user!.uid).set({
-      'username': username,
-      'email': email,
-      'password': password,
+  Future<void> InsertUser(UserModel userModel) async {
+
+    await FirebaseFirestore.instance.collection('Users').doc(userModel.id).set({
+      'id' : userModel.id,
+      'username': userModel.username,
+      'email': userModel.email,
+      'password': userModel.password,
+      'savedItems': userModel.savedItems,
     });
   }
 
