@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
@@ -127,7 +128,12 @@ class _ViewProductPageState extends State<ViewproductPage> {
                     Container(
                       height: 300, // Set a fixed height for LineChartSample1
                       child: Center(
-                        child: LineChartSample1(),
+                        child: LineChartSample1(
+                          dates: (documentData['dates'] as List<dynamic>)
+                              .map((date) => (date as Timestamp).toDate())
+                              .toList(),
+                          prices: documentData['lowest_prices'],
+                        ),
                       ),
                     )
                   ],

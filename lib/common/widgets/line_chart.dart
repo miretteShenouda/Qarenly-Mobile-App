@@ -3,19 +3,17 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color primary = Color(0xFF2697FF);
-  static const Color contentColorGreen = Color(0xFF00E676);
-  static const Color contentColorPink = Color(0xFFFF4081);
-  static const Color contentColorCyan = Color(0xFF00BCD4);
+  static const Color contentColorDarkBlue = Color.fromARGB(255, 4, 7, 93);
 }
 
 class _LineChart extends StatelessWidget {
-  const _LineChart(
-      //{
-      // '  required this.isShowingMainData
-      //  }
-      );
+  final List<DateTime> dates;
+  final List prices;
 
-  //final bool isShowingMainData;
+  const _LineChart({
+    required this.dates,
+    required this.prices,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +25,22 @@ class _LineChart extends StatelessWidget {
         gridData: gridData,
         titlesData: titlesData1,
         borderData: borderData,
-        lineBarsData: lineBarsData1,
-        minX: 0,
-        maxX: 14,
-        maxY: 4,
-        minY: 0,
+        lineBarsData: [
+          LineChartBarData(
+            isCurved: true,
+            color: AppColors.primary,
+            barWidth: 6,
+            isStrokeCapRound: true,
+            preventCurveOverShooting: true,
+            dotData: const FlDotData(show: true),
+            belowBarData: BarAreaData(show: false),
+            spots: List.generate(dates.length, (index) {
+              return FlSpot(index.toDouble(), prices[index]);
+            }),
+          ),
+        ],
       );
+
   LineTouchData get lineTouchData1 => LineTouchData(
         handleBuiltInTouches: true,
         touchTooltipData: LineTouchTooltipData(
@@ -55,73 +63,42 @@ class _LineChart extends StatelessWidget {
         ),
       );
 
-  List<LineChartBarData> get lineBarsData1 => [
-        lineChartBarData1_1,
-        // lineChartBarData1_2,
-        // lineChartBarData1_3,
-      ];
-
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 14,
+      fontSize: 12,
     );
-    String text;
-    switch (value.toInt()) {
-      case 1:
-        text = '1m';
-        break;
-      case 2:
-        text = '2m';
-        break;
-      case 3:
-        text = '3m';
-        break;
-      case 4:
-        text = '5m';
-        break;
-      case 5:
-        text = '6m';
-        break;
-      default:
-        return Container();
-    }
-
-    return Text(text, style: style, textAlign: TextAlign.center);
+    return Text('${value.toStringAsFixed(1)}',
+        style: style, textAlign: TextAlign.center);
   }
 
   SideTitles leftTitles() => SideTitles(
         getTitlesWidget: leftTitleWidgets,
         showTitles: true,
-        interval: 1,
-        reservedSize: 40,
+        interval: (prices.reduce((a, b) => b > a ? b : a) -
+                prices.reduce((a, b) => b < a ? b : a)) /
+            5,
+        reservedSize: 55,
       );
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 16,
+      fontSize: 14,
     );
-    Widget text;
-    switch (value.toInt()) {
-      case 2:
-        text = const Text('SEPT', style: style);
-        break;
-      case 7:
-        text = const Text('OCT', style: style);
-        break;
-      case 12:
-        text = const Text('DEC', style: style);
-        break;
-      default:
-        text = const Text('');
-        break;
+
+    int index = value.toInt();
+    String text = '';
+
+    if (index >= 0 && index < dates.length) {
+      final date = dates[index];
+      text = '${date.day} ${_getMonthAbbreviation(date.month)}';
     }
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 10,
-      child: text,
+      child: Text(text, style: style),
     );
   }
 
@@ -132,6 +109,25 @@ class _LineChart extends StatelessWidget {
         getTitlesWidget: bottomTitleWidgets,
       );
 
+  String _getMonthAbbreviation(int month) {
+    const monthAbbreviations = [
+      '',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+    return monthAbbreviations[month];
+  }
+
   FlGridData get gridData => const FlGridData(show: false);
 
   FlBorderData get borderData => FlBorderData(
@@ -139,69 +135,49 @@ class _LineChart extends StatelessWidget {
         border: Border(
           bottom:
               BorderSide(color: AppColors.primary.withOpacity(0.2), width: 4),
-          left: const BorderSide(color: Colors.transparent),
+          left: BorderSide(color: AppColors.primary.withOpacity(0.2), width: 4),
           right: const BorderSide(color: Colors.transparent),
           top: const BorderSide(color: Colors.transparent),
         ),
       );
-
-  LineChartBarData get lineChartBarData1_1 => LineChartBarData(
-        isCurved: true,
-        color: AppColors.contentColorGreen,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(show: false),
-        spots: const [
-          FlSpot(1, 1),
-          FlSpot(3, 1.5),
-          FlSpot(5, 1.4),
-          FlSpot(7, 3.4),
-          FlSpot(10, 2),
-          FlSpot(12, 2.2),
-          FlSpot(13, 1.8),
-        ],
-      );
 }
 
 class LineChartSample1 extends StatefulWidget {
-  //const LineChartSample1({super.key});
-  const LineChartSample1({Key? key}) : super(key: key);
+  final List<DateTime> dates;
+  final List prices;
+
+  const LineChartSample1({
+    required this.dates,
+    required this.prices,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => LineChartSample1State();
 }
 
 class LineChartSample1State extends State<LineChartSample1> {
-  late bool isShowingMainData;
-
-  @override
-  void initState() {
-    super.initState();
-    isShowingMainData = true;
-  }
-
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.23,
+      aspectRatio: 1.30,
       child: Stack(
         children: <Widget>[
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               const SizedBox(
-                height: 37,
+                height: 3,
               ),
               const Text(
-                ' Lowest Price History',
+                'Lowest Price History',
                 style: TextStyle(
-                  color: AppColors.primary,
-                  fontSize: 32,
+                  color: AppColors.contentColorDarkBlue,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 2,
                 ),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
               const SizedBox(
                 height: 37,
@@ -210,8 +186,9 @@ class LineChartSample1State extends State<LineChartSample1> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16, left: 6),
                   child: _LineChart(
-                      //isShowingMainData: isShowingMainData
-                      ),
+                    dates: widget.dates,
+                    prices: widget.prices,
+                  ),
                 ),
               ),
               const SizedBox(
