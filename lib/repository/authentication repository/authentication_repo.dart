@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/model/user_model.dart';
 import 'package:qarenly/repository/authentication%20repository/exception/login_email_pass_failure.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
@@ -48,9 +49,7 @@ class AuthenticationRepo extends GetxController {
   _setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => LoginPageScreen())
-        : Get.offAll(() => LoginPageScreen());
-
-    // Get.offAll(() => HomepageScreen(user)
+        : Get.offAll(() => HomepageScreen(user));
   }
 
 /*---------------------------------AUTHENTICATION------------------------------------------*/
@@ -73,8 +72,11 @@ class AuthenticationRepo extends GetxController {
   }
 
   Future<bool> loginWithEmailAndPassword(String email, String password) async {
+    UserCredential userCredential;
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      currentUser = userCredential.user;
       return true;
     } on FirebaseAuthException catch (e) {
       final ex = LogInWithEmailAndPasswordFailure.Code(e.code);
@@ -99,6 +101,17 @@ class AuthenticationRepo extends GetxController {
         );
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
+
+        UserModel userData = UserModel(
+          id: userCredential.user!.uid,
+          username: userCredential.user!.displayName!,
+          email: userCredential.user!.email!,
+          password: '',
+          savedItems: [],
+        );
+
+        await InsertUser(userData);
+
         return userCredential.user;
       }
     } catch (error) {
@@ -127,7 +140,7 @@ class AuthenticationRepo extends GetxController {
         // Check if the user is already equal (already signed in)
         if (isUserEqual(result)) {
           // If the user is already signed in, navigate to the homepage
-          Navigator.pushNamed(context, '/homepage_screen');
+          Navigator.pushNamed(context, AppRoutes.homepageScreen);
           return; // Exit the method to prevent further navigation
         }
         final UserCredential userCredential =
@@ -137,12 +150,11 @@ class AuthenticationRepo extends GetxController {
         if (userCredential.additionalUserInfo?.isNewUser ?? false) {
           // If the user is new, navigate to the profile setup screen
           print('new user');
-          Navigator.pushNamed(context, '/homepage_screen');
+          Navigator.pushNamed(context, AppRoutes.homepageScreen);
         } else {
           //already registered, navigate to the home screen
           print('bla  user already exist');
-
-          Navigator.pushNamed(context, '/homepage_screen');
+          Navigator.pushNamed(context, AppRoutes.homepageScreen);
         }
       } else {
         // Handle login failure
