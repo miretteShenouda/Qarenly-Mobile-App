@@ -54,7 +54,6 @@ class AppRoutes {
     profilePage: (context) => UpdateProfileScreen(),
   };
 
-  // Helper method to navigate to the Distance screen with parameters
   // static void navigateToHomeScreen(BuildContext context, User user) {
   //   Navigator.pushNamed(context, homepageScreen, arguments: user);
   // }

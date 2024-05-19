@@ -49,6 +49,7 @@ class AuthenticationRepo extends GetxController {
   _setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => LoginPageScreen())
+        // : Get.offAll(() => LoginPageScreen());
         : Get.offAll(() => HomepageScreen(user));
   }
 
@@ -111,7 +112,7 @@ class AuthenticationRepo extends GetxController {
         );
 
         await InsertUser(userData);
-
+        currentUser = userCredential.user;
         return userCredential.user;
       }
     } catch (error) {

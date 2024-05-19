@@ -12,6 +12,7 @@ class SearchResultController {
     snapshot.docs.forEach((doc) {
       final Product product =
           Product.fromFirestore(doc.data() as Map<String, dynamic>);
+          product.type = 'Laptops';
       if (product.name.toLowerCase().contains(query.toLowerCase())) {
         searchReturn.add(product);
       }

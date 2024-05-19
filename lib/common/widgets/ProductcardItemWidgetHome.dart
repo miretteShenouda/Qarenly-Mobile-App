@@ -20,6 +20,8 @@ class ProductcardItemWidgetHome extends StatelessWidget {
             'productId': product.id,
             'productType': product.type
           });
+          print("Product ID: ${product.id}");
+          print("Product Type: ${product.type}");
         },
         child: Card(
           shape: RoundedRectangleBorder(

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "791851892761-ht0tssnrvu9dulo30lann51a24vd62vb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qarenly.app",
+            "certificate_hash": "034901d1f7ec49f893a9ac0c0c46f57fa92602ef"
+          }
+        },
+        {
           "client_id": "791851892761-ltqvcnk7u53o9na550js9la0g28pj89m.apps.googleusercontent.com",
           "client_type": 3
         }
