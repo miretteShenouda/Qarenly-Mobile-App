@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:qarenly/controller/viewProduct_controller.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import '../../common/widgets/line_chart.dart';
 
 class ViewproductPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class ViewproductPage extends StatefulWidget {
 
 class _ViewProductPageState extends State<ViewproductPage> {
   late ViewProductController _controller = Get.put(ViewProductController());
+  AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
   late ScrollController _scrollController;
   int _currentIndex = 0;
   @override
@@ -53,52 +55,69 @@ class _ViewProductPageState extends State<ViewproductPage> {
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         Row(
                           children: [
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _controller.isNotified =
-                                        !_controller.isNotified;
-                                  });
-                                  if (_controller.isNotified) {
-                                    print("Notified");
-                                  }
-                                },
-                                child: Icon(
-                                  _controller.isNotified
-                                      ? Icons.notifications_active
-                                      : Icons.notifications_none,
-                                  color: Colors.black,
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  padding: EdgeInsets.all(20),
-                                ),
-                              ),
-                            ),
+                            !_authenticationRepo.currentUser!.isAnonymous
+                                ? Align(
+                                    alignment: Alignment.topRight,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _controller.isNotified =
+                                              !_controller.isNotified;
+                                        });
+                                        if (_controller.isNotified) {
+                                          print("Notified");
+                                        }
+                                      },
+                                      child: Icon(
+                                        _controller.isNotified
+                                            ? Icons.notifications_active
+                                            : Icons.notifications_none,
+                                        color: Colors.black,
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        shape: CircleBorder(),
+                                        padding: EdgeInsets.all(20),
+                                      ),
+                                    ),
+                                  )
+                                : Align(
+                                    alignment: Alignment.topRight,
+                                    child: Icon(
+                                      Icons.notifications_off,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                             SizedBox(width: 10),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  await _controller.toggleSavedItem();
-                                  setState(() {
-                                    _controller.isSaved = !_controller.isSaved;
-                                  });
-                                },
-                                child: Icon(
-                                  _controller.isSaved
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: Colors.black,
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  padding: EdgeInsets.all(20),
-                                ),
-                              ),
-                            ),
+                            !_authenticationRepo.currentUser!.isAnonymous
+                                ? Align(
+                                    alignment: Alignment.topRight,
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        await _controller.toggleSavedItem();
+                                        setState(() {
+                                          _controller.isSaved =
+                                              !_controller.isSaved;
+                                        });
+                                      },
+                                      child: Icon(
+                                        _controller.isSaved
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: Colors.black,
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        shape: CircleBorder(),
+                                        padding: EdgeInsets.all(20),
+                                      ),
+                                    ),
+                                  )
+                                : Align(
+                                    alignment: Alignment.topRight,
+                                    child: Icon(
+                                      Icons.favorite_border,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                           ],
                         ),
                       ],

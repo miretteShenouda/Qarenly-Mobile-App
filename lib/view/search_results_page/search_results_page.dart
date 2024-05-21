@@ -55,7 +55,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                     child:
                         CircularProgressIndicator()); // Display a loading indicator
               } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Center(child: Text('No Such Product Found'));
+                // return Text('Error: ${snapshot.error}');
               } else {
                 return SingleChildScrollView(
                   child: Container(

@@ -33,7 +33,17 @@ class AuthenticationRepo extends GetxController {
   }
 
   _handleUserAuthentication(User? user) async {
-    if (user != null) {
+    if (user != null && user.isAnonymous) {
+      print("gowa el anonymous");
+      currentUser = user;
+      userData = UserModel(
+        id: user.uid,
+        username: "Guest",
+        password: "",
+        email: "",
+        savedItems: [],
+      );
+    } else if (user != null) {
       print("gowa el handleuser");
       currentUser = user;
       print(user.uid);
@@ -88,6 +98,26 @@ class AuthenticationRepo extends GetxController {
   }
 
   Future<void> logout() async => await _auth.signOut();
+
+  Future<bool> enterAsGuest() async {
+    try {
+      final UserCredential userCredential = await _auth.signInAnonymously();
+      currentUser = userCredential.user;
+      print(currentUser!.uid);
+      userData = UserModel(
+          id: currentUser!.uid,
+          username: "Guest",
+          password: "",
+          email: "",
+          savedItems: []);
+      print(" User Data User Name : ${userData!.username}");
+      print("User signed in anonymously: ${currentUser!.uid}");
+      return true;
+    } catch (e) {
+      print("Error signing in anonymously: ${e}");
+    }
+    return false;
+  }
 
 /*----------------------------------GOOGLE-----------------------------------------*/
   Future<User?> signInWithGoogle() async {

@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
+import 'package:get/get.dart';
 
 class LoginFooterWidget extends StatelessWidget {
   // AuthenticationRepo _authController = AuthenticationController();
-  AuthenticationRepo _authenticationRepo = AuthenticationRepo();
+  AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
   // const LoginFooterWidget({
   //   Key? key,
   // }) : super(key: key);
@@ -22,7 +23,18 @@ class LoginFooterWidget extends StatelessWidget {
           text: "Enter as a guest",
           margin: EdgeInsets.only(left: 23.h, right: 24.h),
           buttonStyle: CustomButtonStyles.fillPrimaryTL20,
-          onPressed: () {}),
+          onPressed: () async {
+            var flag = await _authenticationRepo.enterAsGuest();
+            if (flag) {
+              Navigator.pushNamed(context, AppRoutes.homepageScreen);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Failed to enter as guest"),
+                ),
+              );
+            }
+          }),
       Align(
           alignment: Alignment.center,
           child: TextButton(

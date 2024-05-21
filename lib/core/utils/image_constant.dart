@@ -44,8 +44,9 @@ class ImageConstant {
   static String imgGoogle = '$imagePath/google.png';
   static String imgLogosfacebook = '$imagePath/facebook.png';
   static String imgSearch = '$imagePath/img_search.svg';
-  static String imageNotFound = 'assets/images/image_not_found.png';
+  static String imageNotFound = '$imagePath/image_not_found.png';
+  static String Guest_img = '$imagePath/guest_img.png';
 
   //profile page images
-  static String profile = 'assets/images/profile.png';
+  static String profile = '$imagePath/profile.png';
 }

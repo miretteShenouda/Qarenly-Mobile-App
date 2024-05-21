@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
+import 'package:get/get.dart';
 
 class SideMenuScreen extends StatefulWidget {
   SideMenuScreen({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
 
   TextEditingController notificationsController = TextEditingController();
 
-  AuthenticationRepo _authenticationRepo = AuthenticationRepo();
+  AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
 
   bool isDark = false;
   @override
@@ -100,60 +101,116 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                       ),
                     ),
                     SizedBox(height: 16.v),
-                    Card(
-                        margin: EdgeInsets.only(left: 18, right: 22),
-                        elevation: 5.0,
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              50.0), // Set the border radius
-                        ),
-                        child: SizedBox(
-                            height: 48,
-                            child: ListTile(
-                              title: Text(
-                                'Saved',
-                                style: TextStyle(
-                                  color: const Color.fromARGB(255, 6, 51, 89),
-                                  fontSize: 23,
-                                ),
-                              ),
-                              leading: CustomImageView(
-                                imagePath: ImageConstant.imgBookmark,
-                                height: 27.adaptSize,
-                                width: 19.adaptSize,
-                              ),
-                              onTap: () {
-                                onTapImgBookmark(context);
-                              },
-                            ))),
+                    !_authenticationRepo.currentUser!.isAnonymous
+                        ? Card(
+                            margin: EdgeInsets.only(left: 18, right: 22),
+                            elevation: 5.0,
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  50.0), // Set the border radius
+                            ),
+                            child: SizedBox(
+                                height: 48,
+                                child: ListTile(
+                                  title: Text(
+                                    'Saved',
+                                    style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 6, 51, 89),
+                                      fontSize: 23,
+                                    ),
+                                  ),
+                                  leading: CustomImageView(
+                                    imagePath: ImageConstant.imgBookmark,
+                                    height: 27.adaptSize,
+                                    width: 19.adaptSize,
+                                  ),
+                                  onTap: () {
+                                    onTapImgBookmark(context);
+                                  },
+                                )))
+                        : Card(
+                            margin: EdgeInsets.only(left: 18, right: 22),
+                            elevation: 5.0,
+                            color: Colors.grey[500],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  50.0), // Set the border radius
+                            ),
+                            child: SizedBox(
+                                height: 48,
+                                child: ListTile(
+                                  title: Text(
+                                    'Saved',
+                                    style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 6, 51, 89),
+                                      fontSize: 23,
+                                    ),
+                                  ),
+                                  leading: CustomImageView(
+                                    imagePath: ImageConstant.imgBookmark,
+                                    height: 27.adaptSize,
+                                    width: 19.adaptSize,
+                                  ),
+                                  trailing: Icon(Icons.lock),
+                                ))),
                     SizedBox(height: 16.v),
-                    Card(
-                        margin: EdgeInsets.only(left: 18, right: 22),
-                        elevation: 5.0,
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              50.0), // Set the border radius
-                        ),
-                        child: SizedBox(
-                          height: 48,
-                          child: ListTile(
-                            title: Text(
-                              'Notifications',
-                              style: TextStyle(
-                                color: const Color.fromARGB(255, 6, 51, 89),
-                                fontSize: 23,
+                    !_authenticationRepo.currentUser!.isAnonymous
+                        ? Card(
+                            margin: EdgeInsets.only(left: 18, right: 22),
+                            elevation: 5.0,
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  50.0), // Set the border radius
+                            ),
+                            child: SizedBox(
+                              height: 48,
+                              child: ListTile(
+                                title: Text(
+                                  'Notifications',
+                                  style: TextStyle(
+                                    color: const Color.fromARGB(255, 6, 51, 89),
+                                    fontSize: 23,
+                                  ),
+                                ),
+                                leading: CustomImageView(
+                                  imagePath:
+                                      ImageConstant.imgNotificationiconpng91,
+                                  height: 32.adaptSize,
+                                  width: 27.adaptSize,
+                                ),
+                                onTap: () {},
                               ),
+                            ))
+                        : Card(
+                            margin: EdgeInsets.only(left: 18, right: 22),
+                            elevation: 5.0,
+                            color: Colors.grey[500],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  50.0), // Set the border radius
                             ),
-                            leading: CustomImageView(
-                              imagePath: ImageConstant.imgNotificationiconpng91,
-                              height: 32.adaptSize,
-                              width: 27.adaptSize,
-                            ),
-                            onTap: () {},
-                          ),
-                        )),
+                            child: SizedBox(
+                                height: 48,
+                                child: ListTile(
+                                  title: Text(
+                                    'Notification',
+                                    style: TextStyle(
+                                      color:
+                                          const Color.fromARGB(255, 6, 51, 89),
+                                      fontSize: 23,
+                                    ),
+                                  ),
+                                  leading: CustomImageView(
+                                    imagePath: ImageConstant.imgBookmark,
+                                    height: 27.adaptSize,
+                                    width: 19.adaptSize,
+                                  ),
+                                  trailing: Icon(Icons.lock),
+                                ))),
                     SizedBox(height: 16.v),
                     Card(
                         margin: EdgeInsets.only(left: 18, right: 22),
@@ -178,9 +235,6 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                               height: 28.adaptSize,
                               width: 28.adaptSize,
                             ),
-                            onTap: () {
-                              // Handle Settings onTap
-                            },
                           ),
                         )),
                     SizedBox(height: 16.v),
