@@ -36,17 +36,23 @@ class AuthenticationRepo extends GetxController {
     if (user != null && user.isAnonymous) {
       print("gowa el anonymous");
       currentUser = user;
+      print(currentUser!.displayName);
+      print(currentUser!.uid);
       userData = UserModel(
-        id: user.uid,
-        username: "Guest",
-        password: "",
-        email: "",
-        savedItems: [],
-      );
+          id: currentUser!.uid,
+          username: "Guest",
+          password: "",
+          email: "",
+          savedItems: []);
+      print(" User Data User Name : ${userData!.username}");
+      print(" User Data id : ${userData!.id}");
+      Get.offAll(() => LoginPageScreen());
     } else if (user != null) {
       print("gowa el handleuser");
       currentUser = user;
+      print(currentUser!.isAnonymous);
       print(user.uid);
+      print(currentUser!.displayName);
       // If user is not null, fetch user data from Firestore
       // /  _fetchUserData(user.uid);
       userData = await fetchUserData();
@@ -223,7 +229,7 @@ class AuthenticationRepo extends GetxController {
       await _auth.signOut();
       await FacebookAuth.instance.logOut();
       print('User signed out successfully');
-      Navigator.pushNamed(context, '/login_page_screen');
+      // Navigator.pushNamed(context, '/login_page_screen');
     } catch (e) {
       print('Error signing out: $e');
     }

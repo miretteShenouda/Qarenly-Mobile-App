@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:qarenly/common/widgets/api_widget.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
+import 'package:get/get.dart';
+import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 
 class signUpFooter extends StatelessWidget {
-  AuthenticationRepo _authenticationRepo = AuthenticationRepo();
+  AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
   // const signUpFooter({
   //   Key? key,
   // }) : super(key: key);
@@ -31,7 +33,7 @@ class signUpFooter extends StatelessWidget {
           User? user = await _authenticationRepo.signInWithGoogle();
           if (user != null) {
             // Navigate to the next screen or do something with the signed-up user
-            Navigator.pushNamed(context, AppRoutes.homepageScreen);
+            Get.offAll( () => HomepageScreen(user));
           } else {
             // Handle sign-up failure
           }

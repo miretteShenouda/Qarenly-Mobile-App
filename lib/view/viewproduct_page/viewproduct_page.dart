@@ -36,7 +36,7 @@ class _ViewProductPageState extends State<ViewproductPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: BuildAppBar(searchController: _controller.searchController),
+        appBar: BuildAppBar(searchController: _controller.searchController , authenticationRepo: _authenticationRepo,),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(15.0),

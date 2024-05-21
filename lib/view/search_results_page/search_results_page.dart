@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/model/product_model.dart';
+import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:qarenly/routes/app_routes.dart';
 
 import '../../common/widgets/ProductcardItemWidgetHome.dart';
@@ -25,6 +26,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   int _currentIndex = 0;
   late SearchResultController controller;
 
+  final authentiationRepo = Get.put(AuthenticationRepo());
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +49,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: BuildAppBar(searchController: searchController),
+        appBar: BuildAppBar(searchController: searchController , authenticationRepo: authentiationRepo,),
         body: FutureBuilder(
             future: controller.searchLaptops(widget.query),
             builder: (context, snapshot) {
@@ -81,7 +84,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
 
   Widget _buildMostlyViewedSection(AsyncSnapshot<Object?> snapshot) {
     final resultList = snapshot.data as RxList<Product>;
-    print(resultList[0].imageUrl);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

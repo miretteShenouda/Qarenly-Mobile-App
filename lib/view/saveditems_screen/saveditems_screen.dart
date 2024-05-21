@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qarenly/controller/savedItems_controller.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/model/product_model.dart';
+import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import '../../common/widgets/app_bar/app_bar.dart';
 import '../../common/widgets/productcard_item_widget.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,8 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
   TextEditingController searchController = TextEditingController();
   final savedItemsController = Get.put(SavedItemsController());
 
+  final _authenticationRepo = Get.put(AuthenticationRepo());
+
   void initState() {
     super.initState();
   }
@@ -26,7 +29,7 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          appBar: BuildAppBar(searchController: searchController),
+          appBar: BuildAppBar(searchController: searchController , authenticationRepo: _authenticationRepo,),
           body: FutureBuilder(
               future: savedItemsController.fetchSavedItems(),
               builder: (context, snapshot) {

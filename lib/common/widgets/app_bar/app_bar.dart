@@ -9,11 +9,12 @@ import 'package:get/get.dart';
 
 class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TextEditingController searchController;
-  AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
+  final AuthenticationRepo authenticationRepo;
 
   BuildAppBar({
     Key? key,
     required this.searchController,
+    required this.authenticationRepo,
   }) : super(key: key);
 
   @override
@@ -22,8 +23,9 @@ class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: 69.h,
       leading: Row(
         children: [
-          !_authenticationRepo.currentUser!.isAnonymous
-              ? AppbarTitleImage(
+          !authenticationRepo.currentUser!.isAnonymous
+              ?
+               AppbarTitleImage(
                   imagePath: ImageConstant.imgEiUser,
                   margin: EdgeInsets.only(left: 16.h, top: 7.v, bottom: 1.v),
                   onTap: () {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 // import 'package:qarenly/common/widgets/app_bar/appbar_title_searchview.dart';
 import 'package:qarenly/core/app_export.dart';
+import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:qarenly/view/search_output_page/search_output_page.dart';
 
+import 'package:get/get.dart';
 import '../../common/widgets/app_bar/app_bar.dart';
 // import 'package:qarenly/common/widgets/app_bar/appbar_leading_image.dart';
 // import 'package:qarenly/common/widgets/app_bar/appbar_trailing_image.dart';
@@ -22,6 +24,8 @@ class SearchOutputPageTabContainerScreenState
     with TickerProviderStateMixin {
   TextEditingController searchController = TextEditingController();
 
+  final _authenticationRepo = Get.put(AuthenticationRepo());
+
   late TabController tabviewController;
 
   @override
@@ -34,7 +38,7 @@ class SearchOutputPageTabContainerScreenState
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            appBar: BuildAppBar(searchController: searchController),
+            appBar: BuildAppBar(searchController: searchController , authenticationRepo: _authenticationRepo,),
             body: SizedBox(
                 width: double.maxFinite,
                 child: Column(children: [

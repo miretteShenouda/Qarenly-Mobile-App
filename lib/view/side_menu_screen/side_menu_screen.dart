@@ -3,6 +3,7 @@ import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
 
 class SideMenuScreen extends StatefulWidget {
   SideMenuScreen({Key? key}) : super(key: key);
@@ -322,11 +323,13 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                             height: 33.adaptSize,
                             width: 33.adaptSize,
                           ),
-                          onTap: () {
+                          onTap: ()async {
                             // onTapSignOut(context);
-                            _authenticationRepo.logout();
-                            _authenticationRepo.signOutFromGoogle();
-                            _authenticationRepo.signOutFacebook(context);
+                            await _authenticationRepo.logout();
+                           await _authenticationRepo.signOutFromGoogle();
+                            await _authenticationRepo.signOutFacebook(context);
+
+                            Get.offAll(() =>  LoginPageScreen());
                           },
                         ),
                       ),
