@@ -1,4 +1,5 @@
 import 'dart:core';
+
 import 'package:qarenly/model/product_model.dart';
 
 class Mobile extends Product {
@@ -21,6 +22,7 @@ class Mobile extends Product {
     required String aboutItem,
     required String imageUrl,
     required double benchmark,
+    required double benchmark_ratio,
     required List<Map> sources,
     required List<double> lowestPrices,
     required List<String> dates,
@@ -34,6 +36,7 @@ class Mobile extends Product {
           aboutItem: aboutItem,
           imageUrl: imageUrl,
           benchmark: benchmark,
+          benchmark_ratio: benchmark_ratio,
           sources: sources,
           lowestPrices: lowestPrices,
           dates: dates,

@@ -17,6 +17,7 @@ class Laptop extends Product {
       required String aboutItem,
       required String imageUrl,
       required double benchmark,
+      required double benchmark_ratio,
       required List<Map> sources,
       required List<double> lowestPrices,
       required List<String> dates,
@@ -34,6 +35,7 @@ class Laptop extends Product {
           aboutItem: aboutItem,
           imageUrl: imageUrl,
           benchmark: benchmark,
+          benchmark_ratio: benchmark_ratio,
           sources: sources,
           lowestPrices: lowestPrices,
           dates: dates,
@@ -54,6 +56,7 @@ class Laptop extends Product {
       techDescription: data['tech_desc'] ?? '',
       imageUrl: data['image_URL'] ?? '',
       benchmark: (data['benchmark'] as num?)?.toDouble() ?? 0.0,
+      benchmark_ratio: (data['benchmark_ratio'] as num?)?.toDouble() ?? 0.0,
       lowestPrices: List<double>.from((data['lowest_prices'] as List<dynamic>?)
               ?.map((price) => (price as num).toDouble()) ??
           []),

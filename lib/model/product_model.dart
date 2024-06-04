@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-
-
 class Product {
   String brand;
   String id;
@@ -13,6 +11,7 @@ class Product {
   String imageUrl;
   String? type;
   double benchmark;
+  double benchmark_ratio;
   List<Map> sources;
   List<double> lowestPrices;
   List<String> dates;
@@ -26,6 +25,7 @@ class Product {
     required this.aboutItem,
     required this.imageUrl,
     required this.benchmark,
+    required this.benchmark_ratio,
     required this.sources,
     required this.lowestPrices,
     required this.dates,
@@ -44,12 +44,11 @@ class Product {
       aboutItem: data['about_item'] ?? '',
       imageUrl: data['image_URL'] ?? '',
       benchmark: (data['benchmark'] ?? 0.0).toDouble(),
+      benchmark_ratio: (data['benchmark_ratio'] ?? 0.0).toDouble(),
       sources: (data['sources'] ?? []).cast<Map>(),
-
       lowestPrices: List<double>.from((data['lowest_prices'] as List<dynamic>?)
               ?.map((price) => (price as num).toDouble()) ??
           []),
-          
       dates: (data['dates'] ?? [])
           .map<String>((timestamp) => timestamp.toString())
           .toList(),

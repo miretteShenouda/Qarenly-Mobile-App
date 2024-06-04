@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/model/product_model.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 class ViewProductController extends GetxController {
@@ -11,7 +12,7 @@ class ViewProductController extends GetxController {
   late Future<DocumentSnapshot<Map<String, dynamic>>?> documentFuture;
   Rxn<Map<String, dynamic>> documentData = Rxn<Map<String, dynamic>>();
   RxBool isLoading = RxBool(true); // Initial value is true
-
+  late List<Product> similarItems = [];
   bool isNotified = false;
   bool isSaved = false;
 
@@ -27,13 +28,13 @@ class ViewProductController extends GetxController {
   Future<bool> toggleSavedItem() async {
     print(AuthenticationRepo.instance.userData!.savedItems);
     if (isSaved) {
-      AuthenticationRepo.instance.userData!.savedItems!.removeWhere( (element) {
+      AuthenticationRepo.instance.userData!.savedItems!.removeWhere((element) {
         return element.id == _productId;
       });
     } else {
-      DocumentReference productRef = _db.collection(_productType!).doc(_productId!);
-      AuthenticationRepo.instance.userData!.savedItems!
-          .add(productRef);
+      DocumentReference productRef =
+          _db.collection(_productType!).doc(_productId!);
+      AuthenticationRepo.instance.userData!.savedItems!.add(productRef);
     }
 
     AuthenticationRepo.instance
@@ -94,9 +95,33 @@ class ViewProductController extends GetxController {
       return null;
     }
   }
+
+  void getSimilarProducts() async {
+    RxList<Product> searchReturn = <Product>[].obs;
+
+    QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('Laptops').get();
+
+    snapshot.docs.forEach((doc) {
+      final Product product =
+          Product.fromFirestore(doc.data() as Map<String, dynamic>);
+      print("blaaaaa");
+      print(product.benchmark_ratio);
+      product.type = 'Laptops';
+      print("kkk");
+      print(documentData.value!['benchmark_ratio']);
+      if (product.benchmark_ratio >=
+              documentData.value!['benchmark_ratio'] - 5 &&
+          product.benchmark_ratio <=
+              documentData.value!['benchmark_ratio'] + 5) {
+        searchReturn.add(product);
+        similarItems.add(product);
+      }
+    });
+
+    // return searchReturn;
+  }
 }
-
-
 
 
 

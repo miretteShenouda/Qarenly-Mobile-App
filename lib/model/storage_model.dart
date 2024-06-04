@@ -1,6 +1,6 @@
 import 'dart:core';
+
 import 'package:qarenly/model/product_model.dart';
-import 'dart:ffi';
 
 class Storage extends Product {
   String architecture;
@@ -20,6 +20,7 @@ class Storage extends Product {
     required String aboutItem,
     required String imageUrl,
     required double benchmark,
+    required double benchmark_ratio,
     required List<Map> sources,
     required List<double> lowestPrices,
     required List<String> dates,
@@ -33,6 +34,7 @@ class Storage extends Product {
           aboutItem: aboutItem,
           imageUrl: imageUrl,
           benchmark: benchmark,
+          benchmark_ratio: benchmark_ratio,
           sources: sources,
           lowestPrices: lowestPrices,
           dates: dates,

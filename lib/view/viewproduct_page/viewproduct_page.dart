@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:qarenly/common/widgets/ProductcardItemWidgetBenchmarking.dart';
 import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:qarenly/controller/viewProduct_controller.dart';
-import 'package:get/get.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
-import '../../common/widgets/line_chart.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../common/widgets/line_chart.dart';
 
 class ViewproductPage extends StatefulWidget {
   ViewproductPage({Key? key}) : super(key: key);
@@ -22,6 +22,7 @@ class _ViewProductPageState extends State<ViewproductPage> {
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
   late ScrollController _scrollController;
   int _currentIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +37,9 @@ class _ViewProductPageState extends State<ViewproductPage> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.getSimilarProducts();
+    print("hi caty");
+    print(_controller.similarItems.toList());
     return SafeArea(
       child: Scaffold(
         appBar: BuildAppBar(
@@ -392,6 +396,16 @@ class _ViewProductPageState extends State<ViewproductPage> {
                           ),
                         ),
                       ),
+                      ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 21.0),
+                          itemCount: _controller.similarItems.length,
+                          itemBuilder: (context, index) =>
+                              ProductcardItemWidgetBenchmarking(
+                                product: _controller.similarItems[index],
+                              ))
                     ],
                   );
                 } else {
