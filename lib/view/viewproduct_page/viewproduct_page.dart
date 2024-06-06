@@ -20,8 +20,8 @@ class ViewproductPage extends StatefulWidget {
 class _ViewProductPageState extends State<ViewproductPage> {
   late ViewProductController _controller = Get.put(ViewProductController());
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
-  late ScrollController _scrollController;
-  int _currentIndex = 0;
+  // late ScrollController _scrollController;
+  // int _currentIndex = 0;
 
   @override
   void initState() {
@@ -37,6 +37,7 @@ class _ViewProductPageState extends State<ViewproductPage> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.initSavedState();
     _controller.getSimilarProducts();
     print("hi caty");
     print(_controller.similarItems.toList());

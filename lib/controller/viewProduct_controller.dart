@@ -25,6 +25,18 @@ class ViewProductController extends GetxController {
     searchController = TextEditingController();
   }
 
+  void initSavedState(){
+    if (AuthenticationRepo.instance.userData!.savedItems!.any((element) {
+      return element.id == _productId;
+    })) {
+      isSaved = true;
+      print("isSaved: $isSaved");
+    } else {
+      isSaved = false;
+      print("isSaved: $isSaved");
+    };
+  }
+
   Future<bool> toggleSavedItem() async {
     print(AuthenticationRepo.instance.userData!.savedItems);
     if (isSaved) {
