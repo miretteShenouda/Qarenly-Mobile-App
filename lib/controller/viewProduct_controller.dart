@@ -26,6 +26,11 @@ class ViewProductController extends GetxController {
   }
 
   void initSavedState(){
+    if (AuthenticationRepo.instance.userData == null || AuthenticationRepo.instance.userData!.savedItems == null) {
+      isSaved = false;
+      return;
+    }
+
     if (AuthenticationRepo.instance.userData!.savedItems!.any((element) {
       return element.id == _productId;
     })) {
