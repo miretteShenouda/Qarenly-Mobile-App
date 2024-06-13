@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/controller/notification_controller.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 import '../../common/theme/app_decoration.dart';
@@ -25,6 +26,8 @@ class _HomepageScreenState extends State<HomepageScreen> {
   int _currentIndex = 0;
   final controller = Get.put(HomePageController());
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
+  NotificationController notificationController =
+      Get.put(NotificationController());
 
   void _scrollNext() {
     setState(() {
@@ -66,7 +69,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: BuildAppBar(searchController: searchController , authenticationRepo: _authenticationRepo,),
+        appBar: BuildAppBar(
+          searchController: searchController,
+          authenticationRepo: _authenticationRepo,
+        ),
         body: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,

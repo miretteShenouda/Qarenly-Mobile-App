@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,24 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
+  FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    badge: true,
+    provisional: false,
+    sound: true,
+  );
+
+  Future<void> NotificationHandlerBackground(RemoteMessage message) async {
+    try {
+      print(message.data.toString());
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  // FirebaseMessaging.onMessage.listen();
+  FirebaseMessaging.onBackgroundMessage(NotificationHandlerBackground);
 
   ///Please update theme as per your need if required.
   ThemeHelper().changeTheme('primary');

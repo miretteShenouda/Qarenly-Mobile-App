@@ -39,11 +39,13 @@ class AuthenticationRepo extends GetxController {
       print(currentUser!.displayName);
       print(currentUser!.uid);
       userData = UserModel(
-          id: currentUser!.uid,
-          username: "Guest",
-          password: "",
-          email: "",
-          savedItems: []);
+        id: currentUser!.uid,
+        username: "Guest",
+        password: "",
+        email: "",
+        savedItems: [],
+        notificationToken: null,
+      );
       print(" User Data User Name : ${userData!.username}");
       print(" User Data id : ${userData!.id}");
       Get.offAll(() => LoginPageScreen());
@@ -55,7 +57,9 @@ class AuthenticationRepo extends GetxController {
       print(currentUser!.displayName);
       // If user is not null, fetch user data from Firestore
       // /  _fetchUserData(user.uid);
+      print("Fetching User Data ==========");
       userData = await fetchUserData();
+      print("After Fetching the user Data");
     } else {
       // If user is null, navigate to login page
       Get.offAll(() => LoginPageScreen());
@@ -111,11 +115,13 @@ class AuthenticationRepo extends GetxController {
       currentUser = userCredential.user;
       print(currentUser!.uid);
       userData = UserModel(
-          id: currentUser!.uid,
-          username: "Guest",
-          password: "",
-          email: "",
-          savedItems: []);
+        id: currentUser!.uid,
+        username: "Guest",
+        password: "",
+        email: "",
+        savedItems: [],
+        notificationToken: null,
+      );
       print(" User Data User Name : ${userData!.username}");
       print("User signed in anonymously: ${currentUser!.uid}");
       return true;
@@ -210,8 +216,8 @@ class AuthenticationRepo extends GetxController {
       if (result.status == LoginStatus.success) {
         final OAuthCredential credential =
             FacebookAuthProvider.credential(result.accessToken!.token);
-        final UserCredential userCredential =
-            await _auth.signInWithCredential(credential);
+        // final UserCredential userCredential =
+        //     await _auth.signInWithCredential(credential);
 
         await FirebaseAuth.instance.signInWithCredential(credential);
         Navigator.pushReplacementNamed(context,
@@ -258,11 +264,11 @@ class AuthenticationRepo extends GetxController {
       'email': userModel.email,
       'password': userModel.password,
       'savedItems': userModel.savedItems,
+      'notificationToken': userModel.notificationToken!,
     });
   }
 
   Future<void> UpdateUser(UserModel user) async {
-    final currentUser = FirebaseAuth.instance.currentUser;
     final userDocRef =
         FirebaseFirestore.instance.collection('Users').doc(currentUser!.uid);
     await userDocRef.update(user.toMap());
@@ -280,6 +286,7 @@ class AuthenticationRepo extends GetxController {
   // Fetch user data from Firestore based on uid
   Future<UserModel?> fetchUserData() async {
     String uid = currentUser!.uid;
+    print("uid : $uid");
     try {
       final userData =
           await FirebaseFirestore.instance.collection('Users').doc(uid).get();
@@ -287,10 +294,22 @@ class AuthenticationRepo extends GetxController {
       if (userData.exists) {
         // User data exists in Firestore
         // Extract user properties and do something with them
-        final username = userData.get('username');
-        final email = userData.get('email');
-        final password = userData.get('password');
-        final savedItems = userData.get('savedItems');
+        var data = userData.data();
+
+        final username = data!['username'];
+        final email = data['email'];
+        final password = data['password'];
+        final savedItems = data['savedItems'];
+
+        String? notificationToken;
+
+        if (data.containsKey('notificationToken')) {
+          notificationToken = data['notificationToken'];
+        } else {
+          notificationToken = null;
+        }
+
+        print("notificationToken : $notificationToken");
 
         final List<DocumentReference> updatedSavedItems =
             savedItems!.cast<DocumentReference>();
@@ -301,6 +320,7 @@ class AuthenticationRepo extends GetxController {
           email: email,
           password: password,
           savedItems: updatedSavedItems,
+          notificationToken: notificationToken,
         );
         return user;
 
