@@ -7,6 +7,15 @@ import 'package:qarenly/repository/authentication%20repository/authentication_re
 import 'core/app_export.dart';
 import 'firebase_options.dart';
 
+
+Future<void> NotificationHandlerBackground(RemoteMessage message) async {
+  try {
+    print(message.data.toString());
+  } catch (e) {
+    print(e.toString());
+  }
+}
+
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 void main() async {
   //trails to solve the exception of parentwidget
@@ -28,14 +37,6 @@ void main() async {
     provisional: false,
     sound: true,
   );
-
-  Future<void> NotificationHandlerBackground(RemoteMessage message) async {
-    try {
-      print(message.data.toString());
-    } catch (e) {
-      print(e.toString());
-    }
-  }
 
   // FirebaseMessaging.onMessage.listen();
   FirebaseMessaging.onBackgroundMessage(NotificationHandlerBackground);
