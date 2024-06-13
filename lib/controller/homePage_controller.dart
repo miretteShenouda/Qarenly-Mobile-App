@@ -23,14 +23,15 @@ class HomePageController extends GetxController {
   Future<void> fetchSavedItems() async {
     try {
       isLoading.value = true;
-      final userId = 'kqX7HeWwwOZGKhvqdQCf'; // Replace with the actual user ID
+      final userId =
+          'CPj0OPftoEho6s9B937XNnIAcUR2'; // Replace with the actual user ID
       final userDocSnapshot =
           await _firestore.collection("Users").doc(userId).get();
 
       if (userDocSnapshot.exists) {
         final userData = userDocSnapshot.data();
         if (userData != null) {
-          List<dynamic> savedItemsData = userData['SavedItems'] ?? [];
+          List<dynamic> savedItemsData = userData['savedItems'] ?? [];
           List<DocumentReference> savedItemsReferences =
               savedItemsData.map((data) => data as DocumentReference).toList();
 
