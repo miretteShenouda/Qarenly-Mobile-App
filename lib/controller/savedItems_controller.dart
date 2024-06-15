@@ -12,12 +12,11 @@ class SavedItemsController extends GetxController {
 
   @override
   void onInit() {
-    fetchSavedItems();
     super.onInit();
   }
 
   Future<List<Product>> fetchSavedItems() async {
-    isLoading.value = true;
+    // isLoading.value = true;
     final List<Product> savedItems = [];
     try {
       final userId = AuthenticationRepo.instance.currentUser!.uid;

@@ -22,6 +22,7 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
   final _authenticationRepo = Get.put(AuthenticationRepo());
 
   void initState() {
+    savedItemsController.fetchSavedItems();
     super.initState();
   }
 
