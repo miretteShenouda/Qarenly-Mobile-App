@@ -33,13 +33,11 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
             searchController: searchController,
             authenticationRepo: _authenticationRepo,
           ),
-          body: FutureBuilder(
-              future: savedItemsController.fetchSavedItems(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  return SingleChildScrollView(
+          body:Obx(() {
+            if (savedItemsController.isLoading.value) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return SingleChildScrollView(
                     child: Container(
                       width: 391.h,
                       padding: EdgeInsets.symmetric(
@@ -49,7 +47,7 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
                         children: [
                           SizedBox(height: 5.v),
                           // _buildCheckbox(),
-                          _buildSavedItemsSection(context, snapshot),
+                          _buildSavedItemsSection(context),
                           SizedBox(height: 8.v),
                           Padding(
                             padding: EdgeInsets.only(left: 13.h),
@@ -59,8 +57,8 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
                       ),
                     ),
                   );
-                }
-              })),
+            }
+          }) ),
     );
   }
 
@@ -80,8 +78,7 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
   // }
 
   Widget _buildSavedItemsSection(
-      BuildContext context, AsyncSnapshot<Object?> snapshot) {
-    var data = snapshot.data! as List<Product>;
+      BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,10 +93,10 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
           separatorBuilder: (context, index) {
             return SizedBox(height: 21.v);
           },
-          itemCount: data.length,
+          itemCount: savedItemsController.savedItemsProducts.length,
           itemBuilder: (context, index) {
             return ProductcardItemWidget(
-              product: data[index],
+              product: savedItemsController.savedItemsProducts[index],
               savedItemsController: savedItemsController,
             );
           },

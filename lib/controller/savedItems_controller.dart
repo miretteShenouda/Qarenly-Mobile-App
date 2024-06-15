@@ -7,7 +7,17 @@ import '../model/laptop_model.dart';
 import '../model/product_model.dart';
 
 class SavedItemsController extends GetxController {
+  RxList <Product> savedItemsProducts = <Product>[].obs;
+  RxBool isLoading = true.obs;
+
+  @override
+  void onInit() {
+    fetchSavedItems();
+    super.onInit();
+  }
+
   Future<List<Product>> fetchSavedItems() async {
+    isLoading.value = true;
     final List<Product> savedItems = [];
     try {
       final userId = AuthenticationRepo.instance.currentUser!.uid;
@@ -25,8 +35,13 @@ class SavedItemsController extends GetxController {
           }
         }
       }
+      savedItemsProducts.value = savedItems;
+      isLoading.value = false;
+      print("Saved Items: ${savedItemsProducts}");
+      print("is Loading value: ${isLoading.value}");
       return savedItems;
     } catch (error) {}
+    isLoading.value = false;
     return [];
   }
   Future<void> deleteProduct(Product product) async {
@@ -35,6 +50,7 @@ class SavedItemsController extends GetxController {
 
       if (savedItemsData != null) {
         savedItemsData.removeWhere(( ref) => ref.id == product.id);
+        savedItemsProducts.removeWhere((element) => element.id == product.id);
 
         AuthenticationRepo.instance.userData!.savedItems = savedItemsData;
         AuthenticationRepo.instance.UpdateUser(AuthenticationRepo.instance.userData!);
