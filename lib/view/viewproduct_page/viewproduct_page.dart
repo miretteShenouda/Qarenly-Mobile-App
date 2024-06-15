@@ -389,13 +389,13 @@ class _ViewProductPageState extends State<ViewproductPage> {
                       Container(
                         height: 300, // Set a fixed height for LineChartSample1
                         child: Center(
-                          child: LineChartSample1(
-                            dates: (documentData['dates'] as List<dynamic>)
-                                .map((date) => (date as Timestamp).toDate())
-                                .toList(),
-                            prices: documentData['lowest_prices'],
-                          ),
-                        ),
+                            // child: LineChartSample1(
+                            //   dates: (documentData['dates'] as List<dynamic>)
+                            //       .map((date) => (date as Timestamp).toDate())
+                            //       .toList(),
+                            //   prices: documentData['lowest_prices'],
+                            // ),
+                            ),
                       ),
                       ListView.separated(
                           physics: const NeverScrollableScrollPhysics(),

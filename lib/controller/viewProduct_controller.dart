@@ -25,8 +25,9 @@ class ViewProductController extends GetxController {
     searchController = TextEditingController();
   }
 
-  void initSavedState(){
-    if (AuthenticationRepo.instance.userData == null || AuthenticationRepo.instance.userData!.savedItems == null) {
+  void initSavedState() {
+    if (AuthenticationRepo.instance.userData == null ||
+        AuthenticationRepo.instance.userData!.savedItems == null) {
       isSaved = false;
       return;
     }
@@ -39,7 +40,8 @@ class ViewProductController extends GetxController {
     } else {
       isSaved = false;
       print("isSaved: $isSaved");
-    };
+    }
+    ;
   }
 
   Future<bool> toggleSavedItem() async {
@@ -85,10 +87,7 @@ class ViewProductController extends GetxController {
         } else {
           return null;
         }
-      } finally {
-        isLoading.value =
-            false; // Set isLoading to false after data fetching is completed (whether success or error)
-      }
+      } finally {}
     } else {
       return null;
     }
@@ -114,27 +113,83 @@ class ViewProductController extends GetxController {
   }
 
   void getSimilarProducts() async {
+    /// CHANGED THE IMPLEMENTATION FROM FOR LOOP TO WHERE CALUSE FOR FASTER RETRIEVAL AND LIMIT CAPAPILITES.
+
+    similarItems.clear(); // clearing the similarItems list
     RxList<Product> searchReturn = <Product>[].obs;
 
-    QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('Laptops').get();
+    final result = await getProductDetails(_productId!,
+        _productType!); // Making sure that the document is not null before accessing it
 
-    snapshot.docs.forEach((doc) {
-      final Product product =
-          Product.fromFirestore(doc.data() as Map<String, dynamic>);
-      print("blaaaaa");
-      print(product.benchmark_ratio);
-      product.type = 'Laptops';
-      print("kkk");
-      print(documentData.value!['benchmark_ratio']);
-      if (product.benchmark_ratio >=
-              documentData.value!['benchmark_ratio'] - 5 &&
-          product.benchmark_ratio <=
-              documentData.value!['benchmark_ratio'] + 5) {
-        searchReturn.add(product);
-        similarItems.add(product);
-      }
-    });
+    if (result != null) {
+      documentData.value = result.data();
+    } else {
+      return;
+    }
+
+    print("Product Type in Controller: $_productType");
+    print("Document benchmark: ${documentData.value!['benchmark_ratio']}");
+    QuerySnapshot snapshot1 = await FirebaseFirestore.instance
+        .collection(_productType!)
+        .where("benchmark_ratio",
+            isGreaterThanOrEqualTo: documentData.value!['benchmark_ratio'] -
+                5) // more or equal to -5
+        .where("benchmark_ratio",
+            isLessThanOrEqualTo: documentData
+                .value!['benchmark_ratio']) // less or equal to his value
+        .where("name", isNotEqualTo: documentData.value!['name'])
+        .limit(5)
+        .get(); // Query for Products less than him
+
+    QuerySnapshot snapshot2 = await FirebaseFirestore.instance
+        .collection(_productType!)
+        .where("benchmark_ratio",
+            isLessThanOrEqualTo: documentData.value!['benchmark_ratio'] +
+                5) // less or equal to +5
+        .where("benchmark_ratio",
+            isGreaterThanOrEqualTo: documentData
+                .value!['benchmark_ratio']) // more or equal to his value
+        .where("name", isNotEqualTo: documentData.value!['name'])
+        .limit(5)
+        .get(); // Query for Products more than him
+
+    searchReturn.addAll(snapshot1.docs.map(
+        (doc) => Product.fromFirestore(doc.data() as Map<String, dynamic>)));
+    searchReturn.addAll(snapshot2.docs.map(
+        (doc) => Product.fromFirestore(doc.data() as Map<String, dynamic>)));
+    for (int i = 0; i < searchReturn.length; i++) {
+      searchReturn[i].type = _productType;
+    }
+    similarItems = searchReturn;
+
+    print(similarItems);
+
+    for (var item in similarItems) {
+      print(item.name);
+    }
+
+    isLoading.value =
+        false; // Set isLoading to false after data fetching is completed (whether success or error)
+
+    // QuerySnapshot snapshot =
+    //     await FirebaseFirestore.instance.collection(_productType!).get();
+
+    // snapshot.docs.forEach((doc) {
+    //   final Product product =
+    //       Product.fromFirestore(doc.data() as Map<String, dynamic>);
+    //   print("blaaaaa");
+    //   print(product.benchmark_ratio);
+    //   product.type = _productType;
+    //   print("kkk");
+    //   print(documentData.value!['benchmark_ratio']);
+    //   if (product.benchmark_ratio >=
+    //           documentData.value!['benchmark_ratio'] - 5 &&
+    //       product.benchmark_ratio <=
+    //           documentData.value!['benchmark_ratio'] + 5) {
+    //     searchReturn.add(product);
+    //     similarItems.add(product);
+    //   }
+    // });
 
     // return searchReturn;
   }

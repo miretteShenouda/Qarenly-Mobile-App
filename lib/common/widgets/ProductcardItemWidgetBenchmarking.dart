@@ -11,6 +11,8 @@ class ProductcardItemWidgetBenchmarking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Product Name: ${product.name}");
+    print("Product ID: ${product.id}");
     return GestureDetector(
         onTap: () {
           Navigator.pushNamed(context, AppRoutes.viewproductPage, arguments: {

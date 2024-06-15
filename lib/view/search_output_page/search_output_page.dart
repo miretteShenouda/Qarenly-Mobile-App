@@ -58,7 +58,7 @@ class SearchOutputPageState extends State<SearchOutputPage>
         itemCount: 4,
         itemBuilder: (context, index) {
           return ProductcardItemWidgetHome(
-            product: controller.laptops[index],
+            product: controller.products[index],
             // homePageController: controller,
           );
         },

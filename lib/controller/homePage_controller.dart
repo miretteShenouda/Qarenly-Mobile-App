@@ -9,57 +9,34 @@ import '../model/product_model.dart';
 class HomePageController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  final RxList<Product> laptops = <Product>[].obs;
+  final RxList<Product> products = <Product>[].obs;
   final RxList<Product> savedItems = <Product>[].obs;
+  int limit = 1;
+
+  final categories = ["Laptops" , "CPUs" , "GPUs" , "TVs"];
 
   RxBool isLoading = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchSavedItems();
+    fetchHomepageItems();
   }
 
-  Future<void> fetchSavedItems() async {
+  Future<void> fetchHomepageItems() async {
     try {
       isLoading.value = true;
-      final userId =
-          'CPj0OPftoEho6s9B937XNnIAcUR2'; // Replace with the actual user ID
-      final userDocSnapshot =
-          await _firestore.collection("Users").doc(userId).get();
 
-      if (userDocSnapshot.exists) {
-        final userData = userDocSnapshot.data();
-        if (userData != null) {
-          List<dynamic> savedItemsData = userData['savedItems'] ?? [];
-          List<DocumentReference> savedItemsReferences =
-              savedItemsData.map((data) => data as DocumentReference).toList();
-
-          for (final DocumentReference ref in savedItemsReferences) {
-            final DocumentSnapshot productDocSnapshot = await ref.get();
-            final String referencePath = productDocSnapshot.reference.path;
-            final List<String> parts = referencePath.split('/');
-            final String productType = parts[0];
-            final String documentId = parts[1];
-            print("Product Type: $productType");
-            print("Document ID: $documentId");
-
-            final DocumentSnapshot productDocSnapshot1 =
-                await _firestore.collection(productType).doc(documentId).get();
-
-            if (productDocSnapshot1.exists) {
-              if (productType == "Laptops") {
-                final Map<String, dynamic>? productData =
-                    productDocSnapshot1.data() as Map<String, dynamic>?;
-
-                if (productData != null) {
-                  final Laptop laptop = Laptop.fromFirestore(productData);
-                  laptop.type = productType;
-                  laptops.add(laptop);
-                }
-              } else {}
-            }
-          }
+      for (var category in categories) {
+        final querySnapshot = await _firestore
+            .collection(category)
+            .limit(limit)
+            .get();
+        for (var doc in querySnapshot.docs) {
+          final product = Product.fromFirestore(doc.data());
+          product.type = category;
+          print("Product ID: ${product.id}"); // Print the product.id;
+          products.add(product);
         }
       }
 

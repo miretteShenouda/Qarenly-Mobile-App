@@ -105,9 +105,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
       child: ListView.builder(
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
-        itemCount: controller.laptops.length,
+        itemCount: controller.products.length,
         itemBuilder: (context, index) {
-          final imageUrl = controller.laptops[index].imageUrl;
+          final imageUrl = controller.products[index].imageUrl;
           return Container(
             margin: EdgeInsets.symmetric(
                 horizontal: 5.0), // Add margin for spacing between items
@@ -135,9 +135,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           separatorBuilder: (context, index) => const SizedBox(height: 21.0),
-          itemCount: controller.laptops.length,
+          itemCount: controller.products.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
-            product: controller.laptops[index],
+            product: controller.products[index],
             // homePageController: controller,
           ),
         ),
@@ -158,9 +158,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           separatorBuilder: (context, index) => const SizedBox(height: 21.0),
-          itemCount: controller.laptops.length,
+          itemCount: controller.products.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
-            product: controller.laptops[index],
+            product: controller.products[index],
             // homePageController: controller,
           ),
         ),
