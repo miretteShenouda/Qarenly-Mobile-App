@@ -29,7 +29,10 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          appBar: BuildAppBar(searchController: searchController , authenticationRepo: _authenticationRepo,),
+          appBar: BuildAppBar(
+            searchController: searchController,
+            authenticationRepo: _authenticationRepo,
+          ),
           body: FutureBuilder(
               future: savedItemsController.fetchSavedItems(),
               builder: (context, snapshot) {
@@ -45,8 +48,8 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 5.v),
-                          _buildCheckbox(),
-                          _buildSavedItemsSection(context , snapshot),
+                          // _buildCheckbox(),
+                          _buildSavedItemsSection(context, snapshot),
                           SizedBox(height: 8.v),
                           Padding(
                             padding: EdgeInsets.only(left: 13.h),
@@ -61,22 +64,23 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
     );
   }
 
-  Widget _buildCheckbox() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Checkbox(
-          value: false, // Set initial value of the checkbox
-          onChanged: (bool? value) {
-            if (value == true) {}
-          },
-        ),
-        Text('Mute all'),
-      ],
-    );
-  }
+  // Widget _buildCheckbox() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.end,
+  //     children: [
+  //       Checkbox(
+  //         value: false, // Set initial value of the checkbox
+  //         onChanged: (bool? value) {
+  //           if (value == true) {}
+  //         },
+  //       ),
+  //       Text('Mute all'),
+  //     ],
+  //   );
+  // }
 
-  Widget _buildSavedItemsSection(BuildContext context , AsyncSnapshot<Object?> snapshot) {
+  Widget _buildSavedItemsSection(
+      BuildContext context, AsyncSnapshot<Object?> snapshot) {
     var data = snapshot.data! as List<Product>;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

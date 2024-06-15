@@ -1,11 +1,14 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:qarenly/common/widgets/api_widget.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:qarenly/common/widgets/api_widget.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 
 class LoginFooterWidget extends StatelessWidget {
   // AuthenticationRepo _authController = AuthenticationController();
@@ -52,6 +55,29 @@ class LoginFooterWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold))
                 ])),
           )),
+      SizedBox(height: 10),
+      ApiButton(
+        text: "Google",
+        img: ImageConstant.imgGoogle,
+        onPressed: () async {
+          User? user = await _authenticationRepo.signInWithGoogle();
+          if (user != null) {
+            // Navigate to the next screen or do something with the signed-up user
+            Get.offAll(() => HomepageScreen(user));
+          } else {
+            // Handle sign-up failure
+            print("failed");
+          }
+        },
+      ),
+      SizedBox(height: 10),
+      ApiButton(
+        text: "Facebook",
+        img: ImageConstant.imgLogosfacebook,
+        onPressed: () {
+          _authenticationRepo.signUpWithFacebook(context);
+        },
+      ),
     ]);
   }
 }

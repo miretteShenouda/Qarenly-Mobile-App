@@ -69,30 +69,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
                                   fontWeight: FontWeight.bold, fontSize: 25)),
                           Row(
                             children: [
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _controller.isNotified =
-                                          !_controller.isNotified;
-                                    });
-                                    if (_controller.isNotified) {
-                                      print("Notified");
-                                    }
-                                  },
-                                  child: Icon(
-                                    _controller.isNotified
-                                        ? Icons.notifications_active
-                                        : Icons.notifications_none,
-                                    color: Colors.black,
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    shape: CircleBorder(),
-                                    padding: EdgeInsets.all(20),
-                                  ),
-                                ),
-                              ),
                               SizedBox(width: 10),
                               Align(
                                 alignment: Alignment.topRight,
