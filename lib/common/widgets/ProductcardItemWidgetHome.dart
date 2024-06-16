@@ -39,7 +39,7 @@ class ProductcardItemWidgetHome extends StatelessWidget {
               radius: BorderRadius.circular(30.0),
             ),
             title: Text(
-              "Name: ${product.name}",
+              "${product.name}",
               style: theme.textTheme.headline6,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -47,17 +47,17 @@ class ProductcardItemWidgetHome extends StatelessWidget {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Source: ${product.sources.join(", ")} \nBrand: ${product.brand}",
-                  maxLines: 2,
-                  style: theme.textTheme.bodyLarge,
-                  // overflow: TextOverflow.ellipsis,
-                ),
+                // Text(
+                //   "Source: ${product.sources.join(", ")} \nBrand: ${product.brand}",
+                //   maxLines: 2,
+                //   style: theme.textTheme.bodyLarge,
+                //   // overflow: TextOverflow.ellipsis,
+                // ),
                 Align(
                     alignment: Alignment.centerRight,
                     child: RichText(
                       text: TextSpan(
-                        text: "Lowest price: ${product.lowestPrices}",
+                        text: "Lowest price: ${product.lowestPrices[0]}",
                         style: theme.textTheme.titleSmall,
                       ),
                     ))

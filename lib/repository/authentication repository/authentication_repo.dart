@@ -69,8 +69,8 @@ class AuthenticationRepo extends GetxController {
   _setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => LoginPageScreen())
-        : Get.offAll(() => LoginPageScreen());
-    // : Get.offAll(() => HomepageScreen(user));
+        // : Get.offAll(() => LoginPageScreen());
+        : Get.offAll(() => HomepageScreen(user));
   }
 
 /*---------------------------------AUTHENTICATION------------------------------------------*/

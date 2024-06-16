@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:qarenly/common/widgets/tff_widget.dart';
@@ -34,7 +35,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             icon: const Icon(
               Icons.arrow_back,
             )),
-        title: Text("Edit Profile",
+        title: Text("Profile",
             style: TextStyle(fontSize: 30, color: Colors.white)),
       ),
       body: FutureBuilder<UserModel?>(
@@ -65,6 +66,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   padding: const EdgeInsets.all(30),
                   child: Column(
                     children: [
+                      Icon(Icons.person_pin, size: 100, color: Colors.white),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         "Update Your Profile",
                         style: TextStyle(
@@ -173,35 +178,65 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             ),
                             const SizedBox(height: 30),
 
-                            // -- Form Submit Button
-                            SizedBox(
-                              width: double.infinity,
-                              height: 30,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (profileController.formKey.currentState!
-                                      .validate()) {
-                                    profileController.updateProfile();
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text('Profile Updated'),
-                                    ));
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    side: BorderSide.none,
-                                    shape: const StadiumBorder()),
-                                child: const Text("Edit Profile",
-                                    style: TextStyle(color: Colors.black)),
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 150,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (profileController
+                                          .formKey.currentState!
+                                          .validate()) {
+                                        profileController.updateProfile();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content: Text('Profile Updated'),
+                                        ));
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        side: BorderSide.none,
+                                        shape: const StadiumBorder()),
+                                    child: const Text("Cancel",
+                                        style: TextStyle(color: Colors.red)),
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                SizedBox(
+                                  width: 150,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (profileController
+                                          .formKey.currentState!
+                                          .validate()) {
+                                        profileController.updateProfile();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content: Text('Profile Updated'),
+                                        ));
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        side: BorderSide.none,
+                                        shape: const StadiumBorder()),
+                                    child: const Text("Edit",
+                                        style: TextStyle(color: Colors.green)),
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 30),
 
                             // -- Created Date and Delete Button
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ElevatedButton(
+                            Container(
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: ElevatedButton(
                                   onPressed: () async {
                                     await profileController.deleteUser();
                                     Navigator.pushReplacementNamed(
@@ -209,15 +244,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor:
-                                          Colors.redAccent.withOpacity(0.1),
-                                      elevation: 0,
+                                          Colors.white.withOpacity(0.1),
                                       foregroundColor: Colors.red,
                                       shape: const StadiumBorder(),
                                       side: BorderSide.none),
-                                  child: const Text("Delete"),
+                                  child: const Text("Delete Account"),
                                 ),
-                              ],
-                            )
+                              ),
+                            ),
                           ],
                         ),
                       ),
