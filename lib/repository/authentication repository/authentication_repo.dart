@@ -69,8 +69,8 @@ class AuthenticationRepo extends GetxController {
   _setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => LoginPageScreen())
-        // : Get.offAll(() => LoginPageScreen());
-        : Get.offAll(() => HomepageScreen(user));
+        : Get.offAll(() => LoginPageScreen());
+    // : Get.offAll(() => HomepageScreen(user));
   }
 
 /*---------------------------------AUTHENTICATION------------------------------------------*/
@@ -264,7 +264,7 @@ class AuthenticationRepo extends GetxController {
       'email': userModel.email,
       'password': userModel.password,
       'savedItems': userModel.savedItems,
-      'notificationToken': userModel.notificationToken!,
+      'notificationToken': userModel.notificationToken,
     });
   }
 

@@ -9,7 +9,7 @@ class UserModel {
   UserType type;
   List<String>? searchHistory = List<String>.empty();
   List<DocumentReference>? savedItems;
-  String? notificationToken;
+  String? notificationToken = null;
   UserModel({
     required this.id,
     required this.username,
@@ -18,7 +18,7 @@ class UserModel {
     this.type = UserType.client,
     this.searchHistory,
     List<DocumentReference>? savedItems,
-    this.notificationToken = null,
+    this.notificationToken,
   }) : savedItems = savedItems ?? List<DocumentReference>.empty(growable: true);
 
   Map<String, dynamic> toMap() {

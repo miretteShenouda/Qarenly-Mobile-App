@@ -17,17 +17,18 @@ class SignUpController extends GetxController {
         .createUserWithEmailAndPassword(email, password);
 
     UserModel userModel = UserModel(
-        id: user!.uid,
-        username: username.text,
-        email: email,
-        password: password,
+      id: user!.uid,
+      username: username.text,
+      email: email,
+      password: password,
     );
-
+    print("USERNAME : ________________________");
+    print(userModel.username);
     InsertUser(userModel);
+    print("USERNAME DONE: ________________________");
   }
 
   void InsertUser(UserModel user) async {
-    AuthenticationRepo.instance
-        .InsertUser(user);
+    AuthenticationRepo.instance.InsertUser(user);
   }
 }
