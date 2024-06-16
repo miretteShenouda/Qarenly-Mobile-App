@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:qarenly/common/widgets/ProductcardItemWidgetBenchmarking.dart';
 import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:qarenly/controller/viewProduct_controller.dart';
@@ -11,7 +12,10 @@ import '../../common/widgets/line_chart.dart';
 
 class ViewproductPage extends StatefulWidget {
   ViewproductPage({Key? key}) : super(key: key);
-  final controller = Get.put(ViewProductController());
+  // final controller = Get.put(ViewProductController());
+  // final List<Map<String, dynamic>> sources;
+
+  // ViewproductPage({required this.sources});
 
   @override
   _ViewProductPageState createState() => _ViewProductPageState();
@@ -20,19 +24,39 @@ class ViewproductPage extends StatefulWidget {
 class _ViewProductPageState extends State<ViewproductPage> {
   late ViewProductController _controller = Get.put(ViewProductController());
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
-  // late ScrollController _scrollController;
-  // int _currentIndex = 0;
+  late List<int?> ratings = [];
 
   @override
   void initState() {
     super.initState();
     _controller.onInit();
+    // ratings = List<int?>.filled(_controller.documentData.value[''].length, null);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _controller.initDependencies(context);
+  }
+
+// Function to parse and format the timestamp
+  String formatTimestamp(Timestamp? timestamp) {
+    if (timestamp == null) {
+      return 'N/A'; // Return a default value if timestamp is null
+    }
+
+    try {
+      // Convert Timestamp to DateTime
+      DateTime date = timestamp.toDate();
+
+      // Define the output format
+      DateFormat outputFormat = DateFormat('dd-MM-yyyy');
+
+      // Format the date
+      return outputFormat.format(date);
+    } catch (e) {
+      return 'Invalid Date'; // Handle parsing errors
+    }
   }
 
   @override
@@ -58,6 +82,8 @@ class _ViewProductPageState extends State<ViewproductPage> {
                   return Center(child: CircularProgressIndicator());
                 } else if (_controller.documentData.value != null) {
                   final documentData = _controller.documentData.value!;
+                  ratings =
+                      List<int?>.filled(documentData['sources'].length, null);
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -134,255 +160,382 @@ class _ViewProductPageState extends State<ViewproductPage> {
                               fontWeight: FontWeight.bold, fontSize: 25)),
 
                       //this is the table of scources
-                      Table(
-                          defaultVerticalAlignment:
-                              TableCellVerticalAlignment.middle,
-                          children: [
-                            // Header row with column titles
-                            TableRow(
-                              // decoration: BoxDecoration(
-                              //   // color: Colors.grey[
-                              //   //     300], // Background color for the header row
-                              // ),
+                      // Table(
+                      //     defaultVerticalAlignment:
+                      //         TableCellVerticalAlignment.middle,
+                      Column(
+                        children: [
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Table(
+                              defaultVerticalAlignment:
+                                  TableCellVerticalAlignment.middle,
+                              columnWidths: {
+                                0: FixedColumnWidth(
+                                    100.0), // Adjust width as needed
+                                1: FixedColumnWidth(120.0),
+                                2: FixedColumnWidth(120.0),
+                                3: FixedColumnWidth(120.0),
+                                4: FixedColumnWidth(120.0),
+                                5: FixedColumnWidth(120.0),
+                              },
                               children: [
-                                TableCell(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Image',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                // Header row with column titles
+                                TableRow(
+                                  children: [
+                                    TableCell(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: Text(
+                                            'Image',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    TableCell(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: Text(
+                                            'Price',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TableCell(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: Text(
+                                            'Stock Status',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TableCell(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: Text(
+                                            'Last in Stock',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TableCell(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: Text(
+                                            'Rating',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TableCell(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: Text(
+                                            'Your Rating',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                TableCell(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Price',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+
+                                ...List.generate(
+                                  documentData['sources']
+                                      .length, // Generate rows based on list length
+                                  (index) => TableRow(
+                                    children: [
+                                      //cell for image and url
+                                      TableCell(
+                                        verticalAlignment:
+                                            TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          // child: Center(
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                100.0), // Adjust radius for size
+                                            child: DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                color: Color.fromRGBO(0, 48, 73,
+                                                    0.0), // Set background color (optional)
+                                                border: Border.all(
+                                                  color: Colors
+                                                      .black, // Change border color as needed
+                                                  width:
+                                                      2.0, // Adjust border width
+                                                ),
+                                                borderRadius: BorderRadius.circular(
+                                                    100.0), // Match border radius
+                                              ),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  // Use URL Launcher to open the link
+                                                  launchURL(
+                                                      documentData['sources']
+                                                          [index]['URL']);
+                                                },
+                                                child: Image.asset(
+                                                  'assets/images/amazon.png', // Replace with your actual logo widget or image provider
+                                                  height:
+                                                      30.0, // Adjust height for logo size
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                TableCell(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Rating',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+
+                                      //cell for price and discounted price
+                                      TableCell(
+                                        verticalAlignment:
+                                            TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Container(
+                                            // Wrap content in a Container
+                                            decoration: BoxDecoration(
+                                              color: Color.fromRGBO(0, 48, 73,
+                                                  0.24), // Set grey background color
+                                            ),
+                                            child: Center(
+                                              child: documentData['sources']
+                                                              [index][
+                                                          'discounted_price'] !=
+                                                      null
+                                                  ? RichText(
+                                                      text: TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text: documentData[
+                                                                        'sources']
+                                                                    [
+                                                                    index]['price']
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .lineThrough, // Strike-through style
+                                                            ),
+                                                          ),
+                                                          TextSpan(
+                                                            text:
+                                                                " ${documentData['sources'][index]['discounted_price'].toString()}",
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .red, // Change color for discounted price
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Text(
+                                                      documentData['sources']
+                                                              [index]['price']
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                    ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                TableCell(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Stock Status',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+
+                                      //cell for stock_status
+                                      TableCell(
+                                        verticalAlignment:
+                                            TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          // Wrap content in a Container
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Color.fromRGBO(0, 48, 73,
+                                                  0.24), // Set grey background color
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                documentData['sources'][index]
+                                                        ['stock_status']
+                                                    .toString(), // Add price field
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                TableCell(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'User Rating',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+
+                                      //cell for last_instock
+                                      TableCell(
+                                        verticalAlignment:
+                                            TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          // Wrap content in a Container
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Color.fromRGBO(0, 48, 73,
+                                                  0.24), // Set grey background color
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                formatTimestamp(documentData[
+                                                        'sources'][index][
+                                                    'last_instock']), // Add price field
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+
+                                      //cell for scraped rating
+                                      TableCell(
+                                        verticalAlignment:
+                                            TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Container(
+                                            // Wrap content in a Container
+                                            decoration: BoxDecoration(
+                                              color: Color.fromRGBO(0, 48, 73,
+                                                  0.24), // Set grey background color
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                documentData['sources'][index]
+                                                        ['rating']
+                                                    .toString(), // Add price field
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      // //cell for user rating input
+                                      // TableCell(
+                                      //   //rate the source
+                                      //   verticalAlignment:
+                                      //       TableCellVerticalAlignment.middle,
+                                      //   child: Padding(
+                                      //     padding: EdgeInsets.all(8.0),
+                                      //     child: Container(
+                                      //       // Wrap content in a Container
+                                      //       decoration: BoxDecoration(
+                                      //         color: Color.fromRGBO(0, 48, 73,
+                                      //             0.24), // Set grey background color
+                                      //       ),
+                                      //       child: Center(
+                                      //         child: Text(
+                                      //           "enter rating", // Add price field
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      // Cell for user rating input
+                                      // Cell for user rating input
+                                      TableCell(
+                                        verticalAlignment:
+                                            TableCellVerticalAlignment.middle,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Color.fromRGBO(
+                                                  0, 48, 73, 0.24),
+                                            ),
+                                            child: Center(
+                                              child: DropdownButton<int>(
+                                                value: ratings[index],
+                                                hint: Text('Rate'),
+                                                items: [1, 2, 3, 4, 5]
+                                                    .map((int value) {
+                                                  return DropdownMenuItem<int>(
+                                                    value: value,
+                                                    child:
+                                                        Text(value.toString()),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (int? newValue) {
+                                                  setState(() {
+                                                    ratings[index] = newValue;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-
-                            ...List.generate(
-                              documentData['sources']
-                                  .length, // Generate rows based on list length
-                              (index) => TableRow(
-                                children: [
-                                  //cell for image and url
-                                  TableCell(
-                                    verticalAlignment:
-                                        TableCellVerticalAlignment.middle,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                            100.0), // Adjust radius for size
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            color: Color.fromRGBO(0, 48, 73,
-                                                0.0), // Set background color (optional)
-                                            border: Border.all(
-                                              color: Colors
-                                                  .black, // Change border color as needed
-                                              width: 2.0, // Adjust border width
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                100.0), // Match border radius
-                                          ),
-                                          child: InkWell(
-                                            onTap: () {
-                                              // Use URL Launcher to open the link
-                                              launchURL(documentData['sources']
-                                                  [index]['URL']);
-                                            },
-                                            child: Image.asset(
-                                              'assets/images/amazon.png', // Replace with your actual logo widget or image provider
-                                              height:
-                                                  30.0, // Adjust height for logo size
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
-                                  //cell for price and discounted price
-                                  TableCell(
-                                    verticalAlignment:
-                                        TableCellVerticalAlignment.middle,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        // Wrap content in a Container
-                                        decoration: BoxDecoration(
-                                          color: Color.fromRGBO(0, 48, 73,
-                                              0.24), // Set grey background color
-                                        ),
-                                        child: documentData['sources'][index]
-                                                    ['discounted_price'] !=
-                                                null
-                                            ? RichText(
-                                                text: TextSpan(
-                                                  children: [
-                                                    TextSpan(
-                                                      text: documentData[
-                                                                  'sources']
-                                                              [index]['price']
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        decoration: TextDecoration
-                                                            .lineThrough, // Strike-through style
-                                                      ),
-                                                    ),
-                                                    TextSpan(
-                                                      text:
-                                                          " ${documentData['sources'][index]['discounted_price'].toString()}",
-                                                      style: TextStyle(
-                                                        color: Colors
-                                                            .red, // Change color for discounted price
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            : Text(
-                                                documentData['sources'][index]
-                                                        ['price']
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: Colors.black),
-                                              ),
-                                      ),
-                                    ),
-                                  ),
-
-                                  //cell for scraped rating
-                                  TableCell(
-                                    verticalAlignment:
-                                        TableCellVerticalAlignment.middle,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        // Wrap content in a Container
-                                        decoration: BoxDecoration(
-                                          color: Color.fromRGBO(0, 48, 73,
-                                              0.24), // Set grey background color
-                                        ),
-                                        child: Text(
-                                          documentData['sources'][index]
-                                                  ['rating']
-                                              .toString(), // Add price field
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
-                                  //cell for stock_status
-                                  TableCell(
-                                    verticalAlignment:
-                                        TableCellVerticalAlignment.middle,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        // Wrap content in a Container
-                                        decoration: BoxDecoration(
-                                          color: Color.fromRGBO(0, 48, 73,
-                                              0.24), // Set grey background color
-                                        ),
-                                        child: Text(
-                                          documentData['sources'][index]
-                                                  ['stock_status']
-                                              .toString(), // Add price field
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
-                                  //cell for user rating input
-                                  TableCell(
-                                    //rate the source
-                                    verticalAlignment:
-                                        TableCellVerticalAlignment.middle,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        // Wrap content in a Container
-                                        decoration: BoxDecoration(
-                                          color: Color.fromRGBO(0, 48, 73,
-                                              0.24), // Set grey background color
-                                        ),
-                                        child: Text(
-                                          "enter rating", // Add price field
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Scroll horizontally to see more',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(Icons.arrow_right_alt),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height:
+                                300, // Set a fixed height for LineChartSample1
+                            child: Center(
+                              child: LineChartSample1(
+                                dates: (documentData['dates'] as List<dynamic>)
+                                    .map((date) => (date as Timestamp).toDate())
+                                    .toList(),
+                                prices: documentData['lowest_prices'],
                               ),
                             ),
-                          ]),
-                      Container(
-                        height: 300, // Set a fixed height for LineChartSample1
-                        child: Center(
-                            // child: LineChartSample1(
-                            //   dates: (documentData['dates'] as List<dynamic>)
-                            //       .map((date) => (date as Timestamp).toDate())
-                            //       .toList(),
-                            //   prices: documentData['lowest_prices'],
-                            // ),
-                            ),
-                      ),
-                      ListView.separated(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 21.0),
-                          itemCount: _controller.similarItems.length,
-                          itemBuilder: (context, index) =>
-                              ProductcardItemWidgetBenchmarking(
-                                product: _controller.similarItems[index],
-                              ))
+                          ),
+                          ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 21.0),
+                              itemCount: _controller.similarItems.length,
+                              itemBuilder: (context, index) =>
+                                  ProductcardItemWidgetBenchmarking(
+                                    product: _controller.similarItems[index],
+                                  ))
+                        ],
+                      )
                     ],
                   );
                 } else {

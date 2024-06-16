@@ -35,7 +35,7 @@ class _LineChart extends StatelessWidget {
             dotData: const FlDotData(show: true),
             belowBarData: BarAreaData(show: false),
             spots: List.generate(dates.length, (index) {
-              return FlSpot(index.toDouble(), prices[index]);
+              return FlSpot(index.toDouble(), prices[index].toDouble());
             }),
           ),
         ],
