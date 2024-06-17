@@ -56,12 +56,12 @@ class ProductcardItemWidgetBenchmarking extends StatelessWidget {
     print("benchmark  ratio: ${product.benchmark_ratio}");
     return GestureDetector(
         onTap: () {
-          if (lowestPriceMap != null && lowestPriceMap['URL'] != null) {
-            String url = lowestPriceMap['URL'];
-            _launchURL(url);
-          } else {
-            print("No valid URL found for the lowest price source.");
-          }
+          // if (lowestPriceMap != null && lowestPriceMap['URL'] != null) {
+          //   String url = lowestPriceMap['URL'];
+          //   _launchURL(url);
+          // } else {
+          //   print("No valid URL found for the lowest price source.");
+          // }
           Navigator.pushNamed(context, AppRoutes.viewproductPage, arguments: {
             'productId': product.id,
             'productType': product.type,

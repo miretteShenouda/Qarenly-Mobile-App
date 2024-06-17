@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qarenly/common/widgets/ProductcardItemWidgetBenchmarking.dart';
@@ -526,16 +527,30 @@ class _ViewProductPageState extends State<ViewproductPage> {
                               ),
                             ),
                           ),
-                          ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 21.0),
+                          Container(
+                            height: 250.0,
+                            child: ListView.separated(
+                              shrinkWrap:
+                                  true, // No need to shrink wrap for horizontal scrolling
+                              scrollDirection: Axis.horizontal,
+                              physics:
+                                  BouncingScrollPhysics(), // Allow the list to scroll horizontally
+                              separatorBuilder: (context, index) => SizedBox(
+                                  width:
+                                      10), // Use width for horizontal separation
                               itemCount: _controller.similarItems.length,
-                              itemBuilder: (context, index) =>
-                                  ProductcardItemWidgetBenchmarking(
-                                    product: _controller.similarItems[index],
-                                  ))
+                              itemBuilder: (context, index) {
+                                final product = _controller.similarItems[index];
+                                return ProductcardItemWidgetBenchmarking(
+                                  product: product,
+                                  comparison: product.comparison ??
+                                      "", // Pass comparison value
+
+                                  // Ensure comparison is passed correctly
+                                );
+                              },
+                            ),
+                          )
                         ],
                       )
                     ],
