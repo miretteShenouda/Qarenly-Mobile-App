@@ -58,6 +58,7 @@ class ViewProductController extends GetxController {
 
     AuthenticationRepo.instance
         .UpdateUser(AuthenticationRepo.instance.userData!);
+    isSaved = !isSaved;
 
     return isSaved;
   }
@@ -87,7 +88,9 @@ class ViewProductController extends GetxController {
         } else {
           return null;
         }
-      } finally {}
+      } finally {
+        // isLoading.value = false;
+      }
     } else {
       return null;
     }
@@ -126,6 +129,7 @@ class ViewProductController extends GetxController {
     } else {
       return;
     }
+    double benchmarkRatio = documentData.value!['benchmark_ratio'];
 
     print("Product Type in Controller: $_productType");
     print("Document benchmark: ${documentData.value!['benchmark_ratio']}");
@@ -157,8 +161,24 @@ class ViewProductController extends GetxController {
         (doc) => Product.fromFirestore(doc.data() as Map<String, dynamic>)));
     searchReturn.addAll(snapshot2.docs.map(
         (doc) => Product.fromFirestore(doc.data() as Map<String, dynamic>)));
-    for (int i = 0; i < searchReturn.length; i++) {
-      searchReturn[i].type = _productType;
+    for (var product in searchReturn) {
+      product.type = _productType;
+      // product.comparison = product.benchmark_ratio > benchmarkRatio
+      //     ? " higher"
+      //     : product.benchmark_ratio < benchmarkRatio
+      //         ? "lower"
+      //         : "equal";
+      if (product.benchmark_ratio > benchmarkRatio) {
+        product.comparison =
+            "${(product.benchmark_ratio - benchmarkRatio).toStringAsPrecision(3)}%";
+        product.arrow = Icons.arrow_circle_up_outlined;
+      } else if (product.benchmark_ratio < benchmarkRatio) {
+        product.comparison =
+            "${(benchmarkRatio - product.benchmark_ratio).toStringAsPrecision(3)}%";
+        product.arrow = Icons.arrow_circle_down_outlined;
+      } else {
+        product.comparison = "equal";
+      }
     }
     similarItems = searchReturn;
 

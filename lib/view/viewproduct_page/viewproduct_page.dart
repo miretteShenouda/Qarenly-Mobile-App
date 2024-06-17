@@ -26,7 +26,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
   late List<int?> ratings = [];
 
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -57,11 +56,11 @@ class _ViewProductPageState extends State<ViewproductPage> {
     super.initState();
     _controller.onInit();
     // ratings = List<int?>.filled(_controller.documentData.value[''].length, null);
-  WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller.initDependencies(context);
       _controller.initSavedState();
       _controller.getSimilarProducts();
-  });
+    });
   }
 
   @override
@@ -546,8 +545,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
                 }
               },
             ),
-            //    ]
-            //   child:
           ),
         ),
       ),

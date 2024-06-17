@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:flutter/material.dart';
+
 class Product {
   String brand;
   String id;
@@ -15,6 +17,8 @@ class Product {
   List<Map> sources;
   List<double> lowestPrices;
   List<String> dates;
+  String? comparison;
+  IconData? arrow;
   Product({
     required this.brand,
     required this.id,
@@ -29,6 +33,8 @@ class Product {
     required this.sources,
     required this.lowestPrices,
     required this.dates,
+    this.comparison,
+    this.arrow,
 
     // required avg_prices,
   });
