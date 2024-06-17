@@ -57,7 +57,7 @@ class ProductcardItemWidgetHome extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: RichText(
                       text: TextSpan(
-                        text: "Lowest price: ${product.lowestPrices[0]}",
+                        text:product.lowestPrices.length == 0? "Lowest price: None": "Lowest price: ${product.lowestPrices[product.lowestPrices.length-1]}",
                         style: theme.textTheme.titleSmall,
                       ),
                     ))

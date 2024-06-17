@@ -11,7 +11,7 @@ class HomePageController extends GetxController {
 
   final RxList<Product> products = <Product>[].obs;
   final RxList<Product> savedItems = <Product>[].obs;
-  int limit = 1;
+  int limit = 5;
 
   final categories = ["Laptops" , "CPUs" , "GPUs" , "TVs"];
 
