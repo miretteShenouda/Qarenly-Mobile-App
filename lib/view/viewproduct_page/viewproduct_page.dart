@@ -26,17 +26,10 @@ class _ViewProductPageState extends State<ViewproductPage> {
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
   late List<int?> ratings = [];
 
-  @override
-  void initState() {
-    super.initState();
-    _controller.onInit();
-    // ratings = List<int?>.filled(_controller.documentData.value[''].length, null);
-  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _controller.initDependencies(context);
   }
 
 // Function to parse and format the timestamp
@@ -60,9 +53,19 @@ class _ViewProductPageState extends State<ViewproductPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _controller.onInit();
+    // ratings = List<int?>.filled(_controller.documentData.value[''].length, null);
+  WidgetsBinding.instance.addPostFrameCallback((_){
+      _controller.initDependencies(context);
+      _controller.initSavedState();
+      _controller.getSimilarProducts();
+  });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _controller.initSavedState();
-    _controller.getSimilarProducts();
     print("hi caty");
     print(_controller.similarItems.toList());
     return SafeArea(
