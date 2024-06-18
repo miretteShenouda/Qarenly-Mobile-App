@@ -1,9 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AppColors {
   static const Color primary = Color(0xFF2697FF);
-  static const Color contentColorDarkBlue = Color.fromARGB(255, 4, 7, 93);
+  static const Color contentColorDarkBlue = Color.fromRGBO(0, 48, 73, 1.0);
 }
 
 class _LineChart extends StatelessWidget {
@@ -20,35 +21,50 @@ class _LineChart extends StatelessWidget {
     return LineChart(sampleData1);
   }
 
-  LineChartData get sampleData1 => LineChartData(
-        lineTouchData: lineTouchData1,
-        gridData: gridData,
-        titlesData: titlesData1,
-        borderData: borderData,
-        lineBarsData: [
-          LineChartBarData(
-            isCurved: true,
-            color: AppColors.primary,
-            barWidth: 6,
-            isStrokeCapRound: true,
-            preventCurveOverShooting: true,
-            dotData: const FlDotData(show: true),
-            belowBarData: BarAreaData(show: false),
-            spots: List.generate(dates.length, (index) {
-              return FlSpot(index.toDouble(), prices[index].toDouble());
-            }),
-          ),
-        ],
-      );
+  LineChartData get sampleData1 {
+    if (prices.isEmpty) {
+      return LineChartData(); // Return an empty chart data to avoid further processing.
+    }
+
+    final minY = prices.reduce((a, b) => a < b ? a : b).toDouble();
+    final maxY = prices.reduce((a, b) => a > b ? a : b).toDouble();
+    final range = maxY - minY;
+    final interval =
+        range == 0 ? 1.0 : range / 5; // Adjust the interval as needed
+    return LineChartData(
+      lineTouchData: lineTouchData1,
+      gridData: gridData,
+      titlesData: titlesData1(minY, maxY, interval),
+      borderData: borderData,
+      minY: minY,
+      maxY: maxY,
+      lineBarsData: [
+        LineChartBarData(
+          isCurved: true,
+          color: AppColors.primary,
+          barWidth: 6,
+          isStrokeCapRound: true,
+          preventCurveOverShooting: true,
+          dotData: const FlDotData(show: true),
+          belowBarData: BarAreaData(show: false),
+          spots: List.generate(dates.length, (index) {
+            return FlSpot(index.toDouble(), prices[index].toDouble());
+          }),
+        ),
+      ],
+    );
+  }
 
   LineTouchData get lineTouchData1 => LineTouchData(
         handleBuiltInTouches: true,
         touchTooltipData: LineTouchTooltipData(
-          getTooltipColor: (touchedSpot) => Colors.blueGrey.withOpacity(0.8),
+          getTooltipColor: (touchedSpot) =>
+              const Color.fromARGB(255, 163, 174, 179).withOpacity(0.8),
         ),
       );
 
-  FlTitlesData get titlesData1 => FlTitlesData(
+  FlTitlesData titlesData1(double minY, double maxY, double interval) =>
+      FlTitlesData(
         bottomTitles: AxisTitles(
           sideTitles: bottomTitles,
         ),
@@ -58,40 +74,38 @@ class _LineChart extends StatelessWidget {
         topTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        // leftTitles: AxisTitles(
-        //   sideTitles: leftTitles(),
-        // ),
+        leftTitles: AxisTitles(
+          sideTitles: leftTitles(minY, maxY, interval),
+        ),
       );
 
-  Widget leftTitleWidgets(double value, TitleMeta meta) {
+  SideTitles leftTitles(double minY, double maxY, double interval) =>
+      SideTitles(
+        showTitles: true,
+        reservedSize: 60,
+        getTitlesWidget: (value, meta) =>
+            leftTitleWidgets(value, minY, maxY, interval),
+        interval: interval,
+      );
+
+  Widget leftTitleWidgets(
+      double value, double minY, double maxY, double interval) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 12,
+      color: AppColors.contentColorDarkBlue,
     );
-    return Text('${value.toStringAsFixed(1)}',
-        style: style, textAlign: TextAlign.center);
+
+    if (value == minY || value == maxY || ((value - minY) % interval == 0)) {
+      return Text("${NumberFormat('#,###').format(value)}",
+
+          // return Text('${value.toStringAsFixed(1)}k',
+          style: style,
+          textAlign: TextAlign.center);
+    } else {
+      return Container(); // Empty container for values not at the specified intervals
+    }
   }
-// In the expression (prices.reduce((a, b) => b > a ? b : a) - prices.reduce((a, b) => b < a ? b : a)), a and b are placeholders representing the elements of the list prices that are being compared during the reduction process.
-
-// Let's break down the expression:
-
-// prices.reduce((a, b) => b > a ? b : a): This part of the expression calculates the maximum value in the prices list. It iterates over each element of the prices list and compares it with the current accumulator value a. If the current element b is greater than the accumulator value a, it replaces a with b, effectively finding the maximum value in the list.
-
-// prices.reduce((a, b) => b < a ? b : a): This part of the expression calculates the minimum value in the prices list. It iterates over each element of the prices list and compares it with the current accumulator value a. If the current element b is less than the accumulator value a, it replaces a with b, effectively finding the minimum value in the list.
-
-// So, during the reduction process:
-
-// a represents the accumulator value, which starts with the first element of the list and is updated as the reduction progresses.
-// b represents the current element being compared with the accumulator.
-// After the reduction process, a holds the maximum value in the list, and b holds the minimum value in the list. Then, the expression calculates the difference between the maximum and minimum values in the prices list.
-  SideTitles leftTitles() => SideTitles(
-        getTitlesWidget: leftTitleWidgets,
-        showTitles: true,
-        interval: (prices.reduce((a, b) => b > a ? b : a) -
-                prices.reduce((a, b) => b < a ? b : a)) /
-            5,
-        reservedSize: 55,
-      );
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
@@ -196,12 +210,17 @@ class LineChartSample1State extends State<LineChartSample1> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 16, left: 6),
-                  child: _LineChart(
-                    dates: widget.dates,
-                    prices: widget.prices,
-                  ),
-                ),
+                    padding: const EdgeInsets.only(right: 16, left: 6),
+                    child: widget.prices.isNotEmpty
+                        ? _LineChart(
+                            dates: widget.dates,
+                            prices: widget.prices,
+                          )
+                        : Center(
+                            child: Text('No data available',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: AppColors.contentColorDarkBlue)))),
               ),
               const SizedBox(
                 height: 10,

@@ -170,11 +170,11 @@ class ViewProductController extends GetxController {
       //         : "equal";
       if (product.benchmark_ratio > benchmarkRatio) {
         product.comparison =
-            "${(product.benchmark_ratio - benchmarkRatio).toStringAsPrecision(3)}%";
+            "${(product.benchmark_ratio - benchmarkRatio).toStringAsPrecision(2)}%";
         product.arrow = Icons.arrow_circle_up_outlined;
       } else if (product.benchmark_ratio < benchmarkRatio) {
         product.comparison =
-            "${(benchmarkRatio - product.benchmark_ratio).toStringAsPrecision(3)}%";
+            "${(benchmarkRatio - product.benchmark_ratio).toStringAsPrecision(2)}%";
         product.arrow = Icons.arrow_circle_down_outlined;
       } else {
         product.comparison = "equal";
