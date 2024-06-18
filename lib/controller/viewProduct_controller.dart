@@ -14,7 +14,7 @@ class ViewProductController extends GetxController {
   RxBool isLoading = RxBool(true); // Initial value is true
   late List<Product> similarItems = [];
   bool isNotified = false;
-  bool isSaved = false;
+  RxBool isSaved = false.obs;
 
   String? _productId;
   String? _productType;
@@ -28,17 +28,17 @@ class ViewProductController extends GetxController {
   void initSavedState() {
     if (AuthenticationRepo.instance.userData == null ||
         AuthenticationRepo.instance.userData!.savedItems == null) {
-      isSaved = false;
+      isSaved.value = false;
       return;
     }
 
     if (AuthenticationRepo.instance.userData!.savedItems!.any((element) {
       return element.id == _productId;
     })) {
-      isSaved = true;
+      isSaved.value = true;
       print("isSaved: $isSaved");
     } else {
-      isSaved = false;
+      isSaved.value = false;
       print("isSaved: $isSaved");
     }
     ;
@@ -46,7 +46,7 @@ class ViewProductController extends GetxController {
 
   Future<bool> toggleSavedItem() async {
     print(AuthenticationRepo.instance.userData!.savedItems);
-    if (isSaved) {
+    if (isSaved.value) {
       AuthenticationRepo.instance.userData!.savedItems!.removeWhere((element) {
         return element.id == _productId;
       });
@@ -58,9 +58,9 @@ class ViewProductController extends GetxController {
 
     AuthenticationRepo.instance
         .UpdateUser(AuthenticationRepo.instance.userData!);
-    isSaved = !isSaved;
+    isSaved.value= !isSaved.value;
 
-    return isSaved;
+    return isSaved.value;
   }
 
   void initDependencies(BuildContext context) {
