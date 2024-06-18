@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qarenly/common/widgets/ProductcardItemWidgetBenchmarking.dart';
@@ -35,9 +34,8 @@ class _ViewProductPageState extends State<ViewproductPage> {
 // Function to parse and format the timestamp
   String formatTimestamp(Timestamp? timestamp) {
     if (timestamp == null) {
-      return 'N/A'; // Return a default value if timestamp is null
+      return 'N/A';
     }
-
     try {
       // Convert Timestamp to DateTime
       DateTime date = timestamp.toDate();
@@ -48,7 +46,7 @@ class _ViewProductPageState extends State<ViewproductPage> {
       // Format the date
       return outputFormat.format(date);
     } catch (e) {
-      return 'Invalid Date'; // Handle parsing errors
+      return 'Invalid Date';
     }
   }
 
@@ -66,8 +64,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("hi caty");
-    print(_controller.similarItems.toList());
     return SafeArea(
       child: Scaffold(
         appBar: BuildAppBar(
@@ -77,9 +73,7 @@ class _ViewProductPageState extends State<ViewproductPage> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
-            child:
-                // Column(children: [
-                Obx(
+            child: Obx(
               () {
                 if (_controller.isLoading.value) {
                   return Center(child: CircularProgressIndicator());
@@ -125,7 +119,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
                           ),
                         ],
                       ),
-
                       SizedBox(height: 10),
                       Text(
                         documentData['name'].toString(),
@@ -153,405 +146,122 @@ class _ViewProductPageState extends State<ViewproductPage> {
                       SizedBox(
                         height: 10,
                       ),
+                      SizedBox(height: 10),
                       Text(documentData['desc'].toString()),
-                      SizedBox(
-                        height: 20,
+                      SizedBox(height: 20),
+                      Text(
+                        "Sources",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25),
                       ),
-
-                      Text("Sources",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 25)),
-
-                      //this is the table of scources
-                      // Table(
-                      //     defaultVerticalAlignment:
-                      //         TableCellVerticalAlignment.middle,
-                      Column(
-                        children: [
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Table(
-                              defaultVerticalAlignment:
-                                  TableCellVerticalAlignment.middle,
-                              columnWidths: {
-                                0: FixedColumnWidth(
-                                    100.0), // Adjust width as needed
-                                1: FixedColumnWidth(120.0),
-                                2: FixedColumnWidth(120.0),
-                                3: FixedColumnWidth(120.0),
-                                4: FixedColumnWidth(120.0),
-                                5: FixedColumnWidth(120.0),
-                              },
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Table(
+                          defaultVerticalAlignment:
+                              TableCellVerticalAlignment.middle,
+                          columnWidths: {
+                            0: FixedColumnWidth(100.0),
+                            1: FixedColumnWidth(120.0),
+                            2: FixedColumnWidth(120.0),
+                            3: FixedColumnWidth(120.0),
+                            4: FixedColumnWidth(120.0),
+                            5: FixedColumnWidth(120.0),
+                          },
+                          border: TableBorder.all(
+                            color: Color.fromRGBO(0, 48, 73, 0.24),
+                          ),
+                          children: [
+                            TableRow(
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(0, 48, 73, 0.14),
+                              ),
                               children: [
-                                // Header row with column titles
-                                TableRow(
-                                  children: [
-                                    TableCell(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: Text(
-                                            'Image',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    TableCell(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: Text(
-                                            'Price',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    TableCell(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: Text(
-                                            'Stock Status',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    TableCell(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: Text(
-                                            'Last in Stock',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    TableCell(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: Text(
-                                            'Rating',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    TableCell(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: Text(
-                                            'Your Rating',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                ...List.generate(
-                                  documentData['sources']
-                                      .length, // Generate rows based on list length
-                                  (index) => TableRow(
-                                    children: [
-                                      //cell for image and url
-                                      TableCell(
-                                        verticalAlignment:
-                                            TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          // child: Center(
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                                100.0), // Adjust radius for size
-                                            child: DecoratedBox(
-                                              decoration: BoxDecoration(
-                                                color: Color.fromRGBO(0, 48, 73,
-                                                    0.0), // Set background color (optional)
-                                                border: Border.all(
-                                                  color: Colors
-                                                      .black, // Change border color as needed
-                                                  width:
-                                                      2.0, // Adjust border width
-                                                ),
-                                                borderRadius: BorderRadius.circular(
-                                                    100.0), // Match border radius
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  // Use URL Launcher to open the link
-                                                  launchURL(
-                                                      documentData['sources']
-                                                          [index]['URL']);
-                                                },
-                                                child: Image.asset(
-                                                  'assets/images/amazon.png', // Replace with your actual logo widget or image provider
-                                                  height:
-                                                      30.0, // Adjust height for logo size
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      //cell for price and discounted price
-                                      TableCell(
-                                        verticalAlignment:
-                                            TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Container(
-                                            // Wrap content in a Container
-                                            decoration: BoxDecoration(
-                                              color: Color.fromRGBO(0, 48, 73,
-                                                  0.24), // Set grey background color
-                                            ),
-                                            child: Center(
-                                              child: documentData['sources']
-                                                              [index][
-                                                          'discounted_price'] !=
-                                                      null
-                                                  ? RichText(
-                                                      text: TextSpan(
-                                                        children: [
-                                                          TextSpan(
-                                                            text: documentData[
-                                                                        'sources']
-                                                                    [
-                                                                    index]['price']
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .lineThrough, // Strike-through style
-                                                            ),
-                                                          ),
-                                                          TextSpan(
-                                                            text:
-                                                                " ${documentData['sources'][index]['discounted_price'].toString()}",
-                                                            style: TextStyle(
-                                                              color: Colors
-                                                                  .red, // Change color for discounted price
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Text(
-                                                      documentData['sources']
-                                                              [index]['price']
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      //cell for stock_status
-                                      TableCell(
-                                        verticalAlignment:
-                                            TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          // Wrap content in a Container
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Color.fromRGBO(0, 48, 73,
-                                                  0.24), // Set grey background color
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                documentData['sources'][index]
-                                                        ['stock_status']
-                                                    .toString(), // Add price field
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      //cell for last_instock
-                                      TableCell(
-                                        verticalAlignment:
-                                            TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          // Wrap content in a Container
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Color.fromRGBO(0, 48, 73,
-                                                  0.24), // Set grey background color
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                formatTimestamp(documentData[
-                                                        'sources'][index][
-                                                    'last_instock']), // Add price field
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      //cell for scraped rating
-                                      TableCell(
-                                        verticalAlignment:
-                                            TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Container(
-                                            // Wrap content in a Container
-                                            decoration: BoxDecoration(
-                                              color: Color.fromRGBO(0, 48, 73,
-                                                  0.24), // Set grey background color
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                documentData['sources'][index]
-                                                        ['rating']
-                                                    .toString(), // Add price field
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-
-                                      // //cell for user rating input
-                                      // TableCell(
-                                      //   //rate the source
-                                      //   verticalAlignment:
-                                      //       TableCellVerticalAlignment.middle,
-                                      //   child: Padding(
-                                      //     padding: EdgeInsets.all(8.0),
-                                      //     child: Container(
-                                      //       // Wrap content in a Container
-                                      //       decoration: BoxDecoration(
-                                      //         color: Color.fromRGBO(0, 48, 73,
-                                      //             0.24), // Set grey background color
-                                      //       ),
-                                      //       child: Center(
-                                      //         child: Text(
-                                      //           "enter rating", // Add price field
-                                      //         ),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      // Cell for user rating input
-                                      // Cell for user rating input
-                                      TableCell(
-                                        verticalAlignment:
-                                            TableCellVerticalAlignment.middle,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Color.fromRGBO(
-                                                  0, 48, 73, 0.24),
-                                            ),
-                                            child: Center(
-                                              child: DropdownButton<int>(
-                                                value: ratings[index],
-                                                hint: Text('Rate'),
-                                                items: [1, 2, 3, 4, 5]
-                                                    .map((int value) {
-                                                  return DropdownMenuItem<int>(
-                                                    value: value,
-                                                    child:
-                                                        Text(value.toString()),
-                                                  );
-                                                }).toList(),
-                                                onChanged: (int? newValue) {
-                                                  setState(() {
-                                                    ratings[index] = newValue;
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                buildHeaderCell('URL'),
+                                buildHeaderCell('Price'),
+                                buildHeaderCell('Stock Status'),
+                                buildHeaderCell('Last in Stock'),
+                                buildHeaderCell('Rating'),
+                                buildHeaderCell('Your Rating'),
                               ],
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Scroll horizontally to see more',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Icon(Icons.arrow_right_alt),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height:
-                                300, // Set a fixed height for LineChartSample1
-                            child: Center(
-                              child: LineChartSample1(
-                                dates: (documentData['dates'] as List<dynamic>)
-                                    .map((date) => (date as Timestamp).toDate())
-                                    .toList(),
-                                prices: documentData['lowest_prices'],
+                            ...List.generate(
+                              documentData['sources'].length,
+                              (index) => TableRow(
+                                children: List.generate(6, (colIndex) {
+                                  Color columnColor = colIndex % 2 == 0
+                                      ? Colors.transparent
+                                      : Color.fromRGBO(0, 48, 73,
+                                          0.24); // alternating colors
+
+                                  //creating columns
+                                  return TableCell(
+                                    verticalAlignment:
+                                        TableCellVerticalAlignment.middle,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: columnColor,
+                                        // borderRadius: BorderRadius.circular(16.0),
+                                      ),
+                                      // color: columnColor,
+                                      padding: EdgeInsets.all(8.0),
+                                      child: getColumnContent(
+                                          colIndex, documentData, index),
+                                    ),
+                                  );
+                                }),
                               ),
                             ),
-                          ),
-                          Container(
-                            height: 250.0,
-                            child: ListView.separated(
-                              shrinkWrap:
-                                  true, // No need to shrink wrap for horizontal scrolling
-                              scrollDirection: Axis.horizontal,
-                              physics:
-                                  BouncingScrollPhysics(), // Allow the list to scroll horizontally
-                              separatorBuilder: (context, index) => SizedBox(
-                                  width:
-                                      10), // Use width for horizontal separation
-                              itemCount: _controller.similarItems.length,
-                              itemBuilder: (context, index) {
-                                final product = _controller.similarItems[index];
-                                return ProductcardItemWidgetBenchmarking(
-                                  product: product,
-                                  comparison: product.comparison ??
-                                      "", // Pass comparison value
+                          ],
+                        ),
+                      ),
 
-                                  // Ensure comparison is passed correctly
-                                );
-                              },
+                      //scroll note
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Scroll horizontally to see more',
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.bold),
                             ),
-                          )
-                        ],
+                            Icon(Icons.arrow_right_alt),
+                          ],
+                        ),
+                      ),
+
+                      //line chart
+                      Container(
+                        height: 300,
+                        child: Center(
+                          child: LineChartSample1(
+                            dates: (documentData['dates'] as List<dynamic>)
+                                .map((date) => (date as Timestamp).toDate())
+                                .toList(),
+                            prices: documentData['lowest_prices'],
+                          ),
+                        ),
+                      ),
+
+                      //benchmarking
+                      Container(
+                        height: 250.0,
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          physics: BouncingScrollPhysics(),
+                          separatorBuilder: (context, index) =>
+                              SizedBox(width: 10),
+                          itemCount: _controller.similarItems.length,
+                          itemBuilder: (context, index) {
+                            final product = _controller.similarItems[index];
+                            return ProductcardItemWidgetBenchmarking(
+                              product: product,
+                              comparison: product.comparison ?? "",
+                            );
+                          },
+                        ),
                       )
                     ],
                   );
@@ -563,35 +273,135 @@ class _ViewProductPageState extends State<ViewproductPage> {
           ),
         ),
       ),
-      //  ),
     );
   }
 
-  // Function to launch URL
-  void launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+  Widget buildHeaderCell(String text) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  Widget getColumnContent(
+      int colIndex, Map<String, dynamic> documentData, int rowIndex) {
+    switch (colIndex) {
+      case 0:
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(16.0),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: InkWell(
+              onTap: () {
+                launchURL(documentData['sources'][rowIndex]['URL']);
+              },
+              child: Image.asset(
+                'assets/images/${documentData['sources'][rowIndex]['website']}.png',
+                height: 30.0,
+              ),
+            ),
+          ),
+        );
+      case 1:
+        return buildRoundedContainer(
+          child: documentData['sources'][rowIndex]['discounted_price'] != null
+              ? RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: documentData['sources'][rowIndex]['price']
+                            .toString(),
+                        style: TextStyle(
+                          color: Colors.black,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            " ${documentData['sources'][rowIndex]['discounted_price'].toString()}",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ],
+                  ),
+                )
+              : Text(
+                  documentData['sources'][rowIndex]['price'].toString(),
+                  style: TextStyle(color: Colors.black),
+                ),
+        );
+      case 2:
+        return buildRoundedContainer(
+          child: Text(
+              documentData['sources'][rowIndex]['stock_status'].toString()),
+        );
+      case 3:
+        return buildRoundedContainer(
+          child: Text(formatTimestamp(
+              documentData['sources'][rowIndex]['last_instock'])),
+        );
+      case 4:
+        return buildRoundedContainer(
+          child: Text(documentData['sources'][rowIndex]['rating'].toString()),
+        );
+      case 5:
+        return buildRoundedContainer(
+          child: DropdownButton<int>(
+            value: ratings[rowIndex],
+            hint: Text('Rate'),
+            items: [1, 2, 3, 4, 5].map((int value) {
+              return DropdownMenuItem<int>(
+                value: value,
+                child: Text(value.toString()),
+              );
+            }).toList(),
+            onChanged: (int? newValue) {
+              setState(() {
+                ratings[rowIndex] = newValue;
+              });
+            },
+          ),
+        );
+      default:
+        return SizedBox.shrink();
+    }
+  }
+
+  Widget buildRoundedContainer({required Widget child}) {
+    return Container(
+      height: 30.0,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(0, 48, 73, 0.24),
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Center(child: child),
+    );
+  }
+
+  Future<void> launchURL(String url) async {
+    try {
+      final Uri uri = Uri.parse(Uri.encodeFull(url));
+      print('Parsed URI: $uri'); // Debugging statement
+
+      if (await canLaunch(uri.toString())) {
+        print('Can launch URL: $uri'); // Debugging statement
+        await launch(uri.toString());
+      } else {
+        print('Could not launch $uri'); // Debugging statement
+        throw Exception('Could not launch $url');
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
+      // Optionally, show an error message to the user using a Snackbar or a Dialog
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error launching URL: $e')),
+      );
     }
   }
 }
-
-// void _scrollNext() {
-//   if (_controller.documentData.value == null) return;
-
-//   setState(() {
-//     // _currentIndex = (_currentIndex + 1) % _controller.documentData.value!['sources']!.length;
-//   });
-
-//   if (!_scrollController.hasClients) return;
-
-//   final itemWidth = MediaQuery.of(context).size.width;
-//   final targetScroll = _currentIndex * itemWidth;
-
-//   _scrollController.animateTo(
-//     targetScroll,
-//     duration: const Duration(milliseconds: 500),
-//     curve: Curves.easeInOut,
-//   );
-// }
