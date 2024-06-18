@@ -98,13 +98,9 @@ class _ViewProductPageState extends State<ViewproductPage> {
                                 child: ElevatedButton(
                                   onPressed: () async {
                                     await _controller.toggleSavedItem();
-                                    setState(() {
-                                      _controller.isSaved =
-                                          !_controller.isSaved;
-                                    });
                                   },
                                   child: Icon(
-                                    _controller.isSaved
+                                    _controller.isSaved.value
                                         ? Icons.favorite
                                         : Icons.favorite_border,
                                     color: Colors.black,
