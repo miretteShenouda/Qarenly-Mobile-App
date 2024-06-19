@@ -60,6 +60,8 @@ class _ViewProductPageState extends State<ViewproductPage> {
       _controller.initSavedState();
       _controller.getSimilarProducts();
     });
+    _initializeRatings();
+
   }
 
   @override
@@ -79,8 +81,8 @@ class _ViewProductPageState extends State<ViewproductPage> {
                   return Center(child: CircularProgressIndicator());
                 } else if (_controller.documentData.value != null) {
                   final documentData = _controller.documentData.value!;
-                  ratings =
-                      List<int?>.filled(documentData['sources'].length, null);
+                  // ratings =
+                  //     List<int?>.filled(documentData['sources'].length, null);
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -277,7 +279,7 @@ class _ViewProductPageState extends State<ViewproductPage> {
       padding: EdgeInsets.all(8.0),
       child: Center(
         child: Text(
-          text,
+          handleNullValues(text),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -296,55 +298,65 @@ class _ViewProductPageState extends State<ViewproductPage> {
             ),
             child: InkWell(
               onTap: () {
-                launchURL(documentData['sources'][rowIndex]['URL']);
+                launchURL(handleNullValues(documentData['sources'][rowIndex]['URL']));
               },
               child: Image.asset(
-                'assets/images/${documentData['sources'][rowIndex]['website']}.png',
-                height: 30.0,
+                'assets/images/${handleNullValues(documentData['sources'][rowIndex]['website'])}.png',
+                height: 32.0,
               ),
             ),
-          ),
+        ),
         );
       case 1:
         return buildRoundedContainer(
-          child: documentData['sources'][rowIndex]['discounted_price'] != null
-              ? RichText(
+          child: Center(
+            child: documentData['sources'][rowIndex]['discounted_price'] != null
+                ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: documentData['sources'][rowIndex]['price']
-                            .toString(),
-                        style: TextStyle(
-                          color: Colors.black,
-                          decoration: TextDecoration.lineThrough,
-                        ),
+                        text: handleNullValues(documentData['sources'][rowIndex]['discounted_price'].toString()+'\n'),
+                        style: TextStyle(color: Colors.black),
                       ),
                       TextSpan(
-                        text:
-                            " ${documentData['sources'][rowIndex]['discounted_price'].toString()}",
-                        style: TextStyle(color: Colors.red),
+                        text: handleNullValues(documentData['sources'][rowIndex]['price'].toString()),
+                        style: TextStyle(
+                          color: Colors.red,
+                          decoration: TextDecoration.lineThrough,
+                          fontSize: 10.0
+                        ),
                       ),
+
                     ],
                   ),
-                )
-              : Text(
-                  documentData['sources'][rowIndex]['price'].toString(),
-                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.center,
                 ),
+              ],
+            )
+                : Text(
+              handleNullValues(documentData['sources'][rowIndex]['price'].toString()),
+              style: TextStyle(color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+          ),
         );
       case 2:
         return buildRoundedContainer(
-          child: Text(
-              documentData['sources'][rowIndex]['stock_status'].toString()),
+          child: Text(          handleStockStatus(documentData['sources'][rowIndex]['stock_status']
+          )),
+
         );
       case 3:
         return buildRoundedContainer(
-          child: Text(formatTimestamp(
-              documentData['sources'][rowIndex]['last_instock'])),
+          child: Text(handleNullTimestamps(documentData['sources'][rowIndex]['last_instock'])),
+
         );
       case 4:
         return buildRoundedContainer(
-          child: Text(documentData['sources'][rowIndex]['rating'].toString()),
+          child: Text(handleNullValues(documentData['sources'][rowIndex]['rating']?.toString())),
         );
       case 5:
         return buildRoundedContainer(
@@ -359,8 +371,10 @@ class _ViewProductPageState extends State<ViewproductPage> {
             }).toList(),
             onChanged: (int? newValue) {
               setState(() {
-                ratings[rowIndex] = newValue;
-              });
+                ratings[rowIndex] = newValue!;
+                    });
+              updateRating(rowIndex, newValue);
+
             },
           ),
         );
@@ -371,11 +385,11 @@ class _ViewProductPageState extends State<ViewproductPage> {
 
   Widget buildRoundedContainer({required Widget child}) {
     return Container(
-      height: 30.0,
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(0, 48, 73, 0.24),
-        borderRadius: BorderRadius.circular(16.0),
-      ),
+      height: 32.0,
+      // decoration: BoxDecoration(
+      //   color: Color.fromRGBO(0, 48, 73, 0.24),
+      //   borderRadius: BorderRadius.circular(16.0),
+      // ),
       child: Center(child: child),
     );
   }
@@ -400,4 +414,107 @@ class _ViewProductPageState extends State<ViewproductPage> {
       );
     }
   }
+
+  String handleStockStatus(bool? stockStatus) {
+    if (stockStatus == true) {
+      return 'Available';
+    } else {
+      return 'Not Available';
+    }
+  }
+
+  String handleNullValues(String? value, {String defaultValue = '—'}) {
+    return (value == 'N/A' ||value == 'null' ||value == null || value.isEmpty) ? defaultValue : value;
+  }
+
+  String handleNullTimestamps(Timestamp? timestamp, {String defaultValue = '—'}) {
+    if (timestamp == null) {
+      return defaultValue;
+    }
+    try {
+      DateTime date = timestamp.toDate();
+      DateFormat outputFormat = DateFormat('dd-MM-yyyy');
+      return outputFormat.format(date);
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+  Future<void> updateRating(int rowIndex, int? rating) async {
+    try {
+      // Get current user ID
+      String userId = _authenticationRepo.currentUser!.uid;
+
+      // Create a reference to the product document
+      DocumentReference productRef = FirebaseFirestore.instance
+          .collection(_controller.productType!)
+          .doc(_controller.productId);
+
+      // Fetch the product document to update the specific source in the sources list
+      DocumentSnapshot productSnapshot = await productRef.get();
+      if (productSnapshot.exists) {
+        // Get the product data
+        Map<String, dynamic> productData = productSnapshot.data() as Map<String, dynamic>;
+
+        // Get the sources list
+        List<dynamic> sources = productData['sources'];
+
+        // Update the specific source with the new rating
+        Map<String, dynamic> source = sources[rowIndex];
+        Map<String, dynamic> usersRatings = source['users_ratings'] ?? {};
+        usersRatings[userId] = rating;
+
+        source['users_ratings'] = usersRatings;
+
+        // Update the sources list
+        sources[rowIndex] = source;
+        await productRef.update({'sources': sources});
+
+        // Update the local ratings list
+        setState(() {
+          ratings[rowIndex] = rating;
+        });
+
+
+        // Optionally, update the UI or show a confirmation message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Rating updated successfully')),
+        );
+      } else {
+        throw Exception('Product not found');
+      }
+    } catch (e) {
+      print('Error updating rating: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update rating: $e')),
+      );
+    }
+  }
+
+  Future<void> _initializeRatings() async {
+    try {
+      // Fetch the product document
+      DocumentSnapshot productSnapshot = await FirebaseFirestore.instance
+          .collection(_controller.productType!)
+          .doc(_controller.productId)
+          .get();
+
+      if (productSnapshot.exists) {
+        // Get the product data
+        Map<String, dynamic> productData = productSnapshot.data() as Map<String, dynamic>;
+        List<dynamic> sources = productData['sources'];
+
+        // Initialize the ratings list
+        setState(() {
+          ratings = List<int?>.generate(sources.length, (index) {
+            Map<String, dynamic> usersRatings = sources[index]['users_ratings'] ?? {};
+            String userId = _authenticationRepo.currentUser!.uid;
+            return usersRatings[userId];
+          });
+        });
+      }
+    } catch (e) {
+      print('Error initializing ratings: $e');
+    }
+  }
+
 }

@@ -19,6 +19,10 @@ class ViewProductController extends GetxController {
   String? _productId;
   String? _productType;
 
+  String? get productType => _productType;
+
+  String? get productId => _productId;
+
   @override
   void onInit() {
     super.onInit();
