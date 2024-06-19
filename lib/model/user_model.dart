@@ -10,6 +10,7 @@ class UserModel {
   List<String>? searchHistory = List<String>.empty();
   List<DocumentReference>? savedItems;
   String? notificationToken = null;
+  List<Map<String, dynamic>>? notifications = null;
   UserModel({
     required this.id,
     required this.username,
@@ -19,6 +20,7 @@ class UserModel {
     this.searchHistory,
     List<DocumentReference>? savedItems,
     this.notificationToken,
+    this.notifications,
   }) : savedItems = savedItems ?? List<DocumentReference>.empty(growable: true);
 
   Map<String, dynamic> toMap() {
@@ -31,6 +33,7 @@ class UserModel {
       'searchHistory': searchHistory,
       'savedItems': savedItems,
       'notificationToken': notificationToken,
+      'notifications': notifications
     };
   }
 }

@@ -265,6 +265,7 @@ class AuthenticationRepo extends GetxController {
       'password': userModel.password,
       'savedItems': userModel.savedItems,
       'notificationToken': userModel.notificationToken,
+      'notifications': userModel.notifications,
     });
   }
 
@@ -301,12 +302,15 @@ class AuthenticationRepo extends GetxController {
         final password = data['password'];
         final savedItems = data['savedItems'];
 
-        String? notificationToken;
+        String? notificationToken = null;
+        List<Map<String, dynamic>>? notifications = null;
 
         if (data.containsKey('notificationToken')) {
           notificationToken = data['notificationToken'];
-        } else {
-          notificationToken = null;
+        }
+
+        if (data.containsKey('notifications')) {
+          notifications = data['notifications'].cast<Map<String, dynamic>>();
         }
 
         print("notificationToken : $notificationToken");
@@ -321,6 +325,7 @@ class AuthenticationRepo extends GetxController {
           password: password,
           savedItems: updatedSavedItems,
           notificationToken: notificationToken,
+          notifications: notifications,
         );
         return user;
 

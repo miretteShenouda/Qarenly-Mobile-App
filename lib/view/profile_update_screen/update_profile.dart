@@ -186,15 +186,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                   height: 50,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      if (profileController
-                                          .formKey.currentState!
-                                          .validate()) {
-                                        profileController.updateProfile();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                          content: Text('Profile Updated'),
-                                        ));
-                                      }
+                                      Navigator.pop(context);
                                     },
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.white,

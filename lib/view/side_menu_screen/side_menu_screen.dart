@@ -183,7 +183,10 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                                   height: 32.adaptSize,
                                   width: 27.adaptSize,
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.notificationsPage);
+                                },
                               ),
                             ))
                         : Card(
@@ -323,13 +326,13 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                             height: 33.adaptSize,
                             width: 33.adaptSize,
                           ),
-                          onTap: ()async {
+                          onTap: () async {
                             // onTapSignOut(context);
                             await _authenticationRepo.logout();
-                           await _authenticationRepo.signOutFromGoogle();
+                            await _authenticationRepo.signOutFromGoogle();
                             await _authenticationRepo.signOutFacebook(context);
 
-                            Get.offAll(() =>  LoginPageScreen());
+                            Get.offAll(() => LoginPageScreen());
                           },
                         ),
                       ),

@@ -5,6 +5,8 @@ import 'package:qarenly/repository/authentication%20repository/authentication_re
 class NotificationController extends GetxController {
   static NotificationController get instance => Get.find();
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
+  RxList<Map<String, dynamic>> notifications = <Map<String, dynamic>>[].obs;
+  RxBool isLoading = true.obs;
 
   @override
   void onInit() {
@@ -49,5 +51,16 @@ class NotificationController extends GetxController {
       print("Update User=========");
       await _authenticationRepo.UpdateUser(_authenticationRepo.userData!);
     }
+  }
+
+  void getNotifications() {
+    isLoading.value = true;
+    if (_authenticationRepo.userData!.notifications != null) {
+      notifications.value = _authenticationRepo.userData!.notifications!;
+      isLoading.value = false;
+      return;
+    }
+    notifications.value = [];
+    isLoading.value = false;
   }
 }
