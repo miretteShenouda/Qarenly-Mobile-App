@@ -61,7 +61,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
       _controller.getSimilarProducts();
     });
     _initializeRatings();
-
   }
 
   @override
@@ -81,12 +80,14 @@ class _ViewProductPageState extends State<ViewproductPage> {
                   return Center(child: CircularProgressIndicator());
                 } else if (_controller.documentData.value != null) {
                   final documentData = _controller.documentData.value!;
-                  int? priceChangeIndicator = documentData.containsKey('price_change_indicator')
-                      ? documentData['price_change_indicator']
-                      : null;
+                  int? priceChangeIndicator =
+                      documentData.containsKey('price_change_indicator')
+                          ? documentData['price_change_indicator']
+                          : null;
                   // Ensure ratings list is initialized correctly
                   if (ratings.isEmpty && documentData['sources'] != null) {
-                    ratings = List<int?>.filled(documentData['sources'].length, null);
+                    ratings =
+                        List<int?>.filled(documentData['sources'].length, null);
                   }
                   // ratings =
                   //     List<int?>.filled(documentData['sources'].length, null);
@@ -242,8 +243,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
                           ? getPriceChangeMessage(priceChangeIndicator)
                           : Text('Price change indicator is not available'),
 
-
-
                       //line chart
                       Container(
                         height: 300,
@@ -303,98 +302,109 @@ class _ViewProductPageState extends State<ViewproductPage> {
 
   Widget getColumnContent(
       int colIndex, Map<String, dynamic> documentData, int rowIndex) {
-    switch (colIndex) {
-      case 0:
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(16.0),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: InkWell(
-              onTap: () {
-                launchURL(handleNullValues(documentData['sources'][rowIndex]['URL']));
-              },
-              child: Image.asset(
-                'assets/images/${handleNullValues(documentData['sources'][rowIndex]['website'])}.png',
-                height: 32.0,
+    try {
+      switch (colIndex) {
+        case 0:
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(16.0),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: InkWell(
+                onTap: () {
+                  launchURL(handleNullValues(
+                      documentData['sources'][rowIndex]['URL']));
+                },
+                child: Image.asset(
+                  'assets/images/${handleNullValues(documentData['sources'][rowIndex]['website'])}.png',
+                  height: 32.0,
+                ),
               ),
             ),
-        ),
-        );
-      case 1:
-        return buildRoundedContainer(
-          child: Center(
-            child: documentData['sources'][rowIndex]['discounted_price'] != null
-                ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: handleNullValues(documentData['sources'][rowIndex]['discounted_price'].toString()+'\n'),
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: handleNullValues(documentData['sources'][rowIndex]['price'].toString()),
-                        style: TextStyle(
-                          color: Colors.red,
-                          decoration: TextDecoration.lineThrough,
-                          fontSize: 10.0
+          );
+        case 1:
+          return buildRoundedContainer(
+            child: Center(
+              child: documentData['sources'][rowIndex]['discounted_price'] !=
+                      null
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: handleNullValues(documentData['sources']
+                                            [rowIndex]['discounted_price']
+                                        .toString() +
+                                    '\n'),
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              TextSpan(
+                                text: handleNullValues(documentData['sources']
+                                        [rowIndex]['price']
+                                    .toString()),
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    decoration: TextDecoration.lineThrough,
+                                    fontSize: 10.0),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-
-                    ],
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            )
-                : Text(
-              handleNullValues(documentData['sources'][rowIndex]['price'].toString()),
-              style: TextStyle(color: Colors.black),
-              textAlign: TextAlign.center,
+                      ],
+                    )
+                  : Text(
+                      handleNullValues(documentData['sources'][rowIndex]
+                              ['price']
+                          .toString()),
+                      style: TextStyle(color: Colors.black),
+                      textAlign: TextAlign.center,
+                    ),
             ),
-          ),
-        );
-      case 2:
-        return buildRoundedContainer(
-          child: Text(          handleStockStatus(documentData['sources'][rowIndex]['stock_status']
-          )),
-
-        );
-      case 3:
-        return buildRoundedContainer(
-          child: Text(handleNullTimestamps(documentData['sources'][rowIndex]['last_instock'])),
-
-        );
-      case 4:
-        return buildRoundedContainer(
-          child: Text(handleNullValues(documentData['sources'][rowIndex]['rating']?.toString())),
-        );
-      case 5:
-        return buildRoundedContainer(
-          child: DropdownButton<int>(
-            value: ratings[rowIndex],
-            hint: Text('Rate'),
-            items: [1, 2, 3, 4, 5].map((int value) {
-              return DropdownMenuItem<int>(
-                value: value,
-                child: Text(value.toString()),
-              );
-            }).toList(),
-            onChanged: (int? newValue) {
-              setState(() {
-                ratings[rowIndex] = newValue!;
-                    });
-              updateRating(rowIndex, newValue);
-
-            },
-          ),
-        );
-      default:
-        return SizedBox.shrink();
+          );
+        case 2:
+          return buildRoundedContainer(
+            child: Text(handleStockStatus(
+                documentData['sources'][rowIndex]['stock_status'])),
+          );
+        case 3:
+          return buildRoundedContainer(
+            child: Text(handleNullTimestamps(
+                documentData['sources'][rowIndex]['last_instock'])),
+          );
+        case 4:
+          return buildRoundedContainer(
+            child: Text(handleNullValues(
+                documentData['sources'][rowIndex]['rating']?.toString())),
+          );
+        case 5:
+          return buildRoundedContainer(
+            child: DropdownButton<int>(
+              value: ratings[rowIndex],
+              hint: Text('Rate'),
+              onChanged: (int? newValue) {
+                setState(() {
+                  ratings[rowIndex] = newValue!;
+                });
+                updateRating(rowIndex, newValue);
+              },
+              items: [1, 2, 3, 4, 5].map((int value) {
+                return DropdownMenuItem<int>(
+                  value: value,
+                  child: Text(value.toString()),
+                );
+              }).toList(),
+            ),
+          );
+        default:
+          return SizedBox.shrink();
+      }
+    } catch (e) {
+      debugPrint('Error in getColumnContent: $e');
+      return Center(child: Text('Error'));
     }
   }
 
@@ -411,8 +421,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
 
   final Widget arrowUpIcon = Icon(Icons.arrow_upward, color: Colors.red);
   final Widget arrowDownIcon = Icon(Icons.arrow_downward, color: Colors.green);
-
-
 
   Widget getPriceChangeMessage(int priceChangeIndicator) {
     switch (priceChangeIndicator) {
@@ -438,8 +446,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
         return Text('');
     }
   }
-
-
 
   Future<void> launchURL(String url) async {
     try {
@@ -471,10 +477,13 @@ class _ViewProductPageState extends State<ViewproductPage> {
   }
 
   String handleNullValues(String? value, {String defaultValue = '—'}) {
-    return (value == 'N/A' ||value == 'null' ||value == null || value.isEmpty) ? defaultValue : value;
+    return (value == 'N/A' || value == 'null' || value == null || value.isEmpty)
+        ? defaultValue
+        : value;
   }
 
-  String handleNullTimestamps(Timestamp? timestamp, {String defaultValue = '—'}) {
+  String handleNullTimestamps(Timestamp? timestamp,
+      {String defaultValue = '—'}) {
     if (timestamp == null) {
       return defaultValue;
     }
@@ -486,6 +495,7 @@ class _ViewProductPageState extends State<ViewproductPage> {
       return defaultValue;
     }
   }
+
   Future<void> updateRating(int rowIndex, int? rating) async {
     try {
       // Get current user ID
@@ -500,7 +510,8 @@ class _ViewProductPageState extends State<ViewproductPage> {
       DocumentSnapshot productSnapshot = await productRef.get();
       if (productSnapshot.exists) {
         // Get the product data
-        Map<String, dynamic> productData = productSnapshot.data() as Map<String, dynamic>;
+        Map<String, dynamic> productData =
+            productSnapshot.data() as Map<String, dynamic>;
 
         // Get the sources list
         List<dynamic> sources = productData['sources'];
@@ -520,7 +531,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
         setState(() {
           ratings[rowIndex] = rating;
         });
-
 
         // Optionally, update the UI or show a confirmation message
         ScaffoldMessenger.of(context).showSnackBar(
@@ -547,13 +557,15 @@ class _ViewProductPageState extends State<ViewproductPage> {
 
       if (productSnapshot.exists) {
         // Get the product data
-        Map<String, dynamic> productData = productSnapshot.data() as Map<String, dynamic>;
+        Map<String, dynamic> productData =
+            productSnapshot.data() as Map<String, dynamic>;
         List<dynamic> sources = productData['sources'];
 
         // Initialize the ratings list
         setState(() {
           ratings = List<int?>.generate(sources.length, (index) {
-            Map<String, dynamic> usersRatings = sources[index]['users_ratings'] ?? {};
+            Map<String, dynamic> usersRatings =
+                sources[index]['users_ratings'] ?? {};
             String userId = _authenticationRepo.currentUser!.uid;
             return usersRatings[userId];
           });
@@ -563,5 +575,4 @@ class _ViewProductPageState extends State<ViewproductPage> {
       print('Error initializing ratings: $e');
     }
   }
-
 }
