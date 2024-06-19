@@ -81,6 +81,13 @@ class _ViewProductPageState extends State<ViewproductPage> {
                   return Center(child: CircularProgressIndicator());
                 } else if (_controller.documentData.value != null) {
                   final documentData = _controller.documentData.value!;
+                  int? priceChangeIndicator = documentData.containsKey('price_change_indicator')
+                      ? documentData['price_change_indicator']
+                      : null;
+                  // Ensure ratings list is initialized correctly
+                  if (ratings.isEmpty && documentData['sources'] != null) {
+                    ratings = List<int?>.filled(documentData['sources'].length, null);
+                  }
                   // ratings =
                   //     List<int?>.filled(documentData['sources'].length, null);
                   return Column(
@@ -228,6 +235,14 @@ class _ViewProductPageState extends State<ViewproductPage> {
                           ],
                         ),
                       ),
+
+                      // Price change indicator message
+                      SizedBox(height: 10),
+                      priceChangeIndicator != null
+                          ? getPriceChangeMessage(priceChangeIndicator)
+                          : Text('Price change indicator is not available'),
+
+
 
                       //line chart
                       Container(
@@ -393,6 +408,38 @@ class _ViewProductPageState extends State<ViewproductPage> {
       child: Center(child: child),
     );
   }
+
+  final Widget arrowUpIcon = Icon(Icons.arrow_upward, color: Colors.red);
+  final Widget arrowDownIcon = Icon(Icons.arrow_downward, color: Colors.green);
+
+
+
+  Widget getPriceChangeMessage(int priceChangeIndicator) {
+    switch (priceChangeIndicator) {
+      case -1:
+        return Row(
+          children: [
+            Text('Expected decrease in price'),
+            SizedBox(width: 5),
+            Icon(Icons.arrow_downward, color: Colors.green),
+          ],
+        );
+      case 0:
+        return Text('Expected constant price');
+      case 1:
+        return Row(
+          children: [
+            Text('Expected increase in price'),
+            SizedBox(width: 5),
+            Icon(Icons.arrow_upward, color: Colors.red),
+          ],
+        );
+      default:
+        return Text('');
+    }
+  }
+
+
 
   Future<void> launchURL(String url) async {
     try {
