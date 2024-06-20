@@ -49,9 +49,12 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: BuildAppBar(searchController: searchController , authenticationRepo: authentiationRepo,),
+        appBar: BuildAppBar(
+          searchController: searchController,
+          authenticationRepo: authentiationRepo,
+        ),
         body: FutureBuilder(
-            future: controller.searchLaptops(widget.query),
+            future: controller.searchProducts(widget.query),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
