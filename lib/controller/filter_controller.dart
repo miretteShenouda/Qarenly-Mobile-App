@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FilterController extends GetxController {
@@ -5,9 +6,15 @@ class FilterController extends GetxController {
 
   RxBool filter = false.obs;
   RxString categoryFilter = "All".obs;
+  Rx<RangeValues> priceFilter = RangeValues(0, 100).obs;
 
   void setCategoryFilter(String category) {
     categoryFilter.value = category;
+    filter.value = true;
+  }
+
+  void setPriceFilter(RangeValues values) {
+    priceFilter.value = values;
     filter.value = true;
   }
 }

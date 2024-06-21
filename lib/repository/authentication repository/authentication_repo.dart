@@ -145,6 +145,14 @@ class AuthenticationRepo extends GetxController {
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
 
+        // if user exist in firestore
+        var userDoc = await FirebaseFirestore.instance.collection("Users").where("id", isEqualTo: userCredential.user!.uid).get();
+        if (userCredential.user != null && !userDoc.docs.isEmpty) {
+          this.currentUser = userCredential.user;
+          this.userData = await fetchUserData();
+          return userCredential.user;
+        }
+
         UserModel userData = UserModel(
           id: userCredential.user!.uid,
           username: userCredential.user!.displayName!,
@@ -309,7 +317,7 @@ class AuthenticationRepo extends GetxController {
           notificationToken = data['notificationToken'];
         }
 
-        if (data.containsKey('notifications')) {
+        if (data.containsKey('notifications') && data['notifications'] != null) {
           notifications = data['notifications'].cast<Map<String, dynamic>>();
         }
 

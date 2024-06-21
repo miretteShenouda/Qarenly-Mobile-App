@@ -35,6 +35,8 @@ class AppRoutes {
   static const String profilePage = '/profile_update_screen';
   static const String notificationsPage = '/notifications_page';
 
+  static const String priceRangePage = '/price_range_page';
+
   // static const String appNavigationScreen = '/app_navigation_screen';
 
   static Map<String, WidgetBuilder> routes = {

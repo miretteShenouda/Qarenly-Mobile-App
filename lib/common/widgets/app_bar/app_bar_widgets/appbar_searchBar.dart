@@ -20,6 +20,13 @@ class AppbarSearchBar extends StatefulWidget {
 class _AppbarSearchBarState extends State<AppbarSearchBar> {
   FilterController filterController = Get.put(FilterController());
 
+double normalizePrice(double value) {
+    // Assuming your min and max price ranges are known
+    final range = filterController.priceFilter.value.end -
+        filterController.priceFilter.value.start;
+    return (value - filterController.priceFilter.value.start) / range * 100;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,99 +46,139 @@ class _AppbarSearchBarState extends State<AppbarSearchBar> {
           decoration: InputDecoration(
             hintText: 'Search for something',
             border: InputBorder.none,
-            suffixIcon: IconButton(
-              icon: Icon(
-                Icons.arrow_drop_down,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                showMenu(
-                  context: context,
-                  position: RelativeRect.fromLTRB(
-                      MediaQuery.of(context).size.width - 100, 60, 0, 0),
-                  elevation: 8,
-                  items: [
-                    PopupMenuItem<String>(
-                      value: 'All',
-                      child: Row(
-                        children: [
-                          Text('All'),
-                          Obx(
-                            () => filterController.categoryFilter.value == 'All'
-                                ? Icon(Icons.check)
-                                : SizedBox.shrink(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem<String>(
-                      value: 'TVs',
-                      child: Row(
-                        children: [
-                          Text('TVs'),
-                          Obx(
-                            () => filterController.categoryFilter.value == 'TVs'
-                                ? Icon(Icons.check)
-                                : SizedBox.shrink(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem<String>(
-                      value: 'Laptops',
-                      child: Row(
-                        children: [
-                          Text('Laptops'),
-                          Obx(
-                            () => filterController.categoryFilter.value ==
-                                    'Laptops'
-                                ? Icon(Icons.check)
-                                : SizedBox.shrink(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem<String>(
-                      value: 'CPUs',
-                      child: Row(
-                        children: [
-                          Text('CPUs'),
-                          Obx(
-                            () =>
-                                filterController.categoryFilter.value == 'CPUs'
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    showMenu(
+                      context: context,
+                      position: RelativeRect.fromLTRB(
+                          MediaQuery.of(context).size.width - 100, 60, 0, 0),
+                      elevation: 8,
+                      items: [
+                        PopupMenuItem<String>(
+                          value: 'All',
+                          child: Row(
+                            children: [
+                              Text('All'),
+                              Obx(
+                                () => filterController.categoryFilter.value ==
+                                        'All'
                                     ? Icon(Icons.check)
                                     : SizedBox.shrink(),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem<String>(
-                      value: 'GPUs',
-                      child: Row(
-                        children: [
-                          Text('GPUs'),
-                          Obx(
-                            () =>
-                                filterController.categoryFilter.value == 'GPUs'
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'TVs',
+                          child: Row(
+                            children: [
+                              Text('TVs'),
+                              Obx(
+                                () => filterController.categoryFilter.value ==
+                                        'TVs'
                                     ? Icon(Icons.check)
                                     : SizedBox.shrink(),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ).then<void>((String? value) {
-                  if (value != null) {
-                    filterController.setCategoryFilter(value);
-                    print(value);
-                  }
-                });
-              },
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'Laptops',
+                          child: Row(
+                            children: [
+                              Text('Laptops'),
+                              Obx(
+                                () => filterController.categoryFilter.value ==
+                                        'Laptops'
+                                    ? Icon(Icons.check)
+                                    : SizedBox.shrink(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'CPUs',
+                          child: Row(
+                            children: [
+                              Text('CPUs'),
+                              Obx(
+                                () =>
+                                    filterController.categoryFilter.value ==
+                                        'CPUs'
+                                    ? Icon(Icons.check)
+                                    : SizedBox.shrink(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'GPUs',
+                          child: Row(
+                            children: [
+                              Text('GPUs'),
+                              Obx(
+                                () =>
+                                    filterController.categoryFilter.value ==
+                                        'GPUs'
+                                    ? Icon(Icons.check)
+                                    : SizedBox.shrink(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ).then<void>((String? value) {
+                      if (value != null) {
+                        filterController.setCategoryFilter(value);
+                        print(value);
+                      }
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.monetization_on_outlined, color: Colors.black),
+                  onPressed: () {
+                    showMenu(
+                      context: context,
+                      position: RelativeRect.fromLTRB( MediaQuery.of(context).size.width - 100, 60, 0, 0),
+                      items: [
+                        PopupMenuItem<String>(
+                          child: Text('Price Range'),
+                        ),
+                        PopupMenuItem<RangeValues>(
+                          child:  RangeSlider(
+                            min: filterController.priceFilter.value.start,
+                            max: filterController.priceFilter.value.end,
+                            labels: RangeLabels(filterController.priceFilter.value.start.toString(),  filterController.priceFilter.value.end.toString()),
+                            values: filterController.priceFilter.value,
+                            onChanged: (value) {
+                              filterController.setPriceFilter(value);
+                              print(filterController.priceFilter.value);
+                              setState(() {
+                              });
+                            },
+                          ),
+                        )
+                      ]
+                    );
+                  },
+                ),
+              ],
             ),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Color.fromARGB(255, 0, 48, 73),
-            ),
+            prefixIcon: IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.8),
+                ),
+                onPressed: () => Navigator.push(context , MaterialPageRoute(builder: (context) => SearchResultsPage(query: widget.controller!.text)))), 
           ),
           onSubmitted: (value) {
             if (value.isNotEmpty) {
