@@ -68,12 +68,12 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 24.0),
+                        horizontal: 20.0, vertical: 0.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Section 3: Mostly Viewed
-                        const SizedBox(height: 34.0),
+                        const SizedBox(height: 10.0),
                         _buildMostlyViewedSection(snapshot),
                       ],
                     ),
@@ -99,7 +99,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          separatorBuilder: (context, index) => const SizedBox(height: 21.0),
+          separatorBuilder: (context, index) => const SizedBox(height: 10.0),
           itemCount: resultList.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
             product: resultList[index],

@@ -10,7 +10,6 @@ import '../../common/theme/app_decoration.dart';
 import '../../common/widgets/ProductcardItemWidgetHome.dart';
 import '../../common/widgets/app_bar/app_bar.dart';
 import '../../controller/homePage_controller.dart';
-import 'package:get/get.dart';
 
 class HomepageScreen extends StatefulWidget {
   HomepageScreen(User user, {Key? key}) : super(key: key);
@@ -30,8 +29,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
       Get.put(NotificationController());
 
   void _scrollNext() {
+    if (controller.products.isEmpty) return; // Add this check
     setState(() {
-      // _currentIndex = (_currentIndex + 1) % controller.laptops.length;
+      _currentIndex = (_currentIndex + 1) % controller.products.length;
     });
 
     if (!_scrollController.hasClients) return;
@@ -77,7 +77,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -109,12 +109,13 @@ class _HomepageScreenState extends State<HomepageScreen> {
         itemBuilder: (context, index) {
           final imageUrl = controller.products[index].imageUrl;
           return Container(
-            margin: EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
                 horizontal: 5.0), // Add margin for spacing between items
+            width:
+                MediaQuery.of(context).size.width - 10.0, // Adjust for margin
             child: Image.network(
               imageUrl,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.contain,
+              fit: BoxFit.scaleDown,
             ),
           );
         },
@@ -134,7 +135,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          separatorBuilder: (context, index) => const SizedBox(height: 21.0),
+          separatorBuilder: (context, index) => const SizedBox(height: 10.0),
           itemCount: controller.products.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
             product: controller.products[index],

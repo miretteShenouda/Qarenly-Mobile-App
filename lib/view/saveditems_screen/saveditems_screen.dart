@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qarenly/controller/savedItems_controller.dart';
 import 'package:qarenly/core/app_export.dart';
-import 'package:qarenly/model/product_model.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
+
 import '../../common/widgets/app_bar/app_bar.dart';
 import '../../common/widgets/productcard_item_widget.dart';
-import 'package:get/get.dart';
 
 class SaveditemsScreen extends StatefulWidget {
   SaveditemsScreen({Key? key}) : super(key: key);
@@ -34,32 +34,32 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
             searchController: searchController,
             authenticationRepo: _authenticationRepo,
           ),
-          body:Obx(() {
+          body: Obx(() {
             if (savedItemsController.isLoading.value) {
               return Center(child: CircularProgressIndicator());
             } else {
               return SingleChildScrollView(
-                    child: Container(
-                      width: 391.h,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.h, vertical: 24.v),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 5.v),
-                          // _buildCheckbox(),
-                          _buildSavedItemsSection(context),
-                          SizedBox(height: 8.v),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13.h),
-                          ),
-                          SizedBox(height: 18.v),
-                        ],
-                      ),
-                    ),
-                  );
+                child: Container(
+                  width: 391.h,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.h, vertical: 10.v),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 5.0),
+                      // _buildCheckbox(),
+                      _buildSavedItemsSection(context),
+                      SizedBox(height: 5.0),
+                      // Padding(
+                      //   padding: EdgeInsets.only(left: 13.h),
+                      // ),
+                      // SizedBox(height: 10.v),
+                    ],
+                  ),
+                ),
+              );
             }
-          }) ),
+          })),
     );
   }
 
@@ -78,8 +78,7 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
   //   );
   // }
 
-  Widget _buildSavedItemsSection(
-      BuildContext context) {
+  Widget _buildSavedItemsSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -92,7 +91,7 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           separatorBuilder: (context, index) {
-            return SizedBox(height: 21.v);
+            return SizedBox(height: 10.0);
           },
           itemCount: savedItemsController.savedItemsProducts.length,
           itemBuilder: (context, index) {

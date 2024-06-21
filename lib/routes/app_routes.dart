@@ -1,18 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:qarenly/controller/authentication_controller/login_controller.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
 import 'package:qarenly/view/notification_screen/notifications_screen.dart';
+import 'package:qarenly/view/profile_update_screen/update_profile.dart';
 import 'package:qarenly/view/saveditems_screen/saveditems_screen.dart';
-import 'package:qarenly/view/search_output_page/search_output_page.dart';
-import 'package:qarenly/view/search_output_page_tab_container_screen/search_output_page_tab_container_screen.dart';
 import 'package:qarenly/view/side_menu_screen/side_menu_screen.dart';
 import 'package:qarenly/view/sign_up_page_screen/sign_up_page_screen.dart';
 import 'package:qarenly/view/splashscreen_screen/splashscreen_screen.dart';
 import 'package:qarenly/view/viewproduct_page/viewproduct_page.dart';
-import 'package:qarenly/view/profile_update_screen/update_profile.dart';
 
 // import 'package:qarenly/presentation/forget_password_screen/forget_password_mail/mail_screen.dart';
 
@@ -48,9 +44,6 @@ class AppRoutes {
     signUpPageScreen: (context) => SignUpPageScreen(),
     homepageScreen: (context) =>
         HomepageScreen(AuthenticationRepo.instance.currentUser!),
-    searchOutputPageTabContainerScreen: (context) =>
-        SearchOutputPageTabContainerScreen(),
-    searchOutputPage: (context) => SearchOutputPage(),
     sideMenuScreen: (context) => SideMenuScreen(),
     viewproductPage: (context) => ViewproductPage(),
     profilePage: (context) => UpdateProfileScreen(),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
-import 'package:get/get.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
 
 class SideMenuScreen extends StatefulWidget {
@@ -36,6 +36,22 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
       // child: Scaffold(
       body: Stack(
         children: [
+          // Transparent overlay
+          Positioned(
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: MediaQuery.of(context).size.width * 0.8,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(
+                    context); // Close the drawer when tapping on the transparent area
+              },
+              child: Container(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
           // Side Menu (Drawer)
           Positioned(
             top: 0,

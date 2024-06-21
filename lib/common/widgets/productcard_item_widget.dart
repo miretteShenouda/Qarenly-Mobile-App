@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qarenly/core/app_export.dart';
+
 import '../../controller/savedItems_controller.dart';
 import '../../model/product_model.dart';
 
@@ -21,15 +22,15 @@ class ProductcardItemWidget extends StatelessWidget {
       ),
       color: Color.fromRGBO(0, 48, 73, 0.0001),
       child: ListTile(
-        contentPadding: EdgeInsets.all(16.0),
+        // contentPadding: EdgeInsets.all(16.0),
         leading: CustomImageView(
           imagePath: product.imageUrl,
-          height: 128.0,
-          width: 104.0,
+          // height: 128.0,
+          // width: 104.0,
           radius: BorderRadius.circular(30.0),
         ),
         title: Text(
-          "Name: ${product.name}",
+          "${product.name}",
           style: theme.textTheme.headline6,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
@@ -37,27 +38,27 @@ class ProductcardItemWidget extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Source: ${product.sources.join(", ")} \nBrand: ${product.brand}",
-              maxLines: 2,
-              style: theme.textTheme.bodyLarge,
-              // overflow: TextOverflow.ellipsis,
-            ),
+            // Text(
+            //   "Source: ${product.sources.join(", ")} \nBrand: ${product.brand}",
+            //   maxLines: 2,
+            //   style: theme.textTheme.bodyLarge,
+            //   // overflow: TextOverflow.ellipsis,
+            // ),
             Align(
               alignment: Alignment.centerRight,
               child: RichText(
                 text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: product.lowestPrices.length == 0
-                          ? "Lowest price: 'N/A'"
-                          : "Lowest price: ${product.lowestPrices.last.toDouble()}",
-                      style: theme.textTheme.titleSmall,
-                    ),
-                  ],
+                  // children: [
+                  // text:TextSpan(
+                  text: product.lowestPrices.length == 0
+                      ? "Lowest price: 'N/A'"
+                      : "Lowest price: ${product.lowestPrices.last.toDouble()}",
+                  style: theme.textTheme.titleSmall,
                 ),
+                // ],
               ),
-            )
+            ),
+            // )
           ],
         ),
         trailing: GestureDetector(

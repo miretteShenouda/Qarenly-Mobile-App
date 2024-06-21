@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import '../../../controller/homePage_controller.dart';
 import '../../../model/product_model.dart';
 import '../../core/app_export.dart';
 
@@ -29,7 +27,7 @@ class ProductcardItemWidgetHome extends StatelessWidget {
           ),
           color: const Color.fromRGBO(0, 48, 73, 0.0001),
           child: ListTile(
-            contentPadding: const EdgeInsets.all(16.0),
+            // contentPadding: const EdgeInsets.all(16.0),
             leading: CustomImageView(
               fit: BoxFit.fill,
               margin: EdgeInsets.zero,
@@ -57,7 +55,9 @@ class ProductcardItemWidgetHome extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: RichText(
                       text: TextSpan(
-                        text:product.lowestPrices.length == 0? "Lowest price: None": "Lowest price: ${product.lowestPrices[product.lowestPrices.length-1]}",
+                        text: product.lowestPrices.length == 0
+                            ? "Lowest price: None"
+                            : "Lowest price: ${product.lowestPrices[product.lowestPrices.length - 1]}",
                         style: theme.textTheme.titleSmall,
                       ),
                     ))
