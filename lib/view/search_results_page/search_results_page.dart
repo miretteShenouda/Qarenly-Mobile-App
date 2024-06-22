@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:qarenly/model/product_model.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:qarenly/routes/app_routes.dart';
+import 'package:qarenly/view/search_results_page/filters.dart';
 
 import '../../common/widgets/ProductcardItemWidgetHome.dart';
 import '../../common/widgets/app_bar/app_bar.dart';
@@ -95,6 +96,97 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           'Search Result',
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
+        Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Wrap(
+              spacing: 10.0,
+              children: [
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //  children: [
+                ElevatedButton(
+                  child: Text(
+                    "Filters",
+                    style: TextStyle(
+                        color: Colors.black), // Text color of the button
+                  ),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(110, 40)), // Set the size of the button
+                    // You can also adjust other properties such as padding, shape, etc.
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchFiltersPage()));
+                    //   filterByPriceRange("0", "50");
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    //   filterByPriceRange("0", "50");
+                  },
+                  child: Text(
+                    "Below \50",
+                    style: TextStyle(
+                        color: Colors.black), // Text color of the button
+                  ),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(110, 40)), // Set the size of the button
+                    // You can also adjust other properties such as padding, shape, etc.
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    //    filterByPriceRange("50", "100");
+                  },
+                  child: Text(
+                    "\50 - \100",
+                    style: TextStyle(
+                        color: Colors.black), // Text color of the button
+                  ),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(110, 40)), // Set the size of the button
+                    // You can also adjust other properties such as padding, shape, etc.
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // filterByPriceRange("100", "200");
+                  },
+                  child: Text(
+                    "\100 - \200",
+                    style: TextStyle(
+                        color: Colors.black), // Text color of the button
+                  ),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(110, 40)), // Set the size of the button
+                    // You can also adjust other properties such as padding, shape, etc.
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // filterByPriceRange("200", "9999");
+                  },
+                  child: Text(
+                    "Above \200",
+                    style: TextStyle(
+                        color: Colors.black), // Text color of the button
+                  ),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(110, 40)), // Set the size of the button
+                    // You can also adjust other properties such as padding, shape, etc.
+                  ),
+                ),
+              ],
+            )
+            //  ]),
+            ),
         const SizedBox(height: 10.0),
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
