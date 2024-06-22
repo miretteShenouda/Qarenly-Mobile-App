@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/controller/filter_controller.dart';
 import 'package:qarenly/controller/notification_controller.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
@@ -24,6 +25,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
   late Timer _timer;
   int _currentIndex = 0;
   final controller = Get.put(HomePageController());
+  final filterController =
+      Get.put(FilterController()); // Initialize FilterController
+
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
   NotificationController notificationController =
       Get.put(NotificationController());
@@ -54,6 +58,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
     _scrollController = ScrollController();
     _timer = Timer.periodic(const Duration(seconds: 3), (_) {
       _scrollNext();
+    });
+    // Listen for filter changes
+    filterController.filter.listen((_) {
+      controller.fetchFilteredProducts();
     });
   }
 

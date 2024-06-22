@@ -18,3 +18,17 @@ class FilterController extends GetxController {
     filter.value = true;
   }
 }
+// import 'package:get/get.dart';
+
+// class FilterController extends GetxController {
+//   RxString categoryFilter = 'All'.obs;
+//   Rx<RangeValues> priceFilter = RangeValues(0, 1000).obs;
+
+//   void setCategoryFilter(String category) {
+//     categoryFilter.value = category;
+//   }
+
+//   void setPriceFilter(RangeValues values) {
+//     priceFilter.value = values;
+//   }
+// }
