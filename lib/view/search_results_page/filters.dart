@@ -1,11 +1,229 @@
 // // search_filters.dart
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/controller/filter_controller.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
+import 'package:flutter/material.dart';
+
+class SearchFiltersPage extends StatefulWidget {
+  @override
+  _SearchFiltersPageState createState() => _SearchFiltersPageState();
+}
+
+class _SearchFiltersPageState extends State<SearchFiltersPage> {
+  SearchController searchController = Get.put(SearchController());
+  AuthenticationRepo authenticationRepo = Get.put(AuthenticationRepo());
+  final TextEditingController lowerBoundController = TextEditingController();
+  final TextEditingController upperBoundController = TextEditingController();
+  FilterController filterController = Get.put(FilterController());
+
+  @override
+  void dispose() {
+    // Dispose controllers when the widget is disposed
+    lowerBoundController.dispose();
+    upperBoundController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: BuildAppBar(
+          searchController: searchController,
+          authenticationRepo: authenticationRepo),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Price",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            ),
+            Text(
+              "Enter Price Range...",
+              style: TextStyle(fontSize: 15),
+            ),
+            SizedBox(height: 10),
+            // Smaller TextField for Lower Bound
+            Row(
+              children: [
+                SizedBox(
+                  width: 150, // Set desired width
+                  child: TextField(
+                    controller: lowerBoundController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Lower Bound',
+                      hintText: 'Enter lower bound',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    ),
+                    style:
+                        TextStyle(fontSize: 14), // Adjust font size if needed
+                  ),
+                ),
+
+                SizedBox(width: 20),
+
+                // Smaller TextField for Upper Bound
+                SizedBox(
+                  width: 150, // Set desired width
+                  child: TextField(
+                    controller: upperBoundController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      fillColor: Colors.black,
+                      labelText: 'Upper Bound',
+                      hintText: 'Enter upper bound',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    ),
+                    style:
+                        TextStyle(fontSize: 14), // Adjust font size if needed
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(70, 30),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                // Implement your logic for using the entered price range
+                final double lowerBound =
+                    double.parse(lowerBoundController.text);
+                final double upperBound =
+                    double.parse(upperBoundController.text);
+                filterController.priceFilterLowerBound.value = lowerBound;
+                filterController.priceFilterUpperBound.value = upperBound;
+                print('Lower Bound: $lowerBound');
+                print('Upper Bound: $upperBound');
+                print(filterController.priceFilterLowerBound.value);
+                print(filterController.priceFilterUpperBound.value);
+
+                Navigator.pop(context);
+
+                // Use these values for filtering or any other logic
+              },
+              child: Text('Submit', style: TextStyle(color: Colors.black)),
+              // navigator: Navigator.of(context),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              "Sources",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            ),
+            Text(
+              "Choose your Seller...",
+              style: TextStyle(fontSize: 15),
+            ),
+            SizedBox(height: 10),
+            Center(
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 40.0,
+                runSpacing: 10.0,
+                children: [
+                  GestureDetector(
+                    child: Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/amazon.png'),
+                            fit: BoxFit.scaleDown),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/jumia.png'),
+                            fit: BoxFit.fitWidth),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/sigma.png'),
+                            fit: BoxFit.fitWidth),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/noonwithoutbackground.png'),
+                            fit: BoxFit.fitWidth),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // Implement your logic for using the entered price range
+                      // filterController.viewSourceProducts('albadr')
+                    },
+                    child: Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/albadr.png'),
+                            fit: BoxFit.fitWidth),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 
 // class SearchFiltersPage extends StatelessWidget {
 //   SearchController searchController = Get.put(SearchController());
@@ -143,123 +361,3 @@ import 'package:qarenly/repository/authentication%20repository/authentication_re
 //   //  );
 //   }
 // }
-
-import 'package:flutter/material.dart';
-
-class SearchFiltersPage extends StatefulWidget {
-  @override
-  _SearchFiltersPageState createState() => _SearchFiltersPageState();
-}
-
-class _SearchFiltersPageState extends State<SearchFiltersPage> {
-  SearchController searchController = Get.put(SearchController());
-  AuthenticationRepo authenticationRepo = Get.put(AuthenticationRepo());
-  final TextEditingController lowerBoundController = TextEditingController();
-  final TextEditingController upperBoundController = TextEditingController();
-  FilterController filterController = Get.put(FilterController());
-
-  @override
-  void dispose() {
-    // Dispose controllers when the widget is disposed
-    lowerBoundController.dispose();
-    upperBoundController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: BuildAppBar(
-          searchController: searchController,
-          authenticationRepo: authenticationRepo),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Enter Price Range",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            SizedBox(height: 10),
-            // Smaller TextField for Lower Bound
-            Row(
-              children: [
-                SizedBox(
-                  width: 150, // Set desired width
-                  child: TextField(
-                    controller: lowerBoundController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'Lower Bound',
-                      hintText: 'Enter lower bound',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    ),
-                    style:
-                        TextStyle(fontSize: 14), // Adjust font size if needed
-                  ),
-                ),
-
-                SizedBox(width: 20),
-
-                // Smaller TextField for Upper Bound
-                SizedBox(
-                  width: 150, // Set desired width
-                  child: TextField(
-                    controller: upperBoundController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'Upper Bound',
-                      hintText: 'Enter upper bound',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    ),
-                    style:
-                        TextStyle(fontSize: 14), // Adjust font size if needed
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                fixedSize: Size(70, 30),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              onPressed: () {
-                // Implement your logic for using the entered price range
-                final double lowerBound =
-                    double.parse(lowerBoundController.text);
-                final double upperBound =
-                    double.parse(upperBoundController.text);
-                filterController.priceFilterLowerBound.value = lowerBound;
-                filterController.priceFilterUpperBound.value = upperBound;
-                print('Lower Bound: $lowerBound');
-                print('Upper Bound: $upperBound');
-                print(filterController.priceFilterLowerBound.value);
-                print(filterController.priceFilterUpperBound.value);
-
-                Navigator.pop(context);
-
-                // Use these values for filtering or any other logic
-              },
-              child: Text('Submit', style: TextStyle(color: Colors.black)),
-              // navigator: Navigator.of(context),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
