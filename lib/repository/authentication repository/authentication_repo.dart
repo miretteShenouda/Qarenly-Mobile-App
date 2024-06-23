@@ -69,8 +69,8 @@ class AuthenticationRepo extends GetxController {
   _setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => LoginPageScreen())
-        // : Get.offAll(() => LoginPageScreen());
-        : Get.offAll(() => HomepageScreen(user));
+        : Get.offAll(() => LoginPageScreen());
+    // : Get.offAll(() => HomepageScreen(user));
   }
 
 /*---------------------------------AUTHENTICATION------------------------------------------*/
@@ -146,7 +146,10 @@ class AuthenticationRepo extends GetxController {
             await _auth.signInWithCredential(credential);
 
         // if user exist in firestore
-        var userDoc = await FirebaseFirestore.instance.collection("Users").where("id", isEqualTo: userCredential.user!.uid).get();
+        var userDoc = await FirebaseFirestore.instance
+            .collection("Users")
+            .where("id", isEqualTo: userCredential.user!.uid)
+            .get();
         if (userCredential.user != null && !userDoc.docs.isEmpty) {
           this.currentUser = userCredential.user;
           this.userData = await fetchUserData();
@@ -188,23 +191,39 @@ class AuthenticationRepo extends GetxController {
       if (result.status == LoginStatus.success) {
         final OAuthCredential credential =
             FacebookAuthProvider.credential(result.accessToken!.token);
+
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+        final UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+        currentUser = userCredential.user;
+
         // Check if the user is already equal (already signed in)
         if (isUserEqual(result)) {
           // If the user is already signed in, navigate to the homepage
+          userData = await fetchUserData();
           Navigator.pushNamed(context, AppRoutes.homepageScreen);
           return; // Exit the method to prevent further navigation
         }
-        final UserCredential userCredential =
-            await _auth.signInWithCredential(credential);
 
         // Check if the user is signing in for the first time
-        if (userCredential.additionalUserInfo?.isNewUser ?? false) {
+        if (userCredential.additionalUserInfo?.isNewUser == true) {
           // If the user is new, navigate to the profile setup screen
           print('new user');
+          UserModel userData = UserModel(
+            id: userCredential.user!.uid,
+            username: userCredential.user!.displayName!,
+            email: userCredential.user!.email!,
+            password: '',
+            savedItems: [],
+          );
+          this.userData = userData;
+          InsertUser(userData);
           Navigator.pushNamed(context, AppRoutes.homepageScreen);
         } else {
           //already registered, navigate to the home screen
           print('bla  user already exist');
+          userData = await fetchUserData();
           Navigator.pushNamed(context, AppRoutes.homepageScreen);
         }
       } else {
@@ -221,15 +240,45 @@ class AuthenticationRepo extends GetxController {
     try {
       final LoginResult result =
           await FacebookAuth.instance.login(permissions: ['email']);
+      print("Login Success");
       if (result.status == LoginStatus.success) {
         final OAuthCredential credential =
             FacebookAuthProvider.credential(result.accessToken!.token);
         // final UserCredential userCredential =
         //     await _auth.signInWithCredential(credential);
 
-        await FirebaseAuth.instance.signInWithCredential(credential);
-        Navigator.pushReplacementNamed(context,
-            '/homepage_screen'); // Navigate to home screen after successful login
+        final userCreds =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+
+        currentUser = userCreds.user;
+
+        print("User ID from FACEBOOK $currentUser!.uid");
+
+        final userInstance = await FirebaseFirestore.instance
+            .collection('Users')
+            .where('id', isEqualTo: currentUser!.uid)
+            .get();
+
+        print("userInstance arrived");
+
+        if (!userInstance.docs.isEmpty) {
+          userData = await fetchUserData();
+        } else {
+          UserModel userData = UserModel(
+            id: currentUser!.uid,
+            username: currentUser!.displayName!,
+            email: currentUser!.email!,
+            password: '',
+            savedItems: [],
+          );
+          this.userData = userData;
+          InsertUser(userData);
+        }
+
+        Navigator.pushNamed(
+            context,
+            AppRoutes
+                .homepageScreen); // Navigate to home screen after successful login
       } else {
         print(result.message);
       }
@@ -317,7 +366,8 @@ class AuthenticationRepo extends GetxController {
           notificationToken = data['notificationToken'];
         }
 
-        if (data.containsKey('notifications') && data['notifications'] != null) {
+        if (data.containsKey('notifications') &&
+            data['notifications'] != null) {
           notifications = data['notifications'].cast<Map<String, dynamic>>();
         }
 

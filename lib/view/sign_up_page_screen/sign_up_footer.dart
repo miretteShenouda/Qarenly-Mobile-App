@@ -33,7 +33,7 @@ class signUpFooter extends StatelessWidget {
           User? user = await _authenticationRepo.signInWithGoogle();
           if (user != null) {
             // Navigate to the next screen or do something with the signed-up user
-            Get.offAll( () => HomepageScreen(user));
+            Get.offAll(() => HomepageScreen(user));
           } else {
             // Handle sign-up failure
           }
