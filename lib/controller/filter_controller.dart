@@ -6,15 +6,12 @@ class FilterController extends GetxController {
 
   RxBool filter = false.obs;
   RxString categoryFilter = "All".obs;
-  Rx<RangeValues> priceFilter = RangeValues(0, 100).obs;
+
+  RxDouble priceFilterLowerBound = 0.0.obs;
+  RxDouble priceFilterUpperBound = 9999999999999.0.obs;
 
   void setCategoryFilter(String category) {
     categoryFilter.value = category;
-    filter.value = true;
-  }
-
-  void setPriceFilter(RangeValues values) {
-    priceFilter.value = values;
     filter.value = true;
   }
 }

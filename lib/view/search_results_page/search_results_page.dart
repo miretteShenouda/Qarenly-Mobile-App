@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/model/product_model.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
@@ -92,9 +93,34 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Search Result',
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Search Result',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            ElevatedButton(
+              child: Text(
+                "Filters",
+                style:
+                    TextStyle(color: Colors.white), // Text color of the button
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.orange),
+                minimumSize: MaterialStateProperty.all<Size>(
+                    Size(110, 50)), // Set the size of the button
+                // You can also adjust other properties such as padding, shape, etc.
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SearchFiltersPage()));
+                //   filterByPriceRange("0", "50");
+              },
+            ),
+          ],
         ),
         Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -104,85 +130,67 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 //  children: [
-                ElevatedButton(
-                  child: Text(
-                    "Filters",
-                    style: TextStyle(
-                        color: Colors.black), // Text color of the button
-                  ),
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(
-                        Size(110, 40)), // Set the size of the button
-                    // You can also adjust other properties such as padding, shape, etc.
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SearchFiltersPage()));
-                    //   filterByPriceRange("0", "50");
-                  },
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    //   filterByPriceRange("0", "50");
-                  },
-                  child: Text(
-                    "Below \50",
-                    style: TextStyle(
-                        color: Colors.black), // Text color of the button
-                  ),
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(
-                        Size(110, 40)), // Set the size of the button
-                    // You can also adjust other properties such as padding, shape, etc.
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    //    filterByPriceRange("50", "100");
-                  },
-                  child: Text(
-                    "\50 - \100",
-                    style: TextStyle(
-                        color: Colors.black), // Text color of the button
-                  ),
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(
-                        Size(110, 40)), // Set the size of the button
-                    // You can also adjust other properties such as padding, shape, etc.
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // filterByPriceRange("100", "200");
-                  },
-                  child: Text(
-                    "\100 - \200",
-                    style: TextStyle(
-                        color: Colors.black), // Text color of the button
-                  ),
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(
-                        Size(110, 40)), // Set the size of the button
-                    // You can also adjust other properties such as padding, shape, etc.
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // filterByPriceRange("200", "9999");
-                  },
-                  child: Text(
-                    "Above \200",
-                    style: TextStyle(
-                        color: Colors.black), // Text color of the button
-                  ),
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(
-                        Size(110, 40)), // Set the size of the button
-                    // You can also adjust other properties such as padding, shape, etc.
-                  ),
-                ),
+
+                // ElevatedButton(
+                //   onPressed: () {
+                //     //   filterByPriceRange("0", "50");
+                //   },
+                //   child: Text(
+                //     "Below \50",
+                //     style: TextStyle(
+                //         color: Colors.black), // Text color of the button
+                //   ),
+                //   style: ButtonStyle(
+                //     minimumSize: MaterialStateProperty.all<Size>(
+                //         Size(110, 40)), // Set the size of the button
+                //     // You can also adjust other properties such as padding, shape, etc.
+                //   ),
+                // ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     //    filterByPriceRange("50", "100");
+                //   },
+                //   child: Text(
+                //     "\50 - \100",
+                //     style: TextStyle(
+                //         color: Colors.black), // Text color of the button
+                //   ),
+                //   style: ButtonStyle(
+                //     minimumSize: MaterialStateProperty.all<Size>(
+                //         Size(110, 40)), // Set the size of the button
+                //     // You can also adjust other properties such as padding, shape, etc.
+                //   ),
+                // ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     // filterByPriceRange("100", "200");
+                //   },
+                //   child: Text(
+                //     "\100 - \200",
+                //     style: TextStyle(
+                //         color: Colors.black), // Text color of the button
+                //   ),
+                //   style: ButtonStyle(
+                //     minimumSize: MaterialStateProperty.all<Size>(
+                //         Size(110, 40)), // Set the size of the button
+                //     // You can also adjust other properties such as padding, shape, etc.
+                //   ),
+                // ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     // filterByPriceRange("200", "9999");
+                //   },
+                // child: Text(
+                //   "Above \200",
+                //   style: TextStyle(
+                //       color: Colors.black), // Text color of the button
+                // ),
+                // style: ButtonStyle(
+                //   minimumSize: MaterialStateProperty.all<Size>(
+                //       Size(110, 40)), // Set the size of the button
+                //   // You can also adjust other properties such as padding, shape, etc.
+                // ),
+                // ),
               ],
             )
             //  ]),

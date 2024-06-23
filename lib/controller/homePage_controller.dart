@@ -32,12 +32,12 @@ class HomePageController extends GetxController {
     products.clear();
     try {
       String selectedCategory = filterController.categoryFilter.value;
-      RangeValues priceRange = filterController.priceFilter.value;
+      // RangeValues priceRange = filterController.priceFilter.value;
 
       if (selectedCategory == 'All') {
         await fetchHomepageItems();
       } else {
-        await _fetchCategoryProducts(selectedCategory, priceRange);
+        await _fetchCategoryProducts(selectedCategory);
       }
     } catch (e) {
       print("error fetching products: $e");
@@ -46,8 +46,7 @@ class HomePageController extends GetxController {
     }
   }
 
-  Future<void> _fetchCategoryProducts(
-      String category, RangeValues priceRange) async {
+  Future<void> _fetchCategoryProducts(String category) async {
     try {
       isLoading.value = true;
       products.clear(); // Clear products list before fetching items

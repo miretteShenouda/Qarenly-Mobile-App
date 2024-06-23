@@ -8,6 +8,11 @@ class SearchResultController {
 
   Future<RxList> searchProducts(String query) async {
     String collection = filterController.categoryFilter.value;
+    double lowerBound = filterController.priceFilterLowerBound.value;
+    double upperBound = filterController.priceFilterUpperBound.value;
+
+    print(
+        'collection: $collection, query: $query, lowerBound: $lowerBound, upperBound: $upperBound');
 
     if (collection == "All") return searchAllProducts(query);
 
@@ -16,20 +21,35 @@ class SearchResultController {
     QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection(collection).get();
 
+    print("collection: $collection");
+
     snapshot.docs.forEach((doc) {
       final Product product =
           Product.fromFirestore(doc.data() as Map<String, dynamic>);
       product.type = collection;
       if (product.name.toLowerCase().contains(query.toLowerCase())) {
-        searchReturn.add(product);
+        for (int i = 0; i < product.sources.length; i++) {
+          if (product.sources[i]["stock_status"] == false) continue;
+
+          double price = product.sources[i]['discounted_price'] == null
+              ? product.sources[i]['price']
+              : product.sources[i]['discounted_price'];
+          print("price: $price");
+          if (price >= lowerBound && price <= upperBound) {
+            searchReturn.add(product);
+            break;
+          }
+        }
       }
     });
-
+    print("searchReturn: $searchReturn");
     return searchReturn;
   }
 
   Future<RxList> searchAllProducts(String query) async {
     int limit = 7;
+    double lowerBound = filterController.priceFilterLowerBound.value;
+    double upperBound = filterController.priceFilterUpperBound.value;
     RxList<Product> searchReturn = <Product>[].obs;
 
     List collections = ["TVs", "Laptops", "CPUs", "GPUs"];
@@ -45,7 +65,17 @@ class SearchResultController {
             Product.fromFirestore(doc.data() as Map<String, dynamic>);
         product.type = collection;
         if (product.name.toLowerCase().contains(query.toLowerCase())) {
-          searchReturnCollection.add(product);
+          for (int i = 0; i < product.sources.length; i++) {
+            if (product.sources[i]["stock_status"] == false) continue;
+
+            double price = product.sources[i]['discounted_price'] == null
+                ? product.sources[i]['price']
+                : product.sources[i]['discounted_price'];
+            if (price >= lowerBound && price <= upperBound) {
+              searchReturnCollection.add(product);
+              break;
+            }
+          }
         }
       });
 
