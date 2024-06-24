@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/controller/filter_controller.dart';
+import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 import '../model/laptop_model.dart';
 import '../model/product_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomePageController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final RxList<Product> products = <Product>[].obs;
   final RxList<Product> savedItems = <Product>[].obs;
+  final RxList<Product> recommendedItems = <Product>[].obs;
+
   int limit = 5;
 
   final FilterController filterController = Get.put(FilterController());
@@ -25,7 +30,64 @@ class HomePageController extends GetxController {
     super.onInit();
     filterController.categoryFilter.listen((_) => fetchFilteredProducts());
     fetchHomepageItems();
+    fetchRecommendedProducts();
   }
+  Future<void> fetchRecommendedProducts() async {
+    AuthenticationRepo.instance.userData = await AuthenticationRepo.instance.fetchUserData();
+    try {
+      isLoading.value = true;
+      recommendedItems.clear();
+      Map<String, List> savedItemsIds = {'ids':[]};
+
+      if (AuthenticationRepo.instance.userData!.savedItems!.isEmpty) {
+        recommendedItems.value= products;
+        return;
+      }
+
+      for (DocumentReference savedItem in AuthenticationRepo.instance.userData!.savedItems!) {
+        final savedItemDoc = await savedItem.get();
+        if (savedItemDoc.exists) {
+          final savedItemData = savedItemDoc.data() as Map<String, dynamic>;
+          savedItemsIds['ids']!.add(savedItemData['id'].toString());
+        }
+      } // AuthenticationRepo.instance.userData!.savedItems;
+
+      print(savedItemsIds);
+
+      final response = await http.post(
+        Uri.parse("https://qarenlyrecommender.azurewebsites.net/"), headers: <String,String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: json.encode(savedItemsIds),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = json.decode(response.body);
+
+        for (var item in responseData) {
+          String id = item['id'];
+          String collection = item['collection'];
+
+          DocumentSnapshot productSnapshot = await _firestore.collection(collection).doc(id).get();
+          if (productSnapshot.exists) {
+            final product = Product.fromFirestore(productSnapshot.data() as Map<String, dynamic>);
+            product.type = collection;
+            recommendedItems.add(product);
+          }
+        }
+
+        print("Recommended List $responseData");
+      } else {
+        print('Failed to fetch recommended products. Status code: ${response.statusCode}');
+      }
+    }
+    catch (error) {
+      print("Error fetching recommended products: $error");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
 
   Future<void> fetchFilteredProducts() async {
     isLoading.value = true;

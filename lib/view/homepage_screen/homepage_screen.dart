@@ -94,7 +94,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
                 _buildHorizontalScrollingSection(),
                 // Section 2: Recent Deals
                 const SizedBox(height: 8.0),
-                _buildRecentDealsSection(context),
+                _buildRecommendedSection(context),
                 // Section 3: Mostly Viewed
                 const SizedBox(height: 34.0),
                 _buildMostlyViewedSection(),
@@ -131,12 +131,12 @@ class _HomepageScreenState extends State<HomepageScreen> {
     );
   }
 
-  Widget _buildRecentDealsSection(BuildContext context) {
+  Widget _buildRecommendedSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Recent Deals',
+          'Recommended For You',
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10.0),
@@ -144,9 +144,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           separatorBuilder: (context, index) => const SizedBox(height: 10.0),
-          itemCount: controller.products.length,
+          itemCount: controller.recommendedItems.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
-            product: controller.products[index],
+            product: controller.recommendedItems[index],
             // homePageController: controller,
           ),
         ),
