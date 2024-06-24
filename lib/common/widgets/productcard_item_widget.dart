@@ -20,14 +20,14 @@ class ProductcardItemWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
-      color: Color.fromRGBO(0, 48, 73, 0.0001),
+      // color: Color.fromRGBO(0, 48, 73, 0.0001),
       child: ListTile(
         // contentPadding: EdgeInsets.all(16.0),
         leading: CustomImageView(
           imagePath: product.imageUrl,
           // height: 128.0,
           // width: 104.0,
-          radius: BorderRadius.circular(30.0),
+          radius: BorderRadius.circular(10.0),
         ),
         title: Text(
           "${product.name}",
