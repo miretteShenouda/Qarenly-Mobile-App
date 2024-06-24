@@ -22,7 +22,7 @@ class ViewproductPage extends StatefulWidget {
 }
 
 class _ViewProductPageState extends State<ViewproductPage> {
-  late ViewProductController _controller = Get.put(ViewProductController());
+  late ViewProductController _controller = ViewProductController();
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
   late List<int?> ratings = [];
 

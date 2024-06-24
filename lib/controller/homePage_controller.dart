@@ -1,15 +1,15 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 // import 'package:flutter/foundation.dart';
 // import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:qarenly/controller/filter_controller.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
-import '../model/laptop_model.dart';
 import '../model/product_model.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class HomePageController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -18,7 +18,6 @@ class HomePageController extends GetxController {
   final RxList<Product> savedItems = <Product>[].obs;
   final RxList<Product> recommendedItems = <Product>[].obs;
   final RxList<Product> recentDeals = <Product>[].obs;
-
 
   int limit = 5;
 
@@ -34,21 +33,23 @@ class HomePageController extends GetxController {
     fetchHomepageItems();
     fetchRecommendedProducts();
     _fetchRecentDealsProducts();
-
   }
+
   Future<void> fetchRecommendedProducts() async {
-    AuthenticationRepo.instance.userData = await AuthenticationRepo.instance.fetchUserData();
+    AuthenticationRepo.instance.userData =
+        await AuthenticationRepo.instance.fetchUserData();
     try {
       isLoading.value = true;
       recommendedItems.clear();
-      Map<String, List> savedItemsIds = {'ids':[]};
+      Map<String, List> savedItemsIds = {'ids': []};
 
       if (AuthenticationRepo.instance.userData!.savedItems!.isEmpty) {
-        recommendedItems.value= products;
+        recommendedItems.value = products;
         return;
       }
 
-      for (DocumentReference savedItem in AuthenticationRepo.instance.userData!.savedItems!) {
+      for (DocumentReference savedItem
+          in AuthenticationRepo.instance.userData!.savedItems!) {
         final savedItemDoc = await savedItem.get();
         if (savedItemDoc.exists) {
           final savedItemData = savedItemDoc.data() as Map<String, dynamic>;
@@ -59,7 +60,8 @@ class HomePageController extends GetxController {
       print(savedItemsIds);
 
       final response = await http.post(
-        Uri.parse("https://qarenlyrecommender.azurewebsites.net/"), headers: <String,String>{
+        Uri.parse("https://qarenlyrecommender.azurewebsites.net/"),
+        headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: json.encode(savedItemsIds),
@@ -72,9 +74,11 @@ class HomePageController extends GetxController {
           String id = item['id'];
           String collection = item['collection'];
 
-          DocumentSnapshot productSnapshot = await _firestore.collection(collection).doc(id).get();
+          DocumentSnapshot productSnapshot =
+              await _firestore.collection(collection).doc(id).get();
           if (productSnapshot.exists) {
-            final product = Product.fromFirestore(productSnapshot.data() as Map<String, dynamic>);
+            final product = Product.fromFirestore(
+                productSnapshot.data() as Map<String, dynamic>);
             product.type = collection;
             recommendedItems.add(product);
           }
@@ -82,10 +86,10 @@ class HomePageController extends GetxController {
 
         print("Recommended List $responseData");
       } else {
-        print('Failed to fetch recommended products. Status code: ${response.statusCode}');
+        print(
+            'Failed to fetch recommended products. Status code: ${response.statusCode}');
       }
-    }
-    catch (error) {
+    } catch (error) {
       print("Error fetching recommended products: $error");
     } finally {
       isLoading.value = false;
@@ -163,19 +167,37 @@ class HomePageController extends GetxController {
     }
   }
 
+  List<Product> pickRandomProducts(List<Product> productList, int count) {
+    if (count >= productList.length) {
+      return productList; // Return all products if count is greater than or equal to list length
+    }
+
+    Random random = Random();
+    List<Product> randomProducts = [];
+
+    while (randomProducts.length < count) {
+      int randomIndex = random.nextInt(productList.length);
+      Product randomProduct = productList[randomIndex];
+      if (!randomProducts.contains(randomProduct)) {
+        randomProducts.add(randomProduct);
+      }
+    }
+
+    return randomProducts;
+  }
+
   Future<void> _fetchCategoryProducts(String category) async {
     try {
       isLoading.value = true;
       products.clear(); // Clear products list before fetching items
 
-      final querySnapshot =
-          await _firestore.collection(category).limit(limit).get();
+      final querySnapshot = await _firestore.collection(category).get();
       for (var doc in querySnapshot.docs) {
         final product = Product.fromFirestore(doc.data());
         product.type = category;
         products.add(product);
       }
-
+      products.value = pickRandomProducts(products, 10);
       isLoading.value = false;
     } catch (error) {
       print("Error retrieving products for category $category: $error");
@@ -189,8 +211,7 @@ class HomePageController extends GetxController {
       products.clear();
       print("heloo");
       for (var category in categories) {
-        final querySnapshot =
-            await _firestore.collection(category).limit(limit).get();
+        final querySnapshot = await _firestore.collection(category).get();
         for (var doc in querySnapshot.docs) {
           final product = Product.fromFirestore(doc.data());
           product.type = category;
@@ -198,7 +219,7 @@ class HomePageController extends GetxController {
           products.add(product);
         }
       }
-
+      products.value = pickRandomProducts(products, 10);
       isLoading.value = false;
     } catch (error) {
       print("Error retrieving saved items: $error");
