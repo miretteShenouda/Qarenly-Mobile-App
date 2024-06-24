@@ -17,6 +17,8 @@ class HomePageController extends GetxController {
   final RxList<Product> products = <Product>[].obs;
   final RxList<Product> savedItems = <Product>[].obs;
   final RxList<Product> recommendedItems = <Product>[].obs;
+  final RxList<Product> recentDeals = <Product>[].obs;
+
 
   int limit = 5;
 
@@ -31,6 +33,8 @@ class HomePageController extends GetxController {
     filterController.categoryFilter.listen((_) => fetchFilteredProducts());
     fetchHomepageItems();
     fetchRecommendedProducts();
+    _fetchRecentDealsProducts();
+
   }
   Future<void> fetchRecommendedProducts() async {
     AuthenticationRepo.instance.userData = await AuthenticationRepo.instance.fetchUserData();
@@ -88,6 +92,57 @@ class HomePageController extends GetxController {
     }
   }
 
+  Future<void> _fetchRecentDealsProducts() async {
+    try {
+      isLoading.value = true;
+      recentDeals.clear(); // Clear products list before fetching items
+
+      final querySnapshot = await _firestore.collection('Recent Deals').get();
+      if (querySnapshot.docs.isEmpty) {
+        print("No documents found in Recent Deals collection.");
+      }
+      for (var doc in querySnapshot.docs) {
+        final data = doc.data();
+        if (data == null) {
+          print("Document data is null for doc ID: ${doc.id}");
+          continue;
+        }
+
+        final product = Product.fromFirestore(data);
+        // print('Object ${product.id}, Name: ${product.name}');
+
+        // // Search for product in other categories to determine its type
+        // bool found = false;
+        // for (var category in categories) {
+        //   final categoryQuerySnapshot = await _firestore
+        //       .collection(category)
+        //       .where('name', isEqualTo: product.name)
+        //       .get();
+        //
+        //   if (categoryQuerySnapshot.docs.isNotEmpty) {
+        //     product.type = category;
+        //     print('typeeeeeeeeee  ${product.type}');
+        //     found = true;
+        //     break; // Exit loop once the type is found
+        //   }
+        // }
+        //
+        // if (!found) {
+        //   print("Product with ID ${product.id} not found in any category.");
+        // }else{
+        //   print("Product with ID ${product.id} was found in ${product.type}.");
+        //
+        // }
+
+        recentDeals.add(product);
+      }
+
+      isLoading.value = false;
+    } catch (error) {
+      print("Error retrieving products for category Recent Deals: $error");
+      isLoading.value = false;
+    }
+  }
 
   Future<void> fetchFilteredProducts() async {
     isLoading.value = true;
