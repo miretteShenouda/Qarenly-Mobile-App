@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/model/product_model.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
@@ -34,6 +33,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   void initState() {
     super.initState();
     searchController = TextEditingController();
+    searchController.text = widget.query;
     _scrollController = ScrollController();
     _timer = Timer.periodic(const Duration(seconds: 3), (_) {});
     controller = Get.put(SearchResultController());

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qarenly/controller/filter_controller.dart';
-import 'package:qarenly/routes/app_routes.dart';
-import '../../../../view/search_results_page/search_results_page.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/controller/filter_controller.dart';
+
+import '../../../../view/search_results_page/search_results_page.dart';
 
 class AppbarSearchBar extends StatefulWidget {
   final TextEditingController? controller;
@@ -134,38 +134,38 @@ class _AppbarSearchBarState extends State<AppbarSearchBar> {
                     });
                   },
                 ),
-                IconButton(
-                  icon:
-                      Icon(Icons.monetization_on_outlined, color: Colors.black),
-                  onPressed: () {
-                    showMenu(
-                        context: context,
-                        position: RelativeRect.fromLTRB(
-                            MediaQuery.of(context).size.width - 100, 60, 0, 0),
-                        items: [
-                          PopupMenuItem<String>(
-                            child: Text('Price Range'),
-                          ),
-                          // PopupMenuItem<RangeValues>(
-                          //   child: RangeSlider(
-                          //     min: filterController.priceFilterLowerBound.value,
-                          //     max: filterController.priceFilterUpperBound.value,
-                          //     // labels: RangeLabels(
-                          //     //     filterController.priceFilter.value.start
-                          //     //         .toString(),
-                          //     //     filterController.priceFilter.value.end
-                          //     //         .toString()),
-                          //     // values: filterController.priceFilter.value,
-                          //     onChanged: (value) {
-                          //       // filterController.setPriceFilter(value);
-                          //       // print(filterController.priceFilter.value);
-                          //       // setState(() {});
-                          //     },
-                          //   ),
-                          // )
-                        ]);
-                  },
-                ),
+                // IconButton(
+                //   icon:
+                //       Icon(Icons.monetization_on_outlined, color: Colors.black),
+                //   onPressed: () {
+                //     showMenu(
+                //         context: context,
+                //         position: RelativeRect.fromLTRB(
+                //             MediaQuery.of(context).size.width - 100, 60, 0, 0),
+                //         items: [
+                //           PopupMenuItem<String>(
+                //             child: Text('Price Range'),
+                //           ),
+                //           // PopupMenuItem<RangeValues>(
+                //           //   child: RangeSlider(
+                //           //     min: filterController.priceFilterLowerBound.value,
+                //           //     max: filterController.priceFilterUpperBound.value,
+                //           //     // labels: RangeLabels(
+                //           //     //     filterController.priceFilter.value.start
+                //           //     //         .toString(),
+                //           //     //     filterController.priceFilter.value.end
+                //           //     //         .toString()),
+                //           //     // values: filterController.priceFilter.value,
+                //           //     onChanged: (value) {
+                //           //       // filterController.setPriceFilter(value);
+                //           //       // print(filterController.priceFilter.value);
+                //           //       // setState(() {});
+                //           //     },
+                //           //   ),
+                //           // )
+                //         ]);
+                //   },
+                // ),
               ],
             ),
             prefixIcon: IconButton(
