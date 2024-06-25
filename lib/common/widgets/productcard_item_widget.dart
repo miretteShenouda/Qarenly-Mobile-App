@@ -38,7 +38,7 @@ class ProductcardItemWidget extends StatelessWidget {
           ),
           title: Text(
             "${product.name}",
-            style: theme.textTheme.headline6,
+            style: theme.textTheme.headlineMedium,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),

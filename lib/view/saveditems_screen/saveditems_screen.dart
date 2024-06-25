@@ -46,10 +46,10 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 5.0),
+                      SizedBox(height: 14.0),
                       // _buildCheckbox(),
                       _buildSavedItemsSection(context),
-                      SizedBox(height: 5.0),
+                      SizedBox(height: 7.0),
                       // Padding(
                       //   padding: EdgeInsets.only(left: 13.h),
                       // ),
@@ -84,14 +84,14 @@ class _SaveditemsScreenState extends State<SaveditemsScreen> {
       children: [
         Text(
           'Saved Items',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 7),
         ListView.separated(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           separatorBuilder: (context, index) {
-            return SizedBox(height: 10.0);
+            return SizedBox(height: 7.0);
           },
           itemCount: savedItemsController.savedItemsProducts.length,
           itemBuilder: (context, index) {
