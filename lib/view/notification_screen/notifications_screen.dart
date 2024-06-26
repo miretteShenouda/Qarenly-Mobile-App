@@ -70,7 +70,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     ),
                     subtitle: Text(
                       notification["body"]!,
-                      style: TextStyle(color: Color.fromRGBO(0, 48, 73, 0.6)),
+                      style: TextStyle(
+                          color: Color.fromRGBO(0, 48, 73, 0.6),
+                          fontStyle: FontStyle.normal),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 16),
