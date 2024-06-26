@@ -259,19 +259,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
   // }
 }
 
-// class MoreDealsPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('More Deals'),
-//       ),
-//       body: Center(
-//         child: Text('More deals will be shown here.'),
-//       ),
-//     );
-//   }
-// }
 class MoreDealsPage extends StatelessWidget {
   final HomePageController controller =
       Get.find(); // Fetch the already created HomePageController instance
@@ -284,53 +271,71 @@ class MoreDealsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BuildAppBar(
-        searchController: searchController,
-        authenticationRepo: _authenticationRepo,
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: controller.recentDeals.length,
-        itemBuilder: (context, index) {
-          final deal = controller.recentDeals[index];
-          final imageUrl = deal.imageUrl;
-          final name = deal.name; // Assuming you have a name field
-
-          return GestureDetector(
-            onTap: () {
-              launchURL(deal.sources[0]["URL"].toString());
-            },
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  children: [
-                    Image.network(
-                      imageUrl,
-                      width: 70,
-                      height: 70,
-                      fit: BoxFit.fill,
-//
-                    ),
-                    const SizedBox(width: 14.0),
-                    Expanded(
-                      child: Text(name,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                          maxLines: 3),
-                    ),
-                  ],
+        appBar: BuildAppBar(
+          searchController: searchController,
+          authenticationRepo: _authenticationRepo,
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Recent Deals',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-          );
-        },
-      ),
-    );
+              const SizedBox(height: 7.0),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: controller.recentDeals.length,
+                  itemBuilder: (context, index) {
+                    final deal = controller.recentDeals[index];
+                    final imageUrl = deal.imageUrl;
+                    final name = deal.name; // Assuming you have a name field
+
+                    return GestureDetector(
+                      onTap: () {
+                        launchURL(deal.sources[0]["URL"].toString());
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            children: [
+                              Image.network(
+                                imageUrl,
+                                width: 70,
+                                height: 70,
+                                fit: BoxFit.fill,
+//
+                              ),
+                              const SizedBox(width: 14.0),
+                              Expanded(
+                                child: Text(name,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
+                                    maxLines: 3),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
   Future<void> launchURL(String url) async {

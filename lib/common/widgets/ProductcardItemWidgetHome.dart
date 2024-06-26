@@ -39,7 +39,7 @@ class ProductcardItemWidgetHome extends StatelessWidget {
             ),
             title: Text(
               "${product.name}",
-              style: theme.textTheme.headlineMedium,
+              style: theme.textTheme.bodySmall,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -60,7 +60,7 @@ class ProductcardItemWidgetHome extends StatelessWidget {
                             ? "Lowest price: None"
                             // ? "EGY ${NumberFormat('#,###').format(product.lowestPrices[product.lowestPrices.length - 1])}"
 
-                            : "Lowest price: EGY ${NumberFormat('#,###').format(product.lowestPrices[product.lowestPrices.length - 1])}",
+                            : "Lowest price: ${NumberFormat('#,###').format(product.lowestPrices[product.lowestPrices.length - 1]) + " L.E."}",
                         style: theme.textTheme.titleSmall,
                       ),
                     ))
