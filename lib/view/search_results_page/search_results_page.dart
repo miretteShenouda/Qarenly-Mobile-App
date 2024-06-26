@@ -37,6 +37,9 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     _scrollController = ScrollController();
     _timer = Timer.periodic(const Duration(seconds: 3), (_) {});
     controller = Get.put(SearchResultController());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.searchProducts(widget.query);
+    });
   }
 
   @override
@@ -55,40 +58,41 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           searchController: searchController,
           authenticationRepo: authentiationRepo,
         ),
-        body: FutureBuilder(
-            future: controller.searchProducts(widget.query),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child:
-                        CircularProgressIndicator()); // Display a loading indicator
-              } else if (snapshot.hasError) {
-                return Center(child: Text('No Such Product Found'));
-                // return Text('Error: ${snapshot.error}');
-              } else {
-                return SingleChildScrollView(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 0.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Section 3: Mostly Viewed
-                        const SizedBox(height: 10.0),
-                        _buildMostlyViewedSection(snapshot),
-                      ],
-                    ),
-                  ),
-                );
-              }
-            }),
+        body: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+                child:
+                    CircularProgressIndicator()); // Display a loading indicator
+          } else if (controller.searchReturn.isEmpty) {
+            return Center(child: Text('No Such Product Found'));
+            // return Text('Error: ${snapshot.error}');
+          } else {
+            print("is loading: ${controller.isLoading.value}");
+            print('length: ${controller.searchReturn.length}');
+            print("searchReturn ${controller.searchReturn}");
+            return SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Section 3: Mostly Viewed
+                    const SizedBox(height: 10.0),
+                    _buildMostlyViewedSection(controller.searchReturn),
+                  ],
+                ),
+              ),
+            );
+          }
+        }),
       ),
     );
   }
 
-  Widget _buildMostlyViewedSection(AsyncSnapshot<Object?> snapshot) {
-    final resultList = snapshot.data as RxList<Product>;
+  Widget _buildMostlyViewedSection(List<Product> snapshot) {
+    final resultList = snapshot;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

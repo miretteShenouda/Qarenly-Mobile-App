@@ -3,10 +3,16 @@ import 'package:qarenly/controller/filter_controller.dart';
 import '../model/product_model.dart';
 import 'package:get/get.dart';
 
-class SearchResultController {
-  FilterController filterController = Get.put(FilterController());
+class SearchResultController extends GetxController {
+  static SearchResultController get to => Get.find();
 
-  Future<RxList> searchProducts(String query) async {
+  FilterController filterController = Get.put(FilterController());
+  RxBool isLoading = false.obs;
+  RxList<Product> searchReturn = <Product>[].obs;
+
+  void searchProducts(String query) async {
+    isLoading.value = true;
+    searchReturn.value = [];
     String collection = filterController.categoryFilter.value;
     double lowerBound = filterController.priceFilterLowerBound.value;
     double upperBound = filterController.priceFilterUpperBound.value;
@@ -14,9 +20,12 @@ class SearchResultController {
     print(
         'collection: $collection, query: $query, lowerBound: $lowerBound, upperBound: $upperBound');
 
-    if (collection == "All") return searchAllProducts(query);
-
-    RxList<Product> searchReturn = <Product>[].obs;
+    if (collection == "All") {
+      print("IS LOADING :::::::::::::: ${isLoading.value}");
+      searchAllProducts(query);
+      isLoading.value = false;
+      return;
+    }
 
     QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection(collection).get();
@@ -43,14 +52,14 @@ class SearchResultController {
       }
     });
     print("searchReturn: $searchReturn");
-    return searchReturn;
+    isLoading.value = false;
   }
 
-  Future<RxList> searchAllProducts(String query) async {
+  void searchAllProducts(String query) async {
     int limit = 7;
     double lowerBound = filterController.priceFilterLowerBound.value;
     double upperBound = filterController.priceFilterUpperBound.value;
-    RxList<Product> searchReturn = <Product>[].obs;
+    // RxList<Product> searchReturn = <Product>[].obs;
 
     List collections = ["TVs", "Laptops", "CPUs", "GPUs"];
 
@@ -85,6 +94,7 @@ class SearchResultController {
         }
       }
     }
-    return searchReturn;
   }
+
+  void applyFilters() {}
 }

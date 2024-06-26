@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/controller/filter_controller.dart';
+import 'package:qarenly/controller/search_controller.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,8 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
   final TextEditingController lowerBoundController = TextEditingController();
   final TextEditingController upperBoundController = TextEditingController();
   FilterController filterController = Get.put(FilterController());
+  SearchResultController searchResultController =
+      Get.put(SearchResultController());
 
   @override
   void dispose() {
@@ -95,36 +98,6 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                fixedSize: Size(70, 30),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              onPressed: () {
-                // Implement your logic for using the entered price range
-                final double lowerBound =
-                    double.parse(lowerBoundController.text);
-                final double upperBound =
-                    double.parse(upperBoundController.text);
-                filterController.priceFilterLowerBound.value = lowerBound;
-                filterController.priceFilterUpperBound.value = upperBound;
-                print('Lower Bound: $lowerBound');
-                print('Upper Bound: $upperBound');
-                print(filterController.priceFilterLowerBound.value);
-                print(filterController.priceFilterUpperBound.value);
-
-                Navigator.pop(context);
-
-                // Use these values for filtering or any other logic
-              },
-              child: Text('Submit', style: TextStyle(color: Colors.black)),
-              // navigator: Navigator.of(context),
-            ),
             SizedBox(
               height: 30,
             ),
@@ -137,93 +110,127 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
               style: TextStyle(fontSize: 15),
             ),
             SizedBox(height: 10),
+            // Center(
+            // child:
+            Wrap(
+              // alignment: WrapAlignment.center,
+              spacing: 40.0,
+              runSpacing: 10.0,
+              children: [
+                GestureDetector(
+                  child: Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/amazon.png'),
+                          fit: BoxFit.scaleDown),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  child: Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/jumia.png'),
+                          fit: BoxFit.fitWidth),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  child: Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/sigma.png'),
+                          fit: BoxFit.fitWidth),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  child: Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                          image: AssetImage(
+                              'assets/images/noonwithoutbackground.png'),
+                          fit: BoxFit.fitWidth),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    // Implement your logic for using the entered price range
+                    filterController.viewSourceProducts(
+                        'albadr', searchResultController.searchReturn);
+                  },
+                  child: Container(
+                    width: 80.0,
+                    height: 80.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/albadr.png'),
+                          fit: BoxFit.fitWidth),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // ),
+            SizedBox(
+              height: 40,
+            ),
             Center(
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 40.0,
-                runSpacing: 10.0,
-                children: [
-                  GestureDetector(
-                    child: Container(
-                      width: 80.0,
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/amazon.png'),
-                            fit: BoxFit.scaleDown),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  fixedSize: Size(150, 40),
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  GestureDetector(
-                    child: Container(
-                      width: 80.0,
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/jumia.png'),
-                            fit: BoxFit.fitWidth),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      width: 80.0,
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/sigma.png'),
-                            fit: BoxFit.fitWidth),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      width: 80.0,
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/noonwithoutbackground.png'),
-                            fit: BoxFit.fitWidth),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Implement your logic for using the entered price range
-                      // filterController.viewSourceProducts('albadr')
-                    },
-                    child: Container(
-                      width: 80.0,
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/albadr.png'),
-                            fit: BoxFit.fitWidth),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+                onPressed: () {
+                  // Implement your logic for using the entered price range
+                  final double lowerBound =
+                      double.parse(lowerBoundController.text);
+                  final double upperBound =
+                      double.parse(upperBoundController.text);
+                  filterController.priceFilterLowerBound.value = lowerBound;
+                  filterController.priceFilterUpperBound.value = upperBound;
+                  print('Lower Bound: $lowerBound');
+                  print('Upper Bound: $upperBound');
+                  print(filterController.priceFilterLowerBound.value);
+                  print(filterController.priceFilterUpperBound.value);
+
+                  Navigator.pop(context);
+
+                  // Use these values for filtering or any other logic
+                },
+                child: Text('Submit', style: TextStyle(color: Colors.black)),
+                // navigator: Navigator.of(context),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-
 
 // class SearchFiltersPage extends StatelessWidget {
 //   SearchController searchController = Get.put(SearchController());
