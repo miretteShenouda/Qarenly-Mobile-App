@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../model/product_model.dart';
 import '../../core/app_export.dart';
@@ -38,7 +39,7 @@ class ProductcardItemWidgetHome extends StatelessWidget {
             ),
             title: Text(
               "${product.name}",
-              style: theme.textTheme.headline6,
+              style: theme.textTheme.headlineMedium,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -57,7 +58,9 @@ class ProductcardItemWidgetHome extends StatelessWidget {
                       text: TextSpan(
                         text: product.lowestPrices.length == 0
                             ? "Lowest price: None"
-                            : "Lowest price: ${product.lowestPrices[product.lowestPrices.length - 1]}",
+                            // ? "EGY ${NumberFormat('#,###').format(product.lowestPrices[product.lowestPrices.length - 1])}"
+
+                            : "Lowest price: EGY ${NumberFormat('#,###').format(product.lowestPrices[product.lowestPrices.length - 1])}",
                         style: theme.textTheme.titleSmall,
                       ),
                     ))

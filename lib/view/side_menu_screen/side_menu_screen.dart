@@ -103,7 +103,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                             'Home',
                             style: TextStyle(
                               color: const Color.fromARGB(255, 6, 51, 89),
-                              fontSize: 23,
+                              fontSize: 20,
                             ),
                           ),
                           leading: CustomImageView(
@@ -135,7 +135,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                                     style: TextStyle(
                                       color:
                                           const Color.fromARGB(255, 6, 51, 89),
-                                      fontSize: 23,
+                                      fontSize: 20,
                                     ),
                                   ),
                                   leading: CustomImageView(
@@ -163,7 +163,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                                     style: TextStyle(
                                       color:
                                           const Color.fromARGB(255, 6, 51, 89),
-                                      fontSize: 23,
+                                      fontSize: 20,
                                     ),
                                   ),
                                   leading: CustomImageView(
@@ -190,7 +190,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                                   'Notifications',
                                   style: TextStyle(
                                     color: const Color.fromARGB(255, 6, 51, 89),
-                                    fontSize: 23,
+                                    fontSize: 20,
                                   ),
                                 ),
                                 leading: CustomImageView(
@@ -221,7 +221,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                                     style: TextStyle(
                                       color:
                                           const Color.fromARGB(255, 6, 51, 89),
-                                      fontSize: 23,
+                                      fontSize: 20,
                                     ),
                                   ),
                                   leading: CustomImageView(
@@ -232,92 +232,92 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                                   trailing: Icon(Icons.lock),
                                 ))),
                     SizedBox(height: 16.v),
-                    Card(
-                        margin: EdgeInsets.only(left: 18, right: 22),
-                        elevation: 5.0,
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              50.0), // Set the border radius
-                        ),
-                        child: SizedBox(
-                          height: 48,
-                          child: ListTile(
-                            title: Text(
-                              'Settings',
-                              style: TextStyle(
-                                color: const Color.fromARGB(255, 6, 51, 89),
-                                fontSize: 23,
-                              ),
-                            ),
-                            leading: CustomImageView(
-                              imagePath: ImageConstant.imgSolarSettingsLinear,
-                              height: 28.adaptSize,
-                              width: 28.adaptSize,
-                            ),
-                          ),
-                        )),
-                    SizedBox(height: 16.v),
-                    Card(
-                        margin: EdgeInsets.only(left: 18, right: 22),
-                        elevation: 5.0,
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              50.0), // Set the border radius
-                        ),
-                        child: SizedBox(
-                          height: 48,
-                          child: ListTile(
-                            title: Text(
-                              'About Us',
-                              style: TextStyle(
-                                color: const Color.fromARGB(255, 6, 51, 89),
-                                fontSize: 23,
-                              ),
-                            ),
-                            leading: CustomImageView(
-                              imagePath: ImageConstant.aboutUs,
-                              height: 27.adaptSize,
-                              width: 27.adaptSize,
-                            ),
-                            onTap: () {
-                              // Handle About Us onTap
-                            },
-                          ),
-                        )),
-                    SizedBox(height: 16.v),
+                    // Card(
+                    //     margin: EdgeInsets.only(left: 18, right: 22),
+                    //     elevation: 5.0,
+                    //     color: Color.fromRGBO(255, 255, 255, 1),
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(
+                    //           50.0), // Set the border radius
+                    //     ),
+                    //     child: SizedBox(
+                    //       height: 48,
+                    //       child: ListTile(
+                    //         title: Text(
+                    //           'Settings',
+                    //           style: TextStyle(
+                    //             color: const Color.fromARGB(255, 6, 51, 89),
+                    //             fontSize: 23,
+                    //           ),
+                    //         ),
+                    //         leading: CustomImageView(
+                    //           imagePath: ImageConstant.imgSolarSettingsLinear,
+                    //           height: 28.adaptSize,
+                    //           width: 28.adaptSize,
+                    //         ),
+                    //       ),
+                    //     )),
+                    // SizedBox(height: 16.v),
+                    // Card(
+                    //     margin: EdgeInsets.only(left: 18, right: 22),
+                    //     elevation: 5.0,
+                    //     color: Color.fromRGBO(255, 255, 255, 1),
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(
+                    //           50.0), // Set the border radius
+                    //     ),
+                    //     child: SizedBox(
+                    //       height: 48,
+                    //       child: ListTile(
+                    //         title: Text(
+                    //           'About Us',
+                    //           style: TextStyle(
+                    //             color: const Color.fromARGB(255, 6, 51, 89),
+                    //             fontSize: 23,
+                    //           ),
+                    //         ),
+                    //         leading: CustomImageView(
+                    //           imagePath: ImageConstant.aboutUs,
+                    //           height: 27.adaptSize,
+                    //           width: 27.adaptSize,
+                    //         ),
+                    //         onTap: () {
+                    //           // Handle About Us onTap
+                    //         },
+                    //       ),
+                    //     )),
+                    // SizedBox(height: 16.v),
                     Spacer(),
                     Divider(),
-                    SizedBox(height: 190.v),
-                    Card(
-                        margin: EdgeInsets.only(left: 18, right: 70),
-                        elevation: 5.0,
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              50.0), // Set the border radius
-                        ),
-                        child: SizedBox(
-                          height: 50,
-                          child: ListTile(
-                            title: Text(
-                              'Dark mode',
-                              style: TextStyle(
-                                color: const Color.fromARGB(255, 6, 51, 89),
-                                fontSize: 23,
-                              ),
-                            ),
-                            leading: CustomImageView(
-                              imagePath: ImageConstant.nightmode,
-                              height: 40.adaptSize,
-                              width: 40.adaptSize,
-                            ),
-                            onTap: () {
-                              darkMode();
-                            },
-                          ),
-                        )),
+                    SizedBox(height: 335.v),
+                    // Card(
+                    //     margin: EdgeInsets.only(left: 18, right: 70),
+                    //     elevation: 5.0,
+                    //     color: Color.fromRGBO(255, 255, 255, 1),
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(
+                    //           50.0), // Set the border radius
+                    //     ),
+                    // child: SizedBox(
+                    //   height: 50,
+                    //   child: ListTile(
+                    //     title: Text(
+                    //       'Dark mode',
+                    //       style: TextStyle(
+                    //         color: const Color.fromARGB(255, 6, 51, 89),
+                    //         fontSize: 23,
+                    //       ),
+                    //     ),
+                    //     leading: CustomImageView(
+                    //       imagePath: ImageConstant.nightmode,
+                    //       height: 40.adaptSize,
+                    //       width: 40.adaptSize,
+                    //     ),
+                    //     onTap: () {
+                    //       darkMode();
+                    //     },
+                    //   ),
+                    // )),
                     SizedBox(height: 16.v),
                     Card(
                       margin: EdgeInsets.only(left: 18, right: 70),
@@ -334,7 +334,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                             'Sign Out',
                             style: TextStyle(
                               color: const Color.fromARGB(255, 6, 51, 89),
-                              fontSize: 23,
+                              fontSize: 20,
                             ),
                           ),
                           leading: CustomImageView(

@@ -94,10 +94,10 @@ class _HomepageScreenState extends State<HomepageScreen> {
                 const SizedBox(height: 5.0),
                 _buildHorizontalScrollingSection(),
                 // Section 2: Recent Deals
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 7.0),
                 _buildExploreSection(),
                 // Section 3: Mostly Viewed
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 7.0),
                 _buildRecommendedSection(context),
               ],
             ),
@@ -166,7 +166,8 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
               return GestureDetector(
                 onTap: () {
-                  launchURL(deal.sources[0]["URL"].toString());
+                  //launchURL(deal.sources[0]["URL"].toString());
+                  launchURL("https://www.google.com/");
                 },
                 child: Container(
                   margin: const EdgeInsets.symmetric(
@@ -213,13 +214,13 @@ class _HomepageScreenState extends State<HomepageScreen> {
       children: [
         const Text(
           'Recommended For You',
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 10.0),
+        const SizedBox(height: 7.0),
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+          separatorBuilder: (context, index) => const SizedBox(height: 14.0),
           itemCount: controller.recommendedItems.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
             product: controller.recommendedItems[index],
@@ -236,13 +237,13 @@ class _HomepageScreenState extends State<HomepageScreen> {
       children: [
         const Text(
           'Explore',
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 10.0),
+        const SizedBox(height: 14.0),
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          separatorBuilder: (context, index) => const SizedBox(height: 21.0),
+          separatorBuilder: (context, index) => const SizedBox(height: 14.0),
           itemCount: controller.products.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
             product: controller.products[index],
@@ -300,6 +301,9 @@ class MoreDealsPage extends StatelessWidget {
               launchURL(deal.sources[0]["URL"].toString());
             },
             child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
               margin: const EdgeInsets.symmetric(vertical: 10.0),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -307,17 +311,17 @@ class MoreDealsPage extends StatelessWidget {
                   children: [
                     Image.network(
                       imageUrl,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
+                      width: 70,
+                      height: 70,
+                      fit: BoxFit.fill,
+//
                     ),
-                    const SizedBox(width: 16.0),
+                    const SizedBox(width: 14.0),
                     Expanded(
-                      child: Text(
-                        name,
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
+                      child: Text(name,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                          maxLines: 3),
                     ),
                   ],
                 ),
