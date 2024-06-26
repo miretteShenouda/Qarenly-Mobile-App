@@ -38,7 +38,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     _timer = Timer.periodic(const Duration(seconds: 3), (_) {});
     controller = Get.put(SearchResultController());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.searchProducts(widget.query);
+      controller.SeacrhAndApplyFilters(widget.query);
     });
   }
 
@@ -64,7 +64,50 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                 child:
                     CircularProgressIndicator()); // Display a loading indicator
           } else if (controller.searchReturn.isEmpty) {
-            return Center(child: Text('No Such Product Found'));
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Search Result',
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                      ),
+                      ElevatedButton(
+                        child: Text(
+                          "Filters",
+                          style: TextStyle(
+                              color: Colors.white), // Text color of the button
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll<Color>(Colors.orange),
+                          minimumSize: MaterialStateProperty.all<Size>(
+                              Size(110, 50)), // Set the size of the button
+                          // You can also adjust other properties such as padding, shape, etc.
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchFiltersPage()));
+                          //   filterByPriceRange("0", "50");
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 300,
+                  ),
+                  Center(
+                    child: Text('No Such Product Found'),
+                  ),
+                ],
+              ),
+            );
             // return Text('Error: ${snapshot.error}');
           } else {
             print("is loading: ${controller.isLoading.value}");

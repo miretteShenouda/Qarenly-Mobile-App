@@ -118,6 +118,13 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
               runSpacing: 10.0,
               children: [
                 GestureDetector(
+                  onTap: () {
+                    if (filterController.Sources.contains('amazon')) {
+                      filterController.Sources.remove("amazon");
+                    } else {
+                      filterController.Sources.add("amazon");
+                    }
+                  },
                   child: Container(
                     width: 80.0,
                     height: 80.0,
@@ -131,6 +138,13 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                   ),
                 ),
                 GestureDetector(
+                  onTap: () {
+                    if (filterController.Sources.contains('jumia')) {
+                      filterController.Sources.remove("jumia");
+                    } else {
+                      filterController.Sources.add("jumia");
+                    }
+                  },
                   child: Container(
                     width: 80.0,
                     height: 80.0,
@@ -144,6 +158,13 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                   ),
                 ),
                 GestureDetector(
+                  onTap: () {
+                    if (filterController.Sources.contains('sigma')) {
+                      filterController.Sources.remove("sigma");
+                    } else {
+                      filterController.Sources.add("sigma");
+                    }
+                  },
                   child: Container(
                     width: 80.0,
                     height: 80.0,
@@ -157,6 +178,13 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                   ),
                 ),
                 GestureDetector(
+                  onTap: () {
+                    if (filterController.Sources.contains('noon')) {
+                      filterController.Sources.remove("noon");
+                    } else {
+                      filterController.Sources.add("noon");
+                    }
+                  },
                   child: Container(
                     width: 80.0,
                     height: 80.0,
@@ -173,8 +201,11 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                 GestureDetector(
                   onTap: () {
                     // Implement your logic for using the entered price range
-                    filterController.viewSourceProducts(
-                        'albadr', searchResultController.searchReturn);
+                    if (filterController.Sources.contains('albadr')) {
+                      filterController.Sources.remove("albadr");
+                    } else {
+                      filterController.Sources.add("albadr");
+                    }
                   },
                   child: Container(
                     width: 80.0,
@@ -206,16 +237,16 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                 ),
                 onPressed: () {
                   // Implement your logic for using the entered price range
-                  final double lowerBound =
-                      double.parse(lowerBoundController.text);
-                  final double upperBound =
-                      double.parse(upperBoundController.text);
-                  filterController.priceFilterLowerBound.value = lowerBound;
-                  filterController.priceFilterUpperBound.value = upperBound;
-                  print('Lower Bound: $lowerBound');
-                  print('Upper Bound: $upperBound');
-                  print(filterController.priceFilterLowerBound.value);
-                  print(filterController.priceFilterUpperBound.value);
+                  if (!lowerBoundController.text.isEmpty &&
+                      !upperBoundController.text.isEmpty) {
+                    final double lowerBound =
+                        double.parse(lowerBoundController.text);
+                    final double upperBound =
+                        double.parse(upperBoundController.text);
+                    filterController.priceFilterLowerBound.value = lowerBound;
+                    filterController.priceFilterUpperBound.value = upperBound;
+                  }
+                  searchResultController.applyFilters();
 
                   Navigator.pop(context);
 

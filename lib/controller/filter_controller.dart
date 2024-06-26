@@ -11,6 +11,8 @@ class FilterController extends GetxController {
   RxDouble priceFilterLowerBound = 0.0.obs;
   RxDouble priceFilterUpperBound = 9999999999999.0.obs;
 
+  RxList<String> Sources = <String>[].obs;
+
   void setCategoryFilter(String category) {
     categoryFilter.value = category;
     filter.value = true;
