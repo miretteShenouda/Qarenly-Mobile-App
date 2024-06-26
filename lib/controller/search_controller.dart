@@ -11,7 +11,6 @@ class SearchResultController extends GetxController {
   RxList<Product> searchReturn = <Product>[].obs;
 
   void searchProducts(String query) async {
-    isLoading.value = true;
     searchReturn.value = [];
     String collection = filterController.categoryFilter.value;
     double lowerBound = filterController.priceFilterLowerBound.value;
@@ -21,9 +20,7 @@ class SearchResultController extends GetxController {
         'collection: $collection, query: $query, lowerBound: $lowerBound, upperBound: $upperBound');
 
     if (collection == "All") {
-      print("IS LOADING :::::::::::::: ${isLoading.value}");
       searchAllProducts(query);
-      isLoading.value = false;
       return;
     }
 
@@ -52,7 +49,6 @@ class SearchResultController extends GetxController {
       }
     });
     print("searchReturn: $searchReturn");
-    isLoading.value = false;
   }
 
   void searchAllProducts(String query) async {
@@ -96,5 +92,44 @@ class SearchResultController extends GetxController {
     }
   }
 
-  void applyFilters() {}
+  void applyFilters() {
+    double lowerBound = filterController.priceFilterLowerBound.value;
+    double upperBound = filterController.priceFilterUpperBound.value;
+
+    List<String> sources = filterController.Sources.value;
+
+    if (sources.isEmpty) {
+      sources = ['albadr', 'sigma', 'jumia', 'noon', 'amazon'];
+    }
+
+    print("Sources Filters $sources");
+
+    List<Product> newSearchResult = [];
+    for (var product in searchReturn.value) {
+      for (var source in sources) {
+        for (int i = 0; i < product.sources.length; i++) {
+          if (product.sources[i]['website'] == source &&
+              product.sources[i]['stock_status']) {
+            double price = product.sources[i]['discounted_price'] == null
+                ? product.sources[i]['price']
+                : product.sources[i]['discounted_price'];
+            if (price >= lowerBound && price <= upperBound) {
+              if (!newSearchResult.contains(product))
+                newSearchResult.add(product);
+            }
+          }
+        }
+      }
+    }
+    print(newSearchResult);
+    searchReturn.value = newSearchResult;
+    print("searchReturn: $searchReturn");
+  }
+
+  void SeacrhAndApplyFilters(String query) {
+    isLoading.value = true;
+    searchProducts(query);
+    applyFilters();
+    isLoading.value = false;
+  }
 }
