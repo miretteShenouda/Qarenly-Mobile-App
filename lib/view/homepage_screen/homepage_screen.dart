@@ -3,15 +3,19 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/common/theme/app_decoration.dart';
+import 'package:qarenly/common/widgets/ProductcardItemWidgetHome.dart';
+import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:qarenly/controller/filter_controller.dart';
+import 'package:qarenly/controller/homePage_controller.dart';
 import 'package:qarenly/controller/notification_controller.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../common/theme/app_decoration.dart';
-import '../../common/widgets/ProductcardItemWidgetHome.dart';
-import '../../common/widgets/app_bar/app_bar.dart';
-import '../../controller/homePage_controller.dart';
+// import '../../common/theme/app_decoration.dart';
+// import '../../common/widgets/ProductcardItemWidgetHome.dart';
+// import '../../common/widgets/app_bar/app_bar.dart';
+// import '../../controller/homePage_controller.dart';
 
 class HomepageScreen extends StatefulWidget {
   HomepageScreen(User user, {Key? key}) : super(key: key);

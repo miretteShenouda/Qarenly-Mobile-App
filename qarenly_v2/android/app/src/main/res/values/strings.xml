@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Qarenly</string>
-    
-<string name="facebook_app_id">1780026582478116</string>
-<string name="fb_login_protocol_scheme">fb1780026582478116</string>
-<string name="facebook_client_token">3c824e32484615c3e12ac07688700c51</string>
-
-</resources>
