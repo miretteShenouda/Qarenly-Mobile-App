@@ -89,6 +89,10 @@ class _ViewProductPageState extends State<ViewproductPage> {
                     ratings =
                         List<int?>.filled(documentData['sources'].length, null);
                   }
+
+                  // filtering Sources
+                  documentData['sources'] = _controller.filterSourcesOnStock(documentData['sources']);
+
                   // ratings =
                   //     List<int?>.filled(documentData['sources'].length, null);
                   return Column(

@@ -48,6 +48,17 @@ class ViewProductController extends GetxController {
     ;
   }
 
+List<dynamic> filterSourcesOnStock(List<dynamic> sources) {
+  List<Map<String, dynamic>> filteredSources = [];
+  for (var source in sources) {
+    if (source['stock_status']) {
+      filteredSources.add(source);
+    }
+  }
+  return filteredSources;
+}
+
+
   Future<bool> toggleSavedItem() async {
     print(AuthenticationRepo.instance.userData!.savedItems);
     if (isSaved.value) {
@@ -218,8 +229,6 @@ class ViewProductController extends GetxController {
     // return searchReturn;
   }
 }
-
-
 
 
 
