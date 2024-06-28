@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/common/widgets/ProductcardItemWidgetHome.dart';
+import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
+import 'package:qarenly/controller/search_controller.dart';
 import 'package:qarenly/model/product_model.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:qarenly/routes/app_routes.dart';
 import 'package:qarenly/view/search_results_page/filters.dart';
-
-import '../../common/widgets/ProductcardItemWidgetHome.dart';
-import '../../common/widgets/app_bar/app_bar.dart';
-import '../../controller/search_controller.dart';
 
 class SearchResultsPage extends StatefulWidget {
   String query;
