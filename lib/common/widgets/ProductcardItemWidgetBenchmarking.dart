@@ -144,7 +144,7 @@ class ProductcardItemWidgetBenchmarking extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         child: Text(
                           lowestPriceMap != null
-                              ? "EGY ${NumberFormat('#,###').format(lowestPriceMap['price'])}"
+                              ? "${NumberFormat('#,###').format(lowestPriceMap['price'])} L.E"
                               : "Price not available",
                           style: Theme.of(context).textTheme.subtitle1,
                         ),

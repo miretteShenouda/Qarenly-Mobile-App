@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:qarenly/core/app_export.dart';
 
 import '../../controller/savedItems_controller.dart';
@@ -59,7 +60,7 @@ class ProductcardItemWidget extends StatelessWidget {
                     // text:TextSpan(
                     text: product.lowestPrices.length == 0
                         ? "Lowest price: 'N/A'"
-                        : "Lowest price: ${product.lowestPrices.last.toDouble()}",
+                        : "Lowest price: ${NumberFormat('#,###').format(product.lowestPrices.last.toDouble())} L.E",
                     style: theme.textTheme.titleSmall,
                   ),
                   // ],

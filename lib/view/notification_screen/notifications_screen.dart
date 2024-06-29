@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:qarenly/controller/notification_controller.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
+import 'package:qarenly/routes/app_routes.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -52,30 +53,45 @@ class _NotificationsPageState extends State<NotificationsPage> {
               itemBuilder: (context, index) {
                 final notification =
                     _notificationController.notifications[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 6),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  elevation: 2,
-                  child: ListTile(
-                    leading: Icon(Icons.notifications,
-                        color: Color.fromRGBO(0, 48, 73, 1)),
-                    title: Text(
-                      notification["title"]!,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                return GestureDetector(
+                  onTap: notification["productId"] != null
+                      ? () {
+                          Navigator.pushNamed(
+                              context, AppRoutes.viewproductPage,
+                              arguments: {
+                                'productId': notification["productId"],
+                                'productType': notification["type"],
+                              });
+                        }
+                      : null,
+                  //  print("Product ID: ${product.id}");
+                  //  print("Product Type: ${product.type}");
+                  //},
+                  child: Card(
+                    margin: const EdgeInsets.symmetric(vertical: 6),
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    elevation: 2,
+                    child: ListTile(
+                      leading: Icon(Icons.notifications,
                           color: Color.fromRGBO(0, 48, 73, 1)),
+                      title: Text(
+                        notification["title"]!,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(0, 48, 73, 1)),
+                      ),
+                      subtitle: Text(
+                        notification["body"]!,
+                        style: TextStyle(
+                            color: Color.fromRGBO(0, 48, 73, 0.6),
+                            fontStyle: FontStyle.normal),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 16),
                     ),
-                    subtitle: Text(
-                      notification["body"]!,
-                      style: TextStyle(
-                          color: Color.fromRGBO(0, 48, 73, 0.6),
-                          fontStyle: FontStyle.normal),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 16),
                   ),
                 );
               },

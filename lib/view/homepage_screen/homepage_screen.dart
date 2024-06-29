@@ -139,9 +139,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
                 },
                 child: Text(
                   'See More',
-                  // style: TextStyle(
-                  //     color: Color(0XFF003049),
-                  //     backgroundColor: Colors.white),
                 ),
                 style: TextButton.styleFrom(
                   foregroundColor: Color(0XFF003049),
