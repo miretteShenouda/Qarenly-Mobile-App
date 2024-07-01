@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/common/widgets/custom_elevated_button.dart';
+import 'package:qarenly/controller/filter_controller.dart';
+import 'package:qarenly/controller/homePage_controller.dart';
+import 'package:qarenly/controller/notification_controller.dart';
+import 'package:qarenly/controller/profile_controller.dart';
+import 'package:qarenly/controller/savedItems_controller.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 import 'package:qarenly/view/login_page_screen/login_page_screen.dart';
@@ -347,6 +352,12 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                             await _authenticationRepo.logout();
                             await _authenticationRepo.signOutFromGoogle();
                             await _authenticationRepo.signOutFacebook(context);
+
+                            Get.delete<SavedItemsController>();
+                            Get.delete<NotificationController>();
+                            Get.delete<FilterController>();
+                            Get.delete<HomePageController>();
+                            Get.delete<ProfileController>();
 
                             Get.offAll(() => LoginPageScreen());
                           },

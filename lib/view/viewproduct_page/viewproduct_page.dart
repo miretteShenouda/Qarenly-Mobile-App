@@ -91,7 +91,8 @@ class _ViewProductPageState extends State<ViewproductPage> {
                   }
 
                   // filtering Sources
-                  documentData['sources'] = _controller.filterSourcesOnStock(documentData['sources']);
+                  documentData['sources'] =
+                      _controller.filterSourcesOnStock(documentData['sources']);
 
                   // ratings =
                   //     List<int?>.filled(documentData['sources'].length, null);
@@ -109,21 +110,24 @@ class _ViewProductPageState extends State<ViewproductPage> {
                               SizedBox(width: 10),
                               Align(
                                 alignment: Alignment.topRight,
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    await _controller.toggleSavedItem();
-                                  },
-                                  child: Icon(
-                                    _controller.isSaved.value
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: Colors.black,
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    shape: CircleBorder(),
-                                    padding: EdgeInsets.all(20),
-                                  ),
-                                ),
+                                child: _authenticationRepo
+                                        .currentUser!.isAnonymous
+                                    ? null
+                                    : ElevatedButton(
+                                        onPressed: () async {
+                                          await _controller.toggleSavedItem();
+                                        },
+                                        child: Icon(
+                                          _controller.isSaved.value
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: Colors.black,
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                          shape: CircleBorder(),
+                                          padding: EdgeInsets.all(20),
+                                        ),
+                                      ),
                               ),
                             ],
                           ),
