@@ -6,12 +6,12 @@ class AppDecoration {
   static BoxDecoration get fillBlueGray => BoxDecoration(
         color: appTheme.blueGray300,
       );
-  static BoxDecoration get fillOnPrimaryContainer => BoxDecoration(
-        color: theme.colorScheme.onPrimaryContainer.withOpacity(0.24),
-      );
-  static BoxDecoration get fillOnPrimaryContainer1 => BoxDecoration(
-        color: theme.colorScheme.onPrimaryContainer,
-      );
+  // static BoxDecoration get fillOnPrimaryContainer => BoxDecoration(
+  //       color: theme.colorScheme.onPrimaryContainer.withOpacity(0.24),
+  //     );
+  // static BoxDecoration get fillOnPrimaryContainer1 => BoxDecoration(
+  //       color: theme.colorScheme.onPrimaryContainer,
+  //     );
   static BoxDecoration get fillOnSecondaryContainer => BoxDecoration(
         color: theme.colorScheme.onSecondaryContainer.withOpacity(0.99),
       );
@@ -28,9 +28,9 @@ class AppDecoration {
           begin: Alignment(0.5, 0),
           end: Alignment(0.5, 1),
           colors: [
-            theme.colorScheme.onPrimary,
-            appTheme.teal100Ec,
-            theme.colorScheme.primary.withOpacity(0.93),
+            //theme.colorScheme.onPrimary,
+            // appTheme.teal100Ec,
+            // theme.colorScheme.primary.withOpacity(0.93),
           ],
         ),
       );

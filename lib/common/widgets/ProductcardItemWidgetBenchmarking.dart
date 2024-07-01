@@ -1,11 +1,8 @@
-import 'dart:math';
-import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
+import 'package:qarenly/model/product_model.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../model/product_model.dart';
+
 import '../../core/app_export.dart';
 
 class ProductcardItemWidgetBenchmarking extends StatelessWidget {
@@ -147,7 +144,7 @@ class ProductcardItemWidgetBenchmarking extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         child: Text(
                           lowestPriceMap != null
-                              ? "EGY ${NumberFormat('#,###').format(lowestPriceMap['price'])}"
+                              ? "${NumberFormat('#,###').format(lowestPriceMap['price'])} L.E"
                               : "Price not available",
                           style: Theme.of(context).textTheme.subtitle1,
                         ),

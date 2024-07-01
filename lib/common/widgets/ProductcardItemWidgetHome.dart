@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:qarenly/model/product_model.dart';
 
-import '../../../model/product_model.dart';
 import '../../core/app_export.dart';
 
 class ProductcardItemWidgetHome extends StatelessWidget {

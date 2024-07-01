@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/app_export.dart';
+import 'package:qarenly/core/app_export.dart';
 
 String _appTheme = "primary";
 

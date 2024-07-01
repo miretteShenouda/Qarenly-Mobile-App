@@ -1,20 +1,20 @@
 name: qarenly
 description: A new Flutter project.
 version: 1.0.0+1
-environment: 
+environment:
   sdk: '>=2.12.0 <3.0.0'
 
 
-dependencies: 
-  flutter: 
+dependencies:
+  flutter:
     sdk: flutter
-    
+
   url_launcher: ^6.0.20
   cached_network_image: ^3.3.0
   flutter_svg: ^2.0.9
   intl: ^0.19.0
   firebase_core: ^2.24.2
-  cloud_firestore: ^4.14.0 
+  cloud_firestore: ^4.14.0
   firebase_auth: ^4.16.0
   flutter_otp_text_field: ^1.1.1
   flutter_facebook_auth: ^6.1.1
@@ -30,21 +30,21 @@ dependencies:
 
 
 
-dev_dependencies: 
-  flutter_test: 
+dev_dependencies:
+  flutter_test:
     sdk: flutter
   get: ^4.6.1
   get_storage: ^2.0.3
 
 
-flutter: 
+flutter:
   uses-material-design: true
-  assets: 
+  assets:
     - assets/
     - assets/images/
-  fonts: 
+  fonts:
     - family: Inter
-      fonts: 
+      fonts:
         - asset: assets/fonts/InterRegular.ttf
           weight: 400
         - asset: assets/fonts/InterMedium.ttf
