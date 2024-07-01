@@ -7,6 +7,7 @@ import 'package:qarenly/view/profile_update_screen/update_profile.dart';
 import 'package:qarenly/view/saveditems_screen/saveditems_screen.dart';
 import 'package:qarenly/view/side_menu_screen/side_menu_screen.dart';
 import 'package:qarenly/view/sign_up_page_screen/sign_up_page_screen.dart';
+import 'package:qarenly/view/splash_page.dart';
 import 'package:qarenly/view/splashscreen_screen/splashscreen_screen.dart';
 import 'package:qarenly/view/viewproduct_page/viewproduct_page.dart';
 
@@ -15,7 +16,7 @@ import 'package:qarenly/view/viewproduct_page/viewproduct_page.dart';
 class AppRoutes {
   static const String saveditemsScreen = '/saveditems_screen';
 
-  static const String splashscreenScreen = '/splashscreen_screen';
+  static const String splashScreen = '/splashscreen_screen';
 
   static const String loginPageScreen = '/login_page_screen';
 
@@ -41,7 +42,6 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> routes = {
     saveditemsScreen: (context) => SaveditemsScreen(),
-    splashscreenScreen: (context) => SplashscreenScreen(),
     loginPageScreen: (context) => LoginPageScreen(),
     signUpPageScreen: (context) => SignUpPageScreen(),
     homepageScreen: (context) =>
@@ -50,6 +50,7 @@ class AppRoutes {
     viewproductPage: (context) => ViewproductPage(),
     profilePage: (context) => UpdateProfileScreen(),
     notificationsPage: (context) => NotificationsPage(),
+    splashScreen:(context) => SplashScreen(),
   };
 
   // static void navigateToHomeScreen(BuildContext context, User user) {

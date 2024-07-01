@@ -50,14 +50,17 @@ class ViewProductController extends GetxController {
     ;
   }
 
-  List<dynamic> filterSourcesOnStock(List<dynamic> sources) {
-    List<Map<String, dynamic>> filteredSources = [];
+  List<dynamic> sortProductSources(List<dynamic> sources) {
+    List<dynamic> inStock = []; List<dynamic> outStock = [];
     for (var source in sources) {
       if (source['stock_status']) {
-        filteredSources.add(source);
+        inStock.add(source);
+      } else {
+        outStock.add(source);
       }
     }
-    return filteredSources;
+
+    return [...inStock, ...outStock];
   }
 
   Future<bool> toggleSavedItem() async {

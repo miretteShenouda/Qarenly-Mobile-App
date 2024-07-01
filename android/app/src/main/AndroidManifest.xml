@@ -18,7 +18,8 @@
 
     <application
         android:label="qarenly"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/qarenly_logo"
+        android:theme="@style/LaunchTheme">
 
         <activity
             android:name=".MainActivity"
@@ -30,15 +31,15 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             
-            <meta-data
+            <!-- <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme"
-            />
+            /> -->
             
-            <meta-data
+            <!-- <meta-data
                 android:name="io.flutter.embedding.android.SplashScreenDrawable"
-                android:resource="@drawable/launch_background"
-            />
+                android:resource="@drawable/qarenly_splash"
+            /> -->
             
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -70,3 +71,4 @@
 
     </application>
 </manifest>
+
