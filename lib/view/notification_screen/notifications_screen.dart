@@ -54,12 +54,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 final notification =
                     _notificationController.notifications[index];
                 return GestureDetector(
-                  onTap: notification["productId"] != null
+                  onTap: notification["id"] != null
                       ? () {
                           Navigator.pushNamed(
                               context, AppRoutes.viewproductPage,
                               arguments: {
-                                'productId': notification["productId"],
+                                'productId': notification["id"],
                                 'productType': notification["type"],
                               });
                         }
