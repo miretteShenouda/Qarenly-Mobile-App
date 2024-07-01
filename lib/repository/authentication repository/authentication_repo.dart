@@ -38,7 +38,7 @@ class AuthenticationRepo extends GetxController {
       currentUser = user;
       print(currentUser!.displayName);
       print(currentUser!.uid);
-      userData = UserModel(
+      this.userData = UserModel(
         id: currentUser!.uid,
         username: "Guest",
         password: "",
@@ -46,6 +46,7 @@ class AuthenticationRepo extends GetxController {
         savedItems: [],
         notificationToken: null,
       );
+      print("User Is Anonymous");
       print(" User Data User Name : ${userData!.username}");
       print(" User Data id : ${userData!.id}");
       Get.offAll(() => LoginPageScreen());
@@ -124,6 +125,7 @@ class AuthenticationRepo extends GetxController {
       );
       print(" User Data User Name : ${userData!.username}");
       print("User signed in anonymously: ${currentUser!.uid}");
+      print("User Is Anonymous");
       return true;
     } catch (e) {
       print("Error signing in anonymously: ${e}");
@@ -414,6 +416,7 @@ class AuthenticationRepo extends GetxController {
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {
           // Auto-retrieval of SMS code completed
+          print("KOLO TMAAAAAAM");
           await _auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
@@ -425,9 +428,11 @@ class AuthenticationRepo extends GetxController {
           }
         },
         codeSent: (verificationId, int? resendToken) {
+          print("EL CODE TMAAAAAAAAAAAAAAM");
           this.verificationId.value = verificationId;
         },
         codeAutoRetrievalTimeout: (String verificationId) {
+          print("EL CODE TIMEOUT TMAM");
           this.verificationId.value = verificationId;
         },
       );

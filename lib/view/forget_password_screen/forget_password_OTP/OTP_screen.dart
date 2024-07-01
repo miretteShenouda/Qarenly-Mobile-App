@@ -54,7 +54,8 @@ class _OTPScreenState extends State<OTPScreen> {
                     onPressed: () {
                       _controller.verifyOTP();
                     },
-                    child: Text("Submit"),
+                    child:
+                        Text("Submit", style: TextStyle(color: Colors.black)),
                   )),
             ],
           )),

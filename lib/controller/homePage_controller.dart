@@ -36,17 +36,21 @@ class HomePageController extends GetxController {
   }
 
   Future<void> fetchRecommendedProducts() async {
+    if (AuthenticationRepo.instance.currentUser!.isAnonymous) return;
+
     AuthenticationRepo.instance.userData =
         await AuthenticationRepo.instance.fetchUserData();
-    try {
-      isLoading.value = true;
-      recommendedItems.clear();
-      Map<String, List> savedItemsIds = {'ids': []};
 
+    try {
       if (AuthenticationRepo.instance.userData!.savedItems!.isEmpty) {
-        recommendedItems.value = products;
+        recommendedItems.value = [];
         return;
       }
+
+      isLoading.value = true;
+
+      recommendedItems.clear();
+      Map<String, List> savedItemsIds = {'ids': []};
 
       for (DocumentReference savedItem
           in AuthenticationRepo.instance.userData!.savedItems!) {

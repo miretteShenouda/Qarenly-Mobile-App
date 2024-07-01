@@ -166,8 +166,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
 
               return GestureDetector(
                 onTap: () {
-                  //launchURL(deal.sources[0]["URL"].toString());
-                  launchURL("https://www.google.com/");
+                  launchURL(deal.sources[0]["URL"].toString());
                 },
                 child: Container(
                   margin: const EdgeInsets.symmetric(

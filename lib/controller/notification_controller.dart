@@ -21,11 +21,6 @@ class NotificationController extends GetxController {
 
   bool existToken() {
     // if user is a guest return true ( Act as if he is a normal user with token)
-    print("userData in existToken: ${_authenticationRepo.userData!}");
-    if (_authenticationRepo.currentUser!.isAnonymous) {
-      return true;
-    }
-
     print(
         "notification token in existToken: ${_authenticationRepo.userData!.notificationToken}");
 
@@ -43,6 +38,10 @@ class NotificationController extends GetxController {
   }
 
   void validateToken() async {
+    if (_authenticationRepo.currentUser!.isAnonymous) {
+      return;
+    }
+
     _authenticationRepo.userData = await _authenticationRepo.fetchUserData();
     bool bValue = !existToken();
     print("bValue: $bValue");

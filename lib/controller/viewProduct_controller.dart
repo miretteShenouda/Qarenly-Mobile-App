@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qarenly/controller/savedItems_controller.dart';
 import 'package:qarenly/model/product_model.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 class ViewProductController extends GetxController {
   static ViewProductController get instance => Get.find();
 
+  SavedItemsController savedItemsController = Get.put(SavedItemsController());
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   late TextEditingController searchController;
   late Future<DocumentSnapshot<Map<String, dynamic>>?> documentFuture;
@@ -48,16 +50,15 @@ class ViewProductController extends GetxController {
     ;
   }
 
-List<dynamic> filterSourcesOnStock(List<dynamic> sources) {
-  List<Map<String, dynamic>> filteredSources = [];
-  for (var source in sources) {
-    if (source['stock_status']) {
-      filteredSources.add(source);
+  List<dynamic> filterSourcesOnStock(List<dynamic> sources) {
+    List<Map<String, dynamic>> filteredSources = [];
+    for (var source in sources) {
+      if (source['stock_status']) {
+        filteredSources.add(source);
+      }
     }
+    return filteredSources;
   }
-  return filteredSources;
-}
-
 
   Future<bool> toggleSavedItem() async {
     print(AuthenticationRepo.instance.userData!.savedItems);
@@ -73,7 +74,10 @@ List<dynamic> filterSourcesOnStock(List<dynamic> sources) {
 
     AuthenticationRepo.instance
         .UpdateUser(AuthenticationRepo.instance.userData!);
-    isSaved.value= !isSaved.value;
+
+    savedItemsController.fetchSavedItems();
+
+    isSaved.value = !isSaved.value;
 
     return isSaved.value;
   }
