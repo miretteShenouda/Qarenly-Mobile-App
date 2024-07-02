@@ -59,8 +59,8 @@ class _ViewProductPageState extends State<ViewproductPage> {
       _controller.initDependencies(context);
       _controller.initSavedState();
       _controller.getSimilarProducts();
-    });
     _initializeRatings();
+    });
   }
 
   @override
