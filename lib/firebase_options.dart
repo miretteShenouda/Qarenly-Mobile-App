@@ -17,9 +17,12 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
+      return const FirebaseOptions(
+    apiKey: 'AIzaSyAqbbsBZuGQ-FNnIGn84AIxxUw0NIBsmEw',
+    appId: '1:791851892761:android:97df42743accea5b0eaa88',
+    messagingSenderId: '791851892761',
+    projectId: 'qarenly-db',
+    storageBucket: 'qarenly-db.appspot.com',
       );
     }
     switch (defaultTargetPlatform) {
