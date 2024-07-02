@@ -1,14 +1,9 @@
-// // search_filters.dart
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:qarenly/common/widgets/app_bar/app_bar.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/controller/filter_controller.dart';
 import 'package:qarenly/controller/search_controller.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
-import 'package:flutter/material.dart';
 
 class SearchFiltersPage extends StatefulWidget {
   @override
@@ -26,7 +21,6 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
 
   @override
   void dispose() {
-    // Dispose controllers when the widget is disposed
     lowerBoundController.dispose();
     upperBoundController.dispose();
     super.dispose();
@@ -52,11 +46,10 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
               style: TextStyle(fontSize: 15),
             ),
             SizedBox(height: 10),
-            // Smaller TextField for Lower Bound
             Row(
               children: [
                 SizedBox(
-                  width: 150, // Set desired width
+                  width: 150,
                   child: TextField(
                     controller: lowerBoundController,
                     keyboardType: TextInputType.number,
@@ -69,16 +62,12 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     ),
-                    style:
-                        TextStyle(fontSize: 14), // Adjust font size if needed
+                    style: TextStyle(fontSize: 14),
                   ),
                 ),
-
                 SizedBox(width: 20),
-
-                // Smaller TextField for Upper Bound
                 SizedBox(
-                  width: 150, // Set desired width
+                  width: 150,
                   child: TextField(
                     controller: upperBoundController,
                     keyboardType: TextInputType.number,
@@ -92,8 +81,7 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     ),
-                    style:
-                        TextStyle(fontSize: 14), // Adjust font size if needed
+                    style: TextStyle(fontSize: 14),
                   ),
                 ),
               ],
@@ -110,10 +98,7 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
               style: TextStyle(fontSize: 15),
             ),
             SizedBox(height: 10),
-            // Center(
-            // child:
             Wrap(
-              // alignment: WrapAlignment.center,
               spacing: 40.0,
               runSpacing: 10.0,
               children: [
@@ -125,17 +110,31 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                       filterController.Sources.add("amazon");
                     }
                   },
-                  child: Container(
-                    width: 80.0,
-                    height: 80.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/amazon.png'),
-                          fit: BoxFit.scaleDown),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ),
+                  child: Obx(() {
+                    bool isChecked =
+                        filterController.Sources.contains("amazon");
+                    return Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/amazon.png'),
+                            fit: BoxFit.scaleDown),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: isChecked
+                          ? Align(
+                              alignment: Alignment.topRight,
+                              child: Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 20.0,
+                              ),
+                            )
+                          : SizedBox.shrink(),
+                    );
+                  }),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -145,17 +144,30 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                       filterController.Sources.add("jumia");
                     }
                   },
-                  child: Container(
-                    width: 80.0,
-                    height: 80.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/jumia.png'),
-                          fit: BoxFit.fitWidth),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ),
+                  child: Obx(() {
+                    bool isChecked = filterController.Sources.contains("jumia");
+                    return Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/jumia.png'),
+                            fit: BoxFit.scaleDown),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: isChecked
+                          ? Align(
+                              alignment: Alignment.topRight,
+                              child: Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 20.0,
+                              ),
+                            )
+                          : SizedBox.shrink(),
+                    );
+                  }),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -165,17 +177,30 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                       filterController.Sources.add("sigma");
                     }
                   },
-                  child: Container(
-                    width: 80.0,
-                    height: 80.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/sigma.png'),
-                          fit: BoxFit.fitWidth),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ),
+                  child: Obx(() {
+                    bool isChecked = filterController.Sources.contains("sigma");
+                    return Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/sigma.png'),
+                            fit: BoxFit.scaleDown),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: isChecked
+                          ? Align(
+                              alignment: Alignment.topRight,
+                              child: Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 20.0,
+                              ),
+                            )
+                          : SizedBox.shrink(),
+                    );
+                  }),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -185,43 +210,68 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                       filterController.Sources.add("noon");
                     }
                   },
-                  child: Container(
-                    width: 80.0,
-                    height: 80.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                          image: AssetImage(
-                              'assets/images/noonwithoutbackground.png'),
-                          fit: BoxFit.fitWidth),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ),
+                  child: Obx(() {
+                    bool isChecked = filterController.Sources.contains("noon");
+                    return Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/noonwithoutbackground.png'),
+                            fit: BoxFit.scaleDown),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: isChecked
+                          ? Align(
+                              alignment: Alignment.topRight,
+                              child: Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 20.0,
+                              ),
+                            )
+                          : SizedBox.shrink(),
+                    );
+                  }),
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Implement your logic for using the entered price range
                     if (filterController.Sources.contains('albadr')) {
                       filterController.Sources.remove("albadr");
                     } else {
                       filterController.Sources.add("albadr");
                     }
                   },
-                  child: Container(
-                    width: 80.0,
-                    height: 80.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/albadr.png'),
-                          fit: BoxFit.fitWidth),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                  ),
+                  child: Obx(() {
+                    bool isChecked =
+                        filterController.Sources.contains("albadr");
+                    return Container(
+                      width: 80.0,
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/albadr.png'),
+                            fit: BoxFit.scaleDown),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: isChecked
+                          ? Align(
+                              alignment: Alignment.topRight,
+                              child: Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 20.0,
+                              ),
+                            )
+                          : SizedBox.shrink(),
+                    );
+                  }),
                 ),
               ],
             ),
-            // ),
             SizedBox(
               height: 40,
             ),
@@ -236,7 +286,6 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                   ),
                 ),
                 onPressed: () {
-                  // Implement your logic for using the entered price range
                   if (!lowerBoundController.text.isEmpty &&
                       !upperBoundController.text.isEmpty) {
                     final double lowerBound =
@@ -247,13 +296,9 @@ class _SearchFiltersPageState extends State<SearchFiltersPage> {
                     filterController.priceFilterUpperBound.value = upperBound;
                   }
                   searchResultController.applyFilters();
-
                   Navigator.pop(context);
-
-                  // Use these values for filtering or any other logic
                 },
                 child: Text('Submit', style: TextStyle(color: Colors.black)),
-                // navigator: Navigator.of(context),
               ),
             ),
           ],

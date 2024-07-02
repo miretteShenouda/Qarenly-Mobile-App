@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/controller/filter_controller.dart';
 import 'package:qarenly/controller/homePage_controller.dart';
 import 'package:qarenly/controller/notification_controller.dart';
@@ -18,11 +17,8 @@ class SideMenuScreen extends StatefulWidget {
 }
 
 class _SideMenuScreenState extends State<SideMenuScreen> {
-  //late TextEditingController homeController
   TextEditingController homeController = TextEditingController();
-
   TextEditingController notificationsController = TextEditingController();
-
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
 
   bool isDark = false;
@@ -36,12 +32,8 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Theme(
-      // data: isDark ? ThemeData.dark() : ThemeData.light(),
-      // child: Scaffold(
       body: Stack(
         children: [
-          // Transparent overlay
           Positioned(
             top: 0,
             bottom: 0,
@@ -57,7 +49,6 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
               ),
             ),
           ),
-          // Side Menu (Drawer)
           Positioned(
             top: 0,
             bottom: 0,
@@ -66,7 +57,6 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
               width: MediaQuery.of(context).size.width *
                   0.8, // Adjust width as needed
               child: Drawer(
-                // backgroundColor: appTheme.blueGray300,
                 backgroundColor: isDark ? Colors.black : appTheme.blueGray300,
                 child: ListView(
                   padding: EdgeInsets.zero,
@@ -94,7 +84,6 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                         left: 18,
                         right: 22,
                       ),
-                      // Adjust margin as needed
                       elevation: 5.0,
                       color: Color.fromRGBO(255, 255, 255, 1),
                       shape: RoundedRectangleBorder(
@@ -237,92 +226,9 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                                   trailing: Icon(Icons.lock),
                                 ))),
                     SizedBox(height: 16.v),
-                    // Card(
-                    //     margin: EdgeInsets.only(left: 18, right: 22),
-                    //     elevation: 5.0,
-                    //     color: Color.fromRGBO(255, 255, 255, 1),
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(
-                    //           50.0), // Set the border radius
-                    //     ),
-                    //     child: SizedBox(
-                    //       height: 48,
-                    //       child: ListTile(
-                    //         title: Text(
-                    //           'Settings',
-                    //           style: TextStyle(
-                    //             color: const Color.fromARGB(255, 6, 51, 89),
-                    //             fontSize: 23,
-                    //           ),
-                    //         ),
-                    //         leading: CustomImageView(
-                    //           imagePath: ImageConstant.imgSolarSettingsLinear,
-                    //           height: 28.adaptSize,
-                    //           width: 28.adaptSize,
-                    //         ),
-                    //       ),
-                    //     )),
-                    // SizedBox(height: 16.v),
-                    // Card(
-                    //     margin: EdgeInsets.only(left: 18, right: 22),
-                    //     elevation: 5.0,
-                    //     color: Color.fromRGBO(255, 255, 255, 1),
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(
-                    //           50.0), // Set the border radius
-                    //     ),
-                    //     child: SizedBox(
-                    //       height: 48,
-                    //       child: ListTile(
-                    //         title: Text(
-                    //           'About Us',
-                    //           style: TextStyle(
-                    //             color: const Color.fromARGB(255, 6, 51, 89),
-                    //             fontSize: 23,
-                    //           ),
-                    //         ),
-                    //         leading: CustomImageView(
-                    //           imagePath: ImageConstant.aboutUs,
-                    //           height: 27.adaptSize,
-                    //           width: 27.adaptSize,
-                    //         ),
-                    //         onTap: () {
-                    //           // Handle About Us onTap
-                    //         },
-                    //       ),
-                    //     )),
-                    // SizedBox(height: 16.v),
                     Spacer(),
                     Divider(),
                     SizedBox(height: 335.v),
-                    // Card(
-                    //     margin: EdgeInsets.only(left: 18, right: 70),
-                    //     elevation: 5.0,
-                    //     color: Color.fromRGBO(255, 255, 255, 1),
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(
-                    //           50.0), // Set the border radius
-                    //     ),
-                    // child: SizedBox(
-                    //   height: 50,
-                    //   child: ListTile(
-                    //     title: Text(
-                    //       'Dark mode',
-                    //       style: TextStyle(
-                    //         color: const Color.fromARGB(255, 6, 51, 89),
-                    //         fontSize: 23,
-                    //       ),
-                    //     ),
-                    //     leading: CustomImageView(
-                    //       imagePath: ImageConstant.nightmode,
-                    //       height: 40.adaptSize,
-                    //       width: 40.adaptSize,
-                    //     ),
-                    //     onTap: () {
-                    //       darkMode();
-                    //     },
-                    //   ),
-                    // )),
                     SizedBox(height: 16.v),
                     Card(
                       margin: EdgeInsets.only(left: 18, right: 70),
@@ -374,82 +280,20 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
     );
   }
 
-  void darkMode() {
-    setState(() {
-      isDark = !isDark;
-    });
+  Widget _buildSixtyThree(BuildContext context) {
+    return Row(
+      children: [
+        Text("Hi, ${AuthenticationRepo.instance.userData!.username}",
+            style: CustomTextStyles.headlineSmallSemiBold),
+      ],
+    );
   }
-}
 
-Widget _buildFourteen(BuildContext context) {
-  return Padding(
-    //margin: EdgeInsets.only(left: 25.h, right: 33.h),
-    padding: EdgeInsets.only(left: 25.h, right: 33.h),
-    child: CustomElevatedButton(
-      height: 48.v,
-      width: double.infinity,
-      text: "About Us",
-      margin: EdgeInsets.only(bottom: 16.v),
-      leftIcon: CustomImageView(
-        imagePath: ImageConstant.aboutUs,
-        height: 25.adaptSize,
-        width: 25.adaptSize,
-        margin: EdgeInsets.only(right: 14.h),
-      ),
-      onPressed: () {
-        // Handle Settings button tap
-        // You can navigate to the settings screen or perform any action here
-      },
-      alignment: Alignment.centerLeft,
-    ),
-  );
-}
+  onTapImgBookmark(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.saveditemsScreen);
+  }
 
-/// Section Widget
-Widget _buildSixtyThree(BuildContext context) {
-  return Row(
-    children: [
-      Text("Hi, ${AuthenticationRepo.instance.userData!.username}",
-          style: CustomTextStyles.headlineSmallSemiBold),
-    ],
-  );
-}
-
-/// Section Widget
-Widget _buildTwelve(BuildContext context) {
-  return Padding(
-    //margin: EdgeInsets.only(left: 25.h, right: 33.h),
-    padding: EdgeInsets.only(left: 25.h, right: 33.h),
-    child: CustomElevatedButton(
-      height: 48.v,
-      width: double.infinity,
-      text: "Settings",
-      margin: EdgeInsets.only(bottom: 16.v),
-      leftIcon: CustomImageView(
-        imagePath: ImageConstant.imgSolarSettingsLinear,
-        height: 25.adaptSize,
-        width: 25.adaptSize,
-        margin: EdgeInsets.only(right: 14.h),
-      ),
-      onPressed: () {
-        // Handle Settings button tap
-        // You can navigate to the settings screen or perform any action here
-      },
-      alignment: Alignment.centerLeft,
-    ),
-  );
-}
-
-onTapImgBookmark(BuildContext context) {
-  Navigator.pushNamed(context, AppRoutes.saveditemsScreen);
-}
-
-/// Navigates to the loginPageScreen when the action is triggered.
-// onTapSignOut(BuildContext context) {
-
-//   Navigator.pushNamed(context, AppRoutes.loginPageScreen);
-// }
-
-onTapImgHome(BuildContext context) {
-  Navigator.pushReplacementNamed(context, AppRoutes.homepageScreen);
+  onTapImgHome(BuildContext context) {
+    Navigator.pushReplacementNamed(context, AppRoutes.homepageScreen);
+  }
 }

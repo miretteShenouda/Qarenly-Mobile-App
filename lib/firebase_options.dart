@@ -5,24 +5,16 @@ import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
+
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return const FirebaseOptions(
-    apiKey: 'AIzaSyAqbbsBZuGQ-FNnIGn84AIxxUw0NIBsmEw',
-    appId: '1:791851892761:android:97df42743accea5b0eaa88',
-    messagingSenderId: '791851892761',
-    projectId: 'qarenly-db',
-    storageBucket: 'qarenly-db.appspot.com',
+        apiKey: 'AIzaSyAqbbsBZuGQ-FNnIGn84AIxxUw0NIBsmEw',
+        appId: '1:791851892761:android:97df42743accea5b0eaa88',
+        messagingSenderId: '791851892761',
+        projectId: 'qarenly-db',
+        storageBucket: 'qarenly-db.appspot.com',
       );
     }
     switch (defaultTargetPlatform) {

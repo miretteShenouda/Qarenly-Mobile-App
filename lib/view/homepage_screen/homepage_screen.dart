@@ -30,22 +30,20 @@ class _HomepageScreenState extends State<HomepageScreen> {
   late Timer _timer;
   int _currentIndex = 0;
   final controller = Get.put(HomePageController());
-  final filterController =
-      Get.put(FilterController()); // Initialize FilterController
+  final filterController = Get.put(FilterController());
 
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
   NotificationController notificationController =
       Get.put(NotificationController());
 
   void _scrollNext() {
-    if (controller.products.isEmpty) return; // Add this check
+    if (controller.products.isEmpty) return;
     setState(() {
       _currentIndex = (_currentIndex + 1) % controller.products.length;
     });
 
     if (!_scrollController.hasClients) return;
 
-    //final maxScroll = _scrollController.position.maxScrollExtent;
     final itemWidth = MediaQuery.of(context).size.width;
     final targetScroll = _currentIndex * itemWidth;
 
@@ -142,11 +140,9 @@ class _HomepageScreenState extends State<HomepageScreen> {
                 ),
                 style: TextButton.styleFrom(
                   foregroundColor: Color(0XFF003049),
-                  // backgroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   textStyle: TextStyle(
-                      fontSize:
-                          13, // Adjust the font size of the text inside the button
+                      fontSize: 13,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline),
                 ),
@@ -170,10 +166,8 @@ class _HomepageScreenState extends State<HomepageScreen> {
                   launchURL(deal.sources[0]["URL"].toString());
                 },
                 child: Container(
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 5.0), // Add margin for spacing between items
-                  width: MediaQuery.of(context).size.width -
-                      10.0, // Adjust for margin
+                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                  width: MediaQuery.of(context).size.width - 10.0,
                   child: Image.network(
                     imageUrl,
                     fit: BoxFit.scaleDown,
@@ -190,18 +184,13 @@ class _HomepageScreenState extends State<HomepageScreen> {
   Future<void> launchURL(String url) async {
     try {
       final Uri uri = Uri.parse(Uri.encodeFull(url));
-      print('Parsed URI: $uri'); // Debugging statement
 
       if (await canLaunch(uri.toString())) {
-        print('Can launch URL: $uri'); // Debugging statement
         await launch(uri.toString());
       } else {
-        print('Could not launch $uri'); // Debugging statement
         throw Exception('Could not launch $url');
       }
     } catch (e) {
-      print('Error launching URL: $e');
-      // Optionally, show an error message to the user using a Snackbar or a Dialog
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error launching URL: $e')),
       );
@@ -224,7 +213,6 @@ class _HomepageScreenState extends State<HomepageScreen> {
           itemCount: controller.recommendedItems.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
             product: controller.recommendedItems[index],
-            // homePageController: controller,
           ),
         ),
       ],
@@ -247,16 +235,11 @@ class _HomepageScreenState extends State<HomepageScreen> {
           itemCount: controller.products.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
             product: controller.products[index],
-            // homePageController: controller,
           ),
         ),
       ],
     );
   }
-
-  // onTapBasilMenuOutline(BuildContext context) {
-  //   Navigator.pushNamed(context, AppRoutes.sideMenuScreen);
-  // }
 }
 
 class MoreDealsPage extends StatelessWidget {
@@ -315,7 +298,6 @@ class MoreDealsPage extends StatelessWidget {
                                 width: 70,
                                 height: 70,
                                 fit: BoxFit.fill,
-//
                               ),
                               const SizedBox(width: 14.0),
                               Expanded(
@@ -341,17 +323,12 @@ class MoreDealsPage extends StatelessWidget {
   Future<void> launchURL(String url) async {
     try {
       final Uri uri = Uri.parse(Uri.encodeFull(url));
-      print('Parsed URI: $uri'); // Debugging statement
-
       if (await canLaunch(uri.toString())) {
-        print('Can launch URL: $uri'); // Debugging statement
         await launch(uri.toString());
       } else {
-        print('Could not launch $uri'); // Debugging statement
         throw Exception('Could not launch $url');
       }
     } catch (e) {
-      print('Error launching URL: $e');
       // Optionally, show an error message to the user using a Snackbar or a Dialog
       Get.snackbar("Error Launching URL", "Error launching URL: $e",
           colorText: Colors.black,

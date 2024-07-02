@@ -64,9 +64,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
                               });
                         }
                       : null,
-                  //  print("Product ID: ${product.id}");
-                  //  print("Product Type: ${product.type}");
-                  //},
                   child: Card(
                     margin: const EdgeInsets.symmetric(vertical: 6),
                     color: Colors.white,

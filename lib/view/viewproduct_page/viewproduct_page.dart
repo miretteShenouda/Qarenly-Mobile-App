@@ -12,10 +12,6 @@ import '../../common/widgets/line_chart.dart';
 
 class ViewproductPage extends StatefulWidget {
   ViewproductPage({Key? key}) : super(key: key);
-  // final controller = Get.put(ViewProductController());
-  // final List<Map<String, dynamic>> sources;
-
-  // ViewproductPage({required this.sources});
 
   @override
   _ViewProductPageState createState() => _ViewProductPageState();
@@ -54,12 +50,11 @@ class _ViewProductPageState extends State<ViewproductPage> {
   void initState() {
     super.initState();
     _controller.onInit();
-    // ratings = List<int?>.filled(_controller.documentData.value[''].length, null);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller.initDependencies(context);
       _controller.initSavedState();
       _controller.getSimilarProducts();
-    _initializeRatings();
+      _initializeRatings();
     });
   }
 
@@ -93,9 +88,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
                   // filtering Sources
                   documentData['sources'] =
                       _controller.sortProductSources(documentData['sources']);
-
-                  // ratings =
-                  //     List<int?>.filled(documentData['sources'].length, null);
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -214,7 +206,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: columnColor,
-                                        // borderRadius: BorderRadius.circular(16.0),
                                       ),
                                       // color: columnColor,
                                       padding: EdgeInsets.all(8.0),
@@ -419,10 +410,6 @@ class _ViewProductPageState extends State<ViewproductPage> {
   Widget buildRoundedContainer({required Widget child}) {
     return Container(
       height: 32.0,
-      // decoration: BoxDecoration(
-      //   color: Color.fromRGBO(0, 48, 73, 0.24),
-      //   borderRadius: BorderRadius.circular(16.0),
-      // ),
       child: Center(child: child),
     );
   }

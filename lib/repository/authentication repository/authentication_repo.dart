@@ -29,16 +29,11 @@ class AuthenticationRepo extends GetxController {
         _auth.authStateChanges()); // Listen to authentication state changes
     ever(firebaseUser, _handleUserAuthentication);
     ever(firebaseUser, _setInitialScreen);
-
-    ///firebaseUser.bindStream(_auth.userChanges());
   }
 
   _handleUserAuthentication(User? user) async {
     if (user != null && user.isAnonymous) {
-      print("gowa el anonymous");
       currentUser = user;
-      print(currentUser!.displayName);
-      print(currentUser!.uid);
       this.userData = UserModel(
         id: currentUser!.uid,
         username: "Guest",
@@ -47,21 +42,13 @@ class AuthenticationRepo extends GetxController {
         savedItems: [],
         notificationToken: null,
       );
-      print("User Is Anonymous");
-      print(" User Data User Name : ${userData!.username}");
-      print(" User Data id : ${userData!.id}");
+
       Get.offAll(() => LoginPageScreen());
     } else if (user != null) {
-      print("gowa el handleuser");
       currentUser = user;
-      print(currentUser!.isAnonymous);
-      print(user.uid);
-      print(currentUser!.displayName);
       // If user is not null, fetch user data from Firestore
-      // /  _fetchUserData(user.uid);
-      print("Fetching User Data ==========");
+
       userData = await fetchUserData();
-      print("After Fetching the user Data");
     } else {
       // If user is null, navigate to login page
       Get.offAll(() => LoginPageScreen());
@@ -86,11 +73,8 @@ class AuthenticationRepo extends GetxController {
       firebaseUser.value != null
           ? Get.offAll(() => HomepageScreen(user!))
           : Get.to(() => LoginPageScreen());
-      // User? user = userCredential.user;
       return user;
-    } catch (e) {
-      print('Error registering user: $e');
-    }
+    } catch (e) {}
     return null;
   }
 
@@ -115,7 +99,6 @@ class AuthenticationRepo extends GetxController {
     try {
       final UserCredential userCredential = await _auth.signInAnonymously();
       currentUser = userCredential.user;
-      print(currentUser!.uid);
       userData = UserModel(
         id: currentUser!.uid,
         username: "Guest",
@@ -124,13 +107,8 @@ class AuthenticationRepo extends GetxController {
         savedItems: [],
         notificationToken: null,
       );
-      print(" User Data User Name : ${userData!.username}");
-      print("User signed in anonymously: ${currentUser!.uid}");
-      print("User Is Anonymous");
       return true;
-    } catch (e) {
-      print("Error signing in anonymously: ${e}");
-    }
+    } catch (e) {}
     return false;
   }
 
@@ -212,7 +190,6 @@ class AuthenticationRepo extends GetxController {
         // Check if the user is signing in for the first time
         if (userCredential.additionalUserInfo?.isNewUser == true) {
           // If the user is new, navigate to the profile setup screen
-          print('new user');
           UserModel userData = UserModel(
             id: userCredential.user!.uid,
             username: userCredential.user!.displayName!,
@@ -225,17 +202,14 @@ class AuthenticationRepo extends GetxController {
           Navigator.pushNamed(context, AppRoutes.homepageScreen);
         } else {
           //already registered, navigate to the home screen
-          print('bla  user already exist');
           userData = await fetchUserData();
           Navigator.pushNamed(context, AppRoutes.homepageScreen);
         }
       } else {
         // Handle login failure
-        print('Facebook login failed: ${result.message}');
       }
     } catch (e) {
       // Handle errors
-      print('Error logging in with Facebook: $e');
     }
   }
 
@@ -243,26 +217,19 @@ class AuthenticationRepo extends GetxController {
     try {
       final LoginResult result =
           await FacebookAuth.instance.login(permissions: ['email']);
-      print("Login Success");
       if (result.status == LoginStatus.success) {
         final OAuthCredential credential =
             FacebookAuthProvider.credential(result.accessToken!.token);
-        // final UserCredential userCredential =
-        //     await _auth.signInWithCredential(credential);
 
         final userCreds =
             await FirebaseAuth.instance.signInWithCredential(credential);
 
         currentUser = userCreds.user;
 
-        print("User ID from FACEBOOK $currentUser!.uid");
-
         final userInstance = await FirebaseFirestore.instance
             .collection('Users')
             .where('id', isEqualTo: currentUser!.uid)
             .get();
-
-        print("userInstance arrived");
 
         if (!userInstance.docs.isEmpty) {
           userData = await fetchUserData();
@@ -282,20 +249,14 @@ class AuthenticationRepo extends GetxController {
             context,
             AppRoutes
                 .homepageScreen); // Navigate to home screen after successful login
-      } else {
-        print(result.message);
-      }
-    } catch (e) {
-      print('Error signing in with Facebook: $e');
-    }
+      } else {}
+    } catch (e) {}
   }
 
   Future<void> signOutFacebook(BuildContext context) async {
     try {
       await _auth.signOut();
       await FacebookAuth.instance.logOut();
-      print('User signed out successfully');
-      // Navigator.pushNamed(context, '/login_page_screen');
     } catch (e) {
       print('Error signing out: $e');
     }
@@ -347,7 +308,6 @@ class AuthenticationRepo extends GetxController {
   // Fetch user data from Firestore based on uid
   Future<UserModel?> fetchUserData() async {
     String uid = currentUser!.uid;
-    print("uid : $uid");
     try {
       final userData =
           await FirebaseFirestore.instance.collection('Users').doc(uid).get();
@@ -374,8 +334,6 @@ class AuthenticationRepo extends GetxController {
           notifications = data['notifications'].cast<Map<String, dynamic>>();
         }
 
-        print("notificationToken : $notificationToken");
-
         final List<DocumentReference> updatedSavedItems =
             savedItems!.cast<DocumentReference>();
 
@@ -389,11 +347,8 @@ class AuthenticationRepo extends GetxController {
           notifications: notifications,
         );
         return user;
-
-        // You can use the fetched user data as needed
       } else {
         // User data does not exist in Firestore
-        // Handle the case where user data is missing
       }
     } catch (e) {
       // Error handling
@@ -416,8 +371,6 @@ class AuthenticationRepo extends GetxController {
       await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          // Auto-retrieval of SMS code completed
-          print("KOLO TMAAAAAAM");
           await _auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
@@ -429,11 +382,9 @@ class AuthenticationRepo extends GetxController {
           }
         },
         codeSent: (verificationId, int? resendToken) {
-          print("EL CODE TMAAAAAAAAAAAAAAM");
           this.verificationId.value = verificationId;
         },
         codeAutoRetrievalTimeout: (String verificationId) {
-          print("EL CODE TIMEOUT TMAM");
           this.verificationId.value = verificationId;
         },
       );
@@ -451,8 +402,6 @@ class AuthenticationRepo extends GetxController {
       );
 
       var result = await _auth.signInWithCredential(credential);
-    } catch (e) {
-      // OTP verification failed
-    }
+    } catch (e) {}
   }
 }

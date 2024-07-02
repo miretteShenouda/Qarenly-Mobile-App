@@ -11,11 +11,7 @@ import 'package:get/get.dart';
 import 'package:qarenly/view/homepage_screen/homepage_screen.dart';
 
 class LoginFooterWidget extends StatelessWidget {
-  // AuthenticationRepo _authController = AuthenticationController();
   AuthenticationRepo _authenticationRepo = Get.put(AuthenticationRepo());
-  // const LoginFooterWidget({
-  //   Key? key,
-  // }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +58,6 @@ class LoginFooterWidget extends StatelessWidget {
         onPressed: () async {
           User? user = await _authenticationRepo.signInWithGoogle();
           if (user != null) {
-            // Navigate to the next screen or do something with the signed-up user
             Get.offAll(() => HomepageScreen(user));
           } else {
             // Handle sign-up failure

@@ -1,123 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:qarenly/common/theme/theme_helper.dart';
 import 'package:qarenly/core/app_export.dart';
-
-// class ResetPasswordScreen extends StatefulWidget {
-//   final String email;
-
-//   const ResetPasswordScreen({Key? key, required this.email}) : super(key: key);
-
-//   @override
-//   _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
-// }
-
-// class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-//   final TextEditingController _passwordController = TextEditingController();
-//   final TextEditingController _confirmPasswordController =
-//       TextEditingController();
-
-//   bool _isLoading = false;
-//   String _errorMessage = '';
-
-//   void _resetPassword() async {
-//     if (_passwordController.text != _confirmPasswordController.text) {
-//       setState(() {
-//         _errorMessage = 'Passwords do not match';
-//       });
-//       return;
-//     }
-
-//     setState(() {
-//       _isLoading = true;
-//       _errorMessage = ''; // Clear previous error message
-//     });
-
-//     try {
-//       await FirebaseAuth.instance.confirmPasswordReset(
-//         code: widget.email,
-//         newPassword: _passwordController.text,
-//       );
-
-//       // Password reset successful, navigate to login screen or home screen
-//       // Example:
-//       // Navigator.of(context).pushReplacementNamed('/login');
-//     } on FirebaseAuthException catch (error) {
-//       String errorMessage = '';
-
-//       if (error.code == 'invalid-action-code') {
-//         errorMessage =
-//             'The password reset link is invalid, expired, or has already been used.';
-//       } else {
-//         errorMessage = 'An unexpected error occurred. Please try again later.';
-//       }
-
-//       setState(() {
-//         _errorMessage = errorMessage;
-//       });
-//     } catch (error) {
-//       setState(() {
-//         _errorMessage = 'An unexpected error occurred. Please try again later.';
-//       });
-//     } finally {
-//       setState(() {
-//         _isLoading = false;
-//       });
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Reset Password'),
-//       ),
-//       body: Container(
-//         padding: EdgeInsets.all(20),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               'Enter your new password:',
-//               style: TextStyle(fontSize: 18),
-//             ),
-//             SizedBox(height: 10),
-//             TextFormField(
-//               controller: _passwordController,
-//               obscureText: true,
-//               decoration: InputDecoration(
-//                 hintText: 'New Password',
-//                 border: OutlineInputBorder(),
-//               ),
-//             ),
-//             SizedBox(height: 10),
-//             TextFormField(
-//               controller: _confirmPasswordController,
-//               obscureText: true,
-//               decoration: InputDecoration(
-//                 hintText: 'Confirm Password',
-//                 border: OutlineInputBorder(),
-//               ),
-//             ),
-//             SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: _isLoading ? null : _resetPassword,
-//               child: _isLoading
-//                   ? CircularProgressIndicator()
-//                   : Text('Reset Password'),
-//             ),
-//             if (_errorMessage.isNotEmpty)
-//               Text(
-//                 _errorMessage,
-//                 style: TextStyle(color: Colors.red),
-//               ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class MailScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -188,8 +72,6 @@ class MailScreen extends StatelessWidget {
                             );
                             Navigator.pushReplacementNamed(
                                 context, AppRoutes.loginPageScreen);
-                            // Get.to(ResetPasswordScreen(
-                            //     email: email)); // Pass email as named parameter
                           },
                           child: const Text(
                             "Reset your password",
