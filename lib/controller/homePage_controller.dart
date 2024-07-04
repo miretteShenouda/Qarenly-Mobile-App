@@ -1,9 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:qarenly/controller/filter_controller.dart';
@@ -117,31 +114,6 @@ class HomePageController extends GetxController {
         }
 
         final product = Product.fromFirestore(data);
-        // print('Object ${product.id}, Name: ${product.name}');
-
-        // // Search for product in other categories to determine its type
-        // bool found = false;
-        // for (var category in categories) {
-        //   final categoryQuerySnapshot = await _firestore
-        //       .collection(category)
-        //       .where('name', isEqualTo: product.name)
-        //       .get();
-        //
-        //   if (categoryQuerySnapshot.docs.isNotEmpty) {
-        //     product.type = category;
-        //     print('typeeeeeeeeee  ${product.type}');
-        //     found = true;
-        //     break; // Exit loop once the type is found
-        //   }
-        // }
-        //
-        // if (!found) {
-        //   print("Product with ID ${product.id} not found in any category.");
-        // }else{
-        //   print("Product with ID ${product.id} was found in ${product.type}.");
-        //
-        // }
-
         recentDeals.add(product);
       }
 
@@ -157,7 +129,6 @@ class HomePageController extends GetxController {
     products.clear();
     try {
       String selectedCategory = filterController.categoryFilter.value;
-      // RangeValues priceRange = filterController.priceFilter.value;
 
       if (selectedCategory == 'All') {
         await fetchHomepageItems();
@@ -213,13 +184,11 @@ class HomePageController extends GetxController {
     try {
       isLoading.value = true;
       products.clear();
-      print("heloo");
       for (var category in categories) {
         final querySnapshot = await _firestore.collection(category).get();
         for (var doc in querySnapshot.docs) {
           final product = Product.fromFirestore(doc.data());
           product.type = category;
-          print("Product ID: ${product.id}"); // Print the product.id;
           products.add(product);
         }
       }

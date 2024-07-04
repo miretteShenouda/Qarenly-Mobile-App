@@ -20,7 +20,6 @@ class _MobileScreenState extends State<MobileScreen> {
         body: Container(
       width: SizeUtils.width,
       height: SizeUtils.height,
-      // decoration of the color ballet "background"
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment(0.5, 0),

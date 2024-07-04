@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/view/sign_up_page_screen/sign_up_footer.dart';
 import 'package:qarenly/view/sign_up_page_screen/sign_up_form.dart';
-// import 'package:qarenly/view/sign_up_page_screen/tff_widget.dart';
-// import 'package:qarenly/common/widgets/app_bar/appbar_leading_iconbutton.dart';
-// import 'package:qarenly/common/widgets/app_bar/custom_app_bar.dart';
-// import 'package:qarenly/common/widgets/custom_elevated_button.dart';
 
 class SignUpPageScreen extends StatelessWidget {
   SignUpPageScreen({Key? key}) : super(key: key);
-
-  // TextEditingController userNameController = TextEditingController();
-
-  // TextEditingController emailController = TextEditingController();
-
-  // TextEditingController passwordController = TextEditingController();
-
-  // TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +13,6 @@ class SignUpPageScreen extends StatelessWidget {
             body: Container(
       width: SizeUtils.width,
       height: SizeUtils.height,
-      // Decoration of the background
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment(0.5, 0),

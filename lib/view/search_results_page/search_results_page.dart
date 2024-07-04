@@ -59,9 +59,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
         ),
         body: Obx(() {
           if (controller.isLoading.value) {
-            return Center(
-                child:
-                    CircularProgressIndicator()); // Display a loading indicator
+            return Center(child: CircularProgressIndicator());
           } else if (controller.searchReturn.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -79,7 +77,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                 ],
               ),
             );
-            // return Text('Error: ${snapshot.error}');
           } else {
             print("is loading: ${controller.isLoading.value}");
             print('length: ${controller.searchReturn.length}');
@@ -92,7 +89,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Section 3: Mostly Viewed
                     const SizedBox(height: 10.0),
                     _buildMostlyViewedSection(controller.searchReturn),
                   ],
@@ -124,20 +120,15 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => SearchFiltersPage()));
-                //   filterByPriceRange("0", "50");
               },
               child: Text(
                 'Filters',
               ),
               style: TextButton.styleFrom(
                 foregroundColor: Color(0XFF003049),
-                // backgroundColor: Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 textStyle: TextStyle(
-                    fontSize:
-                        20, // Adjust the font size of the text inside the button
-                    // fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline),
+                    fontSize: 20, decoration: TextDecoration.underline),
               ),
             ),
           ],
@@ -150,14 +141,9 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           itemCount: resultList.length,
           itemBuilder: (context, index) => ProductcardItemWidgetHome(
             product: resultList[index],
-            // homePageController: homeController,
           ),
         ),
       ],
     );
-  }
-
-  onTapBasilMenuOutline(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.sideMenuScreen);
   }
 }

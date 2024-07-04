@@ -16,9 +16,6 @@ class SearchResultController extends GetxController {
     double lowerBound = filterController.priceFilterLowerBound.value;
     double upperBound = filterController.priceFilterUpperBound.value;
 
-    print(
-        'collection: $collection, query: $query, lowerBound: $lowerBound, upperBound: $upperBound');
-
     if (collection == "All") {
       searchAllProducts(query);
       return;
@@ -26,8 +23,6 @@ class SearchResultController extends GetxController {
 
     QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection(collection).get();
-
-    print("collection: $collection");
 
     snapshot.docs.forEach((doc) {
       final Product product =
@@ -40,7 +35,6 @@ class SearchResultController extends GetxController {
           double price = product.sources[i]['discounted_price'] == null
               ? product.sources[i]['price']
               : product.sources[i]['discounted_price'];
-          print("price: $price");
           if (price >= lowerBound && price <= upperBound) {
             searchReturn.add(product);
             break;
@@ -48,14 +42,12 @@ class SearchResultController extends GetxController {
         }
       }
     });
-    print("searchReturn: $searchReturn");
   }
 
   void searchAllProducts(String query) async {
     int limit = 7;
     double lowerBound = filterController.priceFilterLowerBound.value;
     double upperBound = filterController.priceFilterUpperBound.value;
-    // RxList<Product> searchReturn = <Product>[].obs;
 
     List collections = ["TVs", "Laptops", "CPUs", "GPUs"];
 
@@ -102,8 +94,6 @@ class SearchResultController extends GetxController {
       sources = ['albadr', 'sigma', 'jumia', 'noon', 'amazon'];
     }
 
-    print("Sources Filters $sources");
-
     List<Product> newSearchResult = [];
     for (var product in searchReturn.value) {
       for (var source in sources) {
@@ -121,9 +111,7 @@ class SearchResultController extends GetxController {
         }
       }
     }
-    print(newSearchResult);
     searchReturn.value = newSearchResult;
-    print("searchReturn: $searchReturn");
   }
 
   void SeacrhAndApplyFilters(String query) {

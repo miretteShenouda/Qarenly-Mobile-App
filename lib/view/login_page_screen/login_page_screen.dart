@@ -11,12 +11,9 @@ class LoginPageScreen extends StatefulWidget {
   _LoginPageScreenState createState() => _LoginPageScreenState();
 }
 
-// ignore_for_file: must_be_immutable
 class _LoginPageScreenState extends State<LoginPageScreen> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  // GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +24,6 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
             body: Container(
                 width: SizeUtils.width,
                 height: SizeUtils.height,
-                // decoration of the color ballet "background"
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment(0.5, 0),
@@ -48,16 +44,12 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
                               decoration: AppDecoration.outlineBlack,
                               child: Text("Qarenly",
                                   style: theme.textTheme.displayLarge)),
-                          // End of the section
-
                           SizedBox(height: 68.v),
-
                           //LoginForm section
                           LoginForm(
                               userNameController: userNameController,
                               passwordController: passwordController),
                           SizedBox(height: 23.v),
-
                           //LoginFooter section
                           LoginFooterWidget(),
                           SizedBox(height: 5.v)

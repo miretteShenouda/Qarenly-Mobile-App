@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:qarenly/common/widgets/tff_widget.dart';
 import 'package:qarenly/controller/profile_controller.dart';
 import 'package:qarenly/core/app_export.dart';
 import 'package:qarenly/model/user_model.dart';
-// import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   UpdateProfileScreen({Key? key}) : super(key: key);
@@ -224,7 +221,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             ),
                             const SizedBox(height: 30),
 
-                            // -- Created Date and Delete Button
+                            // Created Date and Delete Button
                             Container(
                               child: Align(
                                 alignment: Alignment.topRight,

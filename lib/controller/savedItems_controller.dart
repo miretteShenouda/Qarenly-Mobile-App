@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:qarenly/model/user_model.dart';
 import 'package:qarenly/repository/authentication%20repository/authentication_repo.dart';
-
 import '../model/product_model.dart';
 
 class SavedItemsController extends GetxController {
@@ -15,7 +14,6 @@ class SavedItemsController extends GetxController {
   }
 
   Future<List<Product>> fetchSavedItems() async {
-    // isLoading.value = true;
     final List<Product> savedItems = [];
     try {
       final userId = AuthenticationRepo.instance.currentUser!.uid;
@@ -38,8 +36,6 @@ class SavedItemsController extends GetxController {
       }
       savedItemsProducts.value = savedItems;
       isLoading.value = false;
-      print("Saved Items: ${savedItemsProducts}");
-      print("is Loading value: ${isLoading.value}");
       return savedItems;
     } catch (error) {}
     isLoading.value = false;
