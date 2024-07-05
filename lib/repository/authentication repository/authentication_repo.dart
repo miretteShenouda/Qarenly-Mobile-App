@@ -22,13 +22,14 @@ class AuthenticationRepo extends GetxController {
   UserModel? userData;
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(
         _auth.authStateChanges()); // Listen to authentication state changes
     ever(firebaseUser, _handleUserAuthentication);
     ever(firebaseUser, _setInitialScreen);
+
+    ///firebaseUser.bindStream(_auth.userChanges());
   }
 
   _handleUserAuthentication(User? user) async {

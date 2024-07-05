@@ -16,8 +16,6 @@ import 'package:qarenly/view/viewproduct_page/viewproduct_page.dart';
 class AppRoutes {
   static const String saveditemsScreen = '/saveditems_screen';
 
-  static const String splashScreen = '/splashscreen_screen';
-
   static const String loginPageScreen = '/login_page_screen';
 
   static const String signUpPageScreen = '/sign_up_page_screen';
@@ -50,7 +48,6 @@ class AppRoutes {
     viewproductPage: (context) => ViewproductPage(),
     profilePage: (context) => UpdateProfileScreen(),
     notificationsPage: (context) => NotificationsPage(),
-    splashScreen:(context) => SplashScreen(),
   };
 
   // static void navigateToHomeScreen(BuildContext context, User user) {

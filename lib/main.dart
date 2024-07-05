@@ -25,7 +25,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ).then(((value) => Get.put(AuthenticationRepo())));
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           theme: theme,
           title: 'qarenly',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.splashScreen,
+          initialRoute: AppRoutes.loginPageScreen,
           // AppRoutes.signUpPageScreen,
           routes: AppRoutes.routes,
         );
