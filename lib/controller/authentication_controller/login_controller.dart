@@ -17,7 +17,6 @@ class LoginController extends GetxController {
     loggedIn = await AuthenticationRepo.instance
         .loginWithEmailAndPassword(email, password);
     currentUser = AuthenticationRepo.instance.currentUser;
-    // print(currentUser!.email);
     return loggedIn;
   }
 }

@@ -47,10 +47,10 @@ class ProductcardItemWidgetBenchmarking extends StatelessWidget {
       }
     }
 
-    print("Product Name: ${product.name}");
-    print("Product ID: ${product.id}");
-    print("priceslowest:${product.lowestPrices}");
-    print("benchmark  ratio: ${product.benchmark_ratio}");
+    // print("Product Name: ${product.name}");
+    // print("Product ID: ${product.id}");
+    // print("priceslowest:${product.lowestPrices}");
+    // print("benchmark  ratio: ${product.benchmark_ratio}");
     return GestureDetector(
         onTap: () {
           // if (lowestPriceMap != null && lowestPriceMap['URL'] != null) {
@@ -63,11 +63,11 @@ class ProductcardItemWidgetBenchmarking extends StatelessWidget {
             'productId': product.id,
             'productType': product.type,
           });
-          print("Product ID: ${product.id}");
-          print("Product Type: ${product.type}");
+          // print("Product ID: ${product.id}");
+          // print("Product Type: ${product.type}");
         },
         child: Container(
-          width: 200.0,
+          width: 215.0,
           margin: const EdgeInsets.all(16.0),
           child: Card(
             // color: const Color.fromRGBO(0, 48, 73, 0.0001),
@@ -106,7 +106,7 @@ class ProductcardItemWidgetBenchmarking extends StatelessWidget {
                         children: [
                           Icon(Icons.shopping_bag,
                               size: 16.0, color: Colors.blue),
-                          SizedBox(width: 5.0),
+                          SizedBox(width: 2.0),
                           Expanded(
                             child: Text(
                               lowestPriceMap != null

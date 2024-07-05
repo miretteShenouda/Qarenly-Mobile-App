@@ -263,7 +263,7 @@ class _ViewProductPageState extends State<ViewproductPage> {
                           scrollDirection: Axis.horizontal,
                           physics: BouncingScrollPhysics(),
                           separatorBuilder: (context, index) =>
-                              SizedBox(width: 10),
+                              SizedBox(width: 3.0),
                           itemCount: _controller.similarItems.length,
                           itemBuilder: (context, index) {
                             final product = _controller.similarItems[index];
@@ -417,53 +417,51 @@ class _ViewProductPageState extends State<ViewproductPage> {
   final Widget arrowUpIcon = Icon(Icons.arrow_upward, color: Colors.red);
   final Widget arrowDownIcon = Icon(Icons.arrow_downward, color: Colors.green);
 
+  Widget getPriceChangeMessage(int priceChangeIndicator) {
+    Widget message;
+    switch (priceChangeIndicator) {
+      case -1:
+        message = Row(
+          children: [
+            Text('Expected decrease in price'),
+            SizedBox(width: 5),
+            Icon(Icons.arrow_downward, color: Colors.green, size: 30),
+          ],
+        );
+        break;
+      case 0:
+        message = Text('Expected constant price');
+        break;
+      case 1:
+        message = Row(
+          children: [
+            Text('Expected increase in price'),
+            SizedBox(width: 5),
+            Icon(Icons.arrow_upward, color: Colors.red, size: 30),
+          ],
+        );
+        break;
+      default:
+        message = Text('');
+    }
 
-Widget getPriceChangeMessage(int priceChangeIndicator) {
-  Widget message;
-  switch (priceChangeIndicator) {
-    case -1:
-      message = Row(
+    return Container(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Color.fromRGBO(0, 48, 73, 1), width: 2),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Row(
         children: [
-          Text('Expected decrease in price'),
+          Icon(Icons.info_outline, color: Color.fromRGBO(0, 48, 73, 1.0)),
           SizedBox(width: 5),
-          Icon(Icons.arrow_downward, color: Colors.green, size: 30),
+          Expanded(child: message),
         ],
-      );
-      break;
-    case 0:
-      message = Text('Expected constant price');
-      break;
-    case 1:
-      message = Row(
-        children: [
-          Text('Expected increase in price'),
-          SizedBox(width: 5),
-          Icon(Icons.arrow_upward, color: Colors.red, size: 30),
-        ],
-      );
-      break;
-    default:
-      message = Text('');
+      ),
+    );
   }
-
-  return Container(
-    padding: EdgeInsets.all(10),
-    margin: EdgeInsets.symmetric(vertical: 10),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      border: Border.all(color: Color.fromRGBO(0, 48, 73,1), width: 2),
-      borderRadius: BorderRadius.circular(5),
-    ),
-    child: Row(
-      children: [
-        Icon(Icons.info_outline,color:Color.fromRGBO(0, 48, 73, 1.0)),
-        SizedBox(width: 5),
-        Expanded(child: message),
-      ],
-    ),
-  );
-}
-
 
   Future<void> launchURL(String url) async {
     try {

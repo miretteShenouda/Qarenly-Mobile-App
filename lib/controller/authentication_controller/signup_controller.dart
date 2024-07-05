@@ -22,10 +22,7 @@ class SignUpController extends GetxController {
       email: email,
       password: password,
     );
-    print("USERNAME : ________________________");
-    print(userModel.username);
     InsertUser(userModel);
-    print("USERNAME DONE: ________________________");
   }
 
   void InsertUser(UserModel user) async {

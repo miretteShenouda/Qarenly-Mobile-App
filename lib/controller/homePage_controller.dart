@@ -57,9 +57,7 @@ class HomePageController extends GetxController {
           savedItemsIds['ids']!.add(savedItemData['id'].toString());
         }
       } // AuthenticationRepo.instance.userData!.savedItems;
-
-      print(savedItemsIds);
-
+      /// print(savedItemsIds);
       final response = await http.post(
         Uri.parse("https://qarenlyrecommender.azurewebsites.net/"),
         headers: <String, String>{
@@ -85,7 +83,7 @@ class HomePageController extends GetxController {
           }
         }
 
-        print("Recommended List $responseData");
+        // print("Recommended List $responseData");
       } else {
         print(
             'Failed to fetch recommended products. Status code: ${response.statusCode}');
