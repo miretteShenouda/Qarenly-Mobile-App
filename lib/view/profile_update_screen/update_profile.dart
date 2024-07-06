@@ -93,10 +93,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             const SizedBox(height: 10),
                             TextFormField(
                               validator: (value) {
+                                RegExp regex = RegExp(r".*[A-Z].*[0-9].*");
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your password.';
-                                } else if (value.length < 8) {
-                                  return 'Password must be at least 8 characters long.';
+                                } else if (value.length < 6) {
+                                  return 'Password must be at least 6 characters long.';
+                                } else if (!regex.hasMatch(value)) {
+                                  return "Password must contain at least one uppercase letter and one number.";
                                 }
                                 return null;
                               },
@@ -131,12 +134,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             const SizedBox(height: 10),
                             TextFormField(
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your confirmation password.';
-                                } else if (value.length < 8) {
-                                  return 'Password must be at least 8 characters long.';
-                                }
-
                                 if (value != profileController.password.text) {
                                   return 'Passwords do not match.';
                                 }
@@ -227,13 +224,43 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 alignment: Alignment.topRight,
                                 child: ElevatedButton(
                                   onPressed: () async {
+                                    final result = await showDialog<bool>(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: const Text('Are you sure?'),
+                                        content: const Text(
+                                            'This action will permanently delete this data'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, false),
+                                            child: const Text(
+                                              'Cancel',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, true),
+                                            child: const Text('Delete',
+                                                style: TextStyle(
+                                                    color: Colors.red)),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+
+                                    if (result == null || !result) {
+                                      return;
+                                    }
+
                                     await profileController.deleteUser();
                                     Navigator.pushReplacementNamed(
                                         context, AppRoutes.loginPageScreen);
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          Colors.white.withOpacity(0.1),
+                                      backgroundColor: Colors.white,
                                       foregroundColor: Colors.red,
                                       shape: const StadiumBorder(),
                                       side: BorderSide.none),

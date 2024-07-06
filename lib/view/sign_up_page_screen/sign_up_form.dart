@@ -44,22 +44,27 @@ class SignUpForm extends StatelessWidget {
                 },
                 Controller: controller.email,
                 hintText: "e-mail",
-                ticon: Icons.email_outlined),
+                ticon: Icons.email),
             SizedBox(
               height: 10,
             ),
             TFF_widget(
               validator: (value) {
+                RegExp regex = RegExp(r".*[A-Z].*[0-9].*");
+
                 if (value == null || value.isEmpty) {
                   return 'Please enter a password.';
                 } else if (value.length < 6) {
                   return 'Password must be at least 6 characters long.';
+                } else if (!regex.hasMatch(value)) {
+                  return "Password must contain at least one uppercase letter and one number.";
                 }
+
                 return null;
               },
               Controller: controller.password,
               hintText: "Password",
-              ticon: Icons.fingerprint,
+              ticon: Icons.lock,
               obscureText: true,
             ),
             SizedBox(
@@ -74,7 +79,7 @@ class SignUpForm extends StatelessWidget {
               },
               Controller: controller.confirmPassword,
               hintText: "Confirm Password",
-              ticon: Icons.fingerprint,
+              ticon: Icons.lock,
               obscureText: true,
             ),
             SizedBox(
